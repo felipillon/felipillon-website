@@ -1,55 +1,60 @@
-import { useEffect } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { Layout } from "@/components/layout/Layout";
+import { Toaster } from "@/components/ui/sonner";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Services from "@/pages/Services";
+import Industries from "@/pages/Industries";
+import Staffing from "@/pages/Staffing";
+import Innovation from "@/pages/Innovation";
+import Leadership from "@/pages/Leadership";
+import Team from "@/pages/Team";
+import OpenRoles from "@/pages/OpenRoles";
+import CaseStudies from "@/pages/CaseStudies";
+import Testimonials from "@/pages/Testimonials";
+import Locations from "@/pages/Locations";
+import Blog from "@/pages/Blog";
+import Contact from "@/pages/Contact";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
+const AnimatedRoutes = () => {
+  const location = useLocation();
   return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/industries" element={<Industries />} />
+        <Route path="/staffing" element={<Staffing />} />
+        <Route path="/innovation" element={<Innovation />} />
+        <Route path="/leadership" element={<Leadership />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/open-roles" element={<OpenRoles />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/locations" element={<Locations />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </AnimatePresence>
   );
 };
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <Layout>
+          <AnimatedRoutes />
+        </Layout>
+        <Toaster position="bottom-right" />
       </BrowserRouter>
-    </div>
+    </ThemeProvider>
   );
 }
 
