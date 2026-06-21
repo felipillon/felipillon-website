@@ -32,6 +32,7 @@ export const NAV_LINKS = [
   { label: "Team", path: "/team" },
   { label: "Open Roles", path: "/open-roles" },
   { label: "Case Studies", path: "/case-studies" },
+  { label: "Testimonials", path: "/testimonials" },
   { label: "Locations", path: "/locations" },
   { label: "Blog", path: "/blog" },
 ];

@@ -4,7 +4,7 @@ import { Linkedin, Github, Twitter, Mail, ArrowUpRight } from "lucide-react";
 const cols = [
   { title: "Company", links: [["About", "/about"], ["Leadership", "/leadership"], ["Team", "/team"], ["Locations", "/locations"]] },
   { title: "Services", links: [["Staffing", "/staffing"], ["Innovation", "/innovation"], ["Services", "/services"], ["Industries", "/industries"]] },
-  { title: "Careers", links: [["Open Roles", "/open-roles"], ["Case Studies", "/case-studies"], ["Blog", "/blog"], ["Contact", "/contact"]] },
+  { title: "Careers", links: [["Open Roles", "/open-roles"], ["Case Studies", "/case-studies"], ["Testimonials", "/testimonials"], ["Blog", "/blog"], ["Contact", "/contact"]] },
 ];
 
 export const Footer = () => (
