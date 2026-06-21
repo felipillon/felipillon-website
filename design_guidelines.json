@@ -1,0 +1,209 @@
+{
+  "theme": {
+    "default": "dark",
+    "supported": ["dark", "light"],
+    "archetype": "Enterprise Luxury Future (Archetype 4 & 5 hybrid)",
+    "emotion": "Trustworthy, Cutting-edge, High-end, Cinematic, Authoritative"
+  },
+  "colors": {
+    "dark": {
+      "background": {
+        "base": "#000000",
+        "slate": "#0A0A0C",
+        "surface": "rgba(255, 255, 255, 0.02)",
+        "surfaceHover": "rgba(255, 255, 255, 0.05)"
+      },
+      "border": {
+        "default": "rgba(255, 255, 255, 0.08)",
+        "glow": "rgba(16, 185, 129, 0.5)"
+      },
+      "text": {
+        "primary": "#FFFFFF",
+        "secondary": "#A1A1AA",
+        "muted": "#71717A"
+      },
+      "accent": {
+        "primary": "#10B981",
+        "primaryHover": "#059669",
+        "secondary": "#3B82F6",
+        "gradient": "linear-gradient(135deg, #10B981 0%, #3B82F6 100%)"
+      }
+    },
+    "light": {
+      "background": {
+        "base": "#FAFAFA",
+        "slate": "#F4F4F5",
+        "surface": "#FFFFFF",
+        "surfaceHover": "#F9FAFB"
+      },
+      "border": {
+        "default": "rgba(0, 0, 0, 0.08)",
+        "glow": "rgba(5, 150, 105, 0.3)"
+      },
+      "text": {
+        "primary": "#090A0B",
+        "secondary": "#52525B",
+        "muted": "#A1A1AA"
+      },
+      "accent": {
+        "primary": "#059669",
+        "primaryHover": "#047857",
+        "secondary": "#1D4ED8",
+        "gradient": "linear-gradient(135deg, #059669 0%, #1D4ED8 100%)"
+      }
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "'Outfit', sans-serif",
+      "body": "'Plus Jakarta Sans', sans-serif",
+      "mono": "'JetBrains Mono', monospace"
+    },
+    "scale": {
+      "h1": "text-5xl sm:text-6xl lg:text-7xl font-light tracking-tighter leading-tight",
+      "h2": "text-4xl sm:text-5xl font-medium tracking-tight",
+      "h3": "text-2xl sm:text-3xl font-medium tracking-tight",
+      "h4": "text-xl font-medium",
+      "bodyLarge": "text-lg sm:text-xl leading-relaxed text-secondary",
+      "body": "text-base leading-relaxed text-secondary",
+      "label": "text-xs font-semibold tracking-[0.2em] uppercase"
+    }
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-6 sm:px-8 md:px-12",
+    "section_padding": "py-24 sm:py-32",
+    "bento_grid": {
+      "wrapper": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8",
+      "hero_card": "col-span-1 md:col-span-8 row-span-2",
+      "square_card": "col-span-1 md:col-span-4",
+      "tall_card": "col-span-1 md:col-span-4 row-span-2"
+    },
+    "borderRadius": {
+      "card": "rounded-2xl",
+      "button": "rounded-full",
+      "tag": "rounded-md"
+    }
+  },
+  "components": {
+    "glassmorphism": {
+      "base": "backdrop-blur-xl border border-white/10 dark:border-white/10 light:border-black/5",
+      "backgroundDark": "bg-white/5",
+      "backgroundLight": "bg-black/5",
+      "shadow": "shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
+    },
+    "tracing_beam_card": {
+      "description": "Card with a glowing border effect on hover or looping.",
+      "implementation": "Use Framer Motion to animate a gradient border or a mask-image reveal. Card should have dark background, 1px border, and glow matching accent colors (Emerald or Electric Blue)."
+    },
+    "buttons": {
+      "magnetic_pill": {
+        "base": "relative inline-flex items-center justify-center px-8 py-4 rounded-full font-medium transition-all duration-300 overflow-hidden",
+        "primary": "bg-accent-primary text-white hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]",
+        "secondary": "bg-transparent border border-white/20 text-white hover:bg-white/10 hover:border-white/40"
+      }
+    }
+  },
+  "motion": {
+    "philosophy": "Cinematic, smooth, heavy motion but never jarring. Every interaction feels premium and intentional.",
+    "transitions": {
+      "spring": "type: 'spring', stiffness: 100, damping: 20",
+      "ease": "ease: [0.22, 1, 0.36, 1], duration: 0.8"
+    },
+    "effects": {
+      "staggered_reveal": "Parent sets staggerChildren: 0.1, children animate y: 20 to 0, opacity: 0 to 1.",
+      "scroll_parallax": "Images and backgrounds translate slightly on scroll to create depth.",
+      "hover_lift": "Cards translateY(-8px) and increase shadow opacity on hover.",
+      "magnetic_hover": "Use framer-motion useMouse to slightly pull buttons towards cursor."
+    }
+  },
+  "layout_blueprints": {
+    "Home": {
+      "Hero": "100vh height. Absolute positioning for cinematic abstract particles background. Center aligned text: 'AI-Driven Human Capital & Custom Software Solutions'. Large CTA magnetic buttons.",
+      "Marquee": "Opacity 50% grayscale logos running infinitely using react-fast-marquee.",
+      "Divisions_Bento": "Asymmetrical 12-col grid. Staffing & Recruitment card (Emerald theme) taking 7 cols, Innovation card (Blue theme) taking 5 cols. Video hover reveals.",
+      "Industries": "3-column grid of tall cards. Dynamic hover states revealing full-background videos for Healthcare, Renewable Energy, and Construction.",
+      "Why_Felipillon": "Grid of feature cards with tracing beam glowing borders. Icons using Lucide React.",
+      "Global_Footprint": "Interactive globe (e.g., cobe or framer-motion SVG globe) with connection lines between Berlin, Pune, Makati City.",
+      "Success_Metrics": "Large typography counters triggering on intersection observer."
+    },
+    "Divisions": {
+      "Staffing_Recruitment": "Focus on human elements, clean UI, healthcare/exec search visuals. Emerald accents.",
+      "Innovation": "Darker, highly technical, code snippets, server visuals, 3D grids. Electric Blue accents."
+    },
+    "Navigation": {
+      "Header": "Sticky, glassmorphism nav bar. Transparent at top, blurs on scroll. Includes theme toggle and massive contact CTA."
+    },
+    "Footer": {
+      "Structure": "Massive bottom padding. Grid layout for links. Enormous typography for brand name 'FELIPILLON' at the bottom."
+    }
+  },
+  "media": {
+    "hero_backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1758073519996-6d3c63b4922c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHw0fHxjaW5lbWF0aWMlMjBhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBwYXJ0aWNsZXN8ZW58MHx8fHwxNzgyMDU2MjEyfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract glowing dots and wave patterns, perfect for hero particles",
+        "category": "hero_bg"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1579567761406-4684ee0c75b6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwyfHxjaW5lbWF0aWMlMjBhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBwYXJ0aWNsZXN8ZW58MHx8fHwxNzgyMDU2MjEyfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Blue and white abstract art",
+        "category": "hero_bg_alt"
+      }
+    ],
+    "industries": [
+      {
+        "url": "https://images.pexels.com/photos/5452247/pexels-photo-5452247.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Healthcare professionals",
+        "category": "healthcare"
+      },
+      {
+        "url": "https://images.pexels.com/photos/14468163/pexels-photo-14468163.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Wind turbines for renewable energy",
+        "category": "renewable_energy"
+      },
+      {
+        "url": "https://images.pexels.com/photos/18078304/pexels-photo-18078304.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Construction site crane against sky",
+        "category": "construction"
+      }
+    ],
+    "innovation": [
+      {
+        "url": "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwyfHxzZXJ2ZXIlMjByb29tJTIwYWklMjB0ZWNobm9sb2d5fGVufDB8fHx8MTc4MjA1NjIxN3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Server rack, AI technology",
+        "category": "servers_software"
+      }
+    ],
+    "team_and_offices": [
+      {
+        "url": "https://images.pexels.com/photos/36733304/pexels-photo-36733304.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Professional team standing",
+        "category": "team"
+      },
+      {
+        "url": "https://images.pexels.com/photos/13219418/pexels-photo-13219418.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Illuminated modern glass office",
+        "category": "office_hq"
+      }
+    ],
+    "logos": [
+      {
+        "url": "https://images.pexels.com/photos/26576975/pexels-photo-26576975.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "trusted_by_marquee"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1705988142466-e468bc654eeb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHwxfHxjb21wYW55JTIwbG9nbyUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3ODIwNTYyMTd8MA&ixlib=rb-4.1.0&q=85",
+        "category": "trusted_by_marquee"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Read this entire JSON to implement the design system accurately.",
+    "Use Framer Motion heavily for page transitions, staggered text reveals, hover lifts, and magnetic buttons.",
+    "Implement the 'Crystal Glass' effect using the provided backdrop-blur utilities.",
+    "Ensure the theme toggler smoothly transitions colors. Default should be DARK.",
+    "For the animated globe, if cobe is complex to integrate quickly, use a Framer Motion rotating SVG or pure CSS interactive particle globe.",
+    "Use Lucide React icons everywhere.",
+    "All interactive elements MUST have a data-testid attribute in kebab-case."
+  ]
+}
