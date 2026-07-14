@@ -1,44 +1,59 @@
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-// Glassmorphism card with cursor-following glow border + hover lift
-export const GlowCard = ({ children, className = "", glow = "16,185,129", lift = true, ...props }) => {
+export const GlowCard = ({ children, className = "", glow = "201,151,58", lift = true, ...props }) => {
   const ref = useRef(null);
-  const [pos, setPos] = useState({ x: -200, y: -200 });
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["6deg", "-6deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-6deg", "6deg"]);
+
   const [hover, setHover] = useState(false);
 
-  const onMove = (e) => {
-    const r = ref.current.getBoundingClientRect();
-    setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+    x.set(0);
+    y.set(0);
   };
 
   return (
     <motion.div
       ref={ref}
-      onMouseMove={onMove}
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      whileHover={lift ? { y: -8 } : {}}
-      transition={{ type: "spring", stiffness: 200, damping: 22 }}
-      className={`group relative overflow-hidden rounded-2xl glass ${className}`}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        rotateX: hover && lift ? rotateX : 0,
+        rotateY: hover && lift ? rotateY : 0,
+      }}
+      className={`relative group rounded-[24px] bg-[#0c0c0e] border border-white/[0.06] backdrop-blur-xl transition-colors duration-500 hover:bg-[#111114] overflow-hidden ${className}`}
       {...props}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: `radial-gradient(420px circle at ${pos.x}px ${pos.y}px, rgba(${glow},0.12), transparent 40%)` }}
-      />
-      <div
-        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      <motion.div
+        className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-500"
         style={{
-          background: `radial-gradient(300px circle at ${pos.x}px ${pos.y}px, rgba(${glow},0.5), transparent 40%)`,
-          maskImage: "linear-gradient(#000,#000), linear-gradient(#000,#000)",
-          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-          padding: "1px",
+          opacity: hover ? 1 : 0,
+          background: `radial-gradient(500px circle at ${useTransform(mouseXSpring, v => (v + 0.5) * 100)}% ${useTransform(mouseYSpring, v => (v + 0.5) * 100)}%, rgba(${glow}, 0.08), transparent 40%)`,
         }}
       />
-      <div className="relative z-10 h-full">{children}</div>
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.15] to-transparent z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="relative z-10 h-full w-full" style={{ transform: "translateZ(30px)" }}>
+        {children}
+      </div>
     </motion.div>
   );
 };

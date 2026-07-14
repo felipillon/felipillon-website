@@ -11,21 +11,19 @@ export const MagneticButton = ({
 
   const handleMove = (e) => {
     const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setPos({ x: x * 0.25, y: y * 0.25 });
+    setPos({
+      x: (e.clientX - rect.left - rect.width / 2) * 0.22,
+      y: (e.clientY - rect.top - rect.height / 2) * 0.22,
+    });
   };
-  const reset = () => setPos({ x: 0, y: 0 });
 
-  const handleClick = (e) => {
-    if (onClick) onClick(e);
-    if (to) navigate(to);
-  };
+  const reset = () => setPos({ x: 0, y: 0 });
+  const handleClick = (e) => { if (onClick) onClick(e); if (to) navigate(to); };
 
   const styles = {
-    primary: "bg-gradient-to-r from-emerald-500 to-electric-500 text-white hover:shadow-[0_0_30px_-4px_rgba(16,185,129,0.6)]",
-    secondary: "glass text-foreground hover:border-emerald-500/50",
-    ghost: "bg-transparent border border-foreground/15 text-foreground hover:bg-foreground/5",
+    primary: "bg-[#C9973A] text-black font-semibold hover:bg-[#D4A853] hover:shadow-[0_0_32px_-4px_rgba(201,151,58,0.65)] active:scale-95",
+    secondary: "bg-white/[0.07] backdrop-blur-md border border-white/[0.12] text-white hover:bg-white/[0.12] hover:border-white/20",
+    ghost: "bg-transparent border border-white/[0.12] text-white/70 hover:text-white hover:border-white/25",
   };
 
   return (
@@ -35,8 +33,10 @@ export const MagneticButton = ({
       onMouseLeave={reset}
       onClick={handleClick}
       animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: "spring", stiffness: 180, damping: 14 }}
-      className={`relative inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm transition-shadow duration-300 ${styles[variant]} ${className}`}
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 200, damping: 16 }}
+      className={`relative inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm transition-all duration-300 ${styles[variant]} ${className}`}
       {...props}
     >
       {children}

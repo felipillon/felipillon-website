@@ -17,18 +17,35 @@ module.exports = {
             colors: {
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
-                emerald: {
-                    DEFAULT: "#10B981",
-                    400: "#34D399",
-                    500: "#10B981",
-                    600: "#059669",
+
+                // ── Brand colors derived from Felipillon logo ──────────────
+                // Primary: warm gold — from the logo's warm brown/tan tones
+                gold: {
+                    DEFAULT: "#C9973A",
+                    300: "#E8C07A",
+                    400: "#D4A853",
+                    500: "#C9973A",
+                    600: "#A87A28",
+                    700: "#8A6020",
                 },
-                electric: {
-                    DEFAULT: "#3B82F6",
-                    400: "#60A5FA",
-                    500: "#3B82F6",
-                    600: "#2563EB",
+                // Secondary: deep warm brown — from the dark silhouettes
+                brown: {
+                    DEFAULT: "#3D2314",
+                    300: "#8A5A3C",
+                    400: "#6B3F27",
+                    500: "#3D2314",
+                    600: "#2C1810",
+                    700: "#1A0E08",
                 },
+                // Accent: warm cream — from logo background tone
+                cream: {
+                    DEFAULT: "#F5EFE6",
+                    100: "#FAF7F3",
+                    200: "#F5EFE6",
+                    300: "#EDE3D5",
+                },
+
+                // shadcn/ui tokens — unchanged
                 card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
                 popover: { DEFAULT: "hsl(var(--popover))", foreground: "hsl(var(--popover-foreground))" },
                 primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },

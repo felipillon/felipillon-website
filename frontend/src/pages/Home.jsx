@@ -1,280 +1,549 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Globe2, Code2, Check } from "lucide-react";
-import { Particles } from "../components/shared/Particles";
+import { ArrowRight, ArrowUpRight, ChevronDown, Check, Play } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ImageDivider } from "../components/layout/Layout";
 import { MagneticButton } from "../components/shared/MagneticButton";
 import { GlowCard } from "../components/shared/GlowCard";
-import { Reveal, StaggerGroup, fadeUp } from "../components/shared/Reveal";
-import { SectionHeading } from "../components/shared/SectionHeading";
+import { Reveal } from "../components/shared/Reveal";
 import { Counter } from "../components/shared/Counter";
 import { Globe } from "../components/shared/Globe";
-import { Link } from "react-router-dom";
-import { INDUSTRIES, WHY, METRICS, DIVISIONS, TRUSTED, TESTIMONIALS, VIDEOS } from "../data/content";
+import { Particles } from "../components/shared/Particles";
+import { useLang } from "../context/LangContext";
+import { SPECIALITIES, WHY, METRICS, TRUSTED, TESTIMONIALS, MEDIA, VIDEO_BG, VIDEO_BG_2, VIDEO_BG_FALLBACK, VIDEO_POSTER } from "../data/content";
 
+// ── Hero with video + particles ───────────────────────────────────────────────
 const Hero = () => {
+  const { t } = useLang();
   const ref = useRef(null);
+  const videoRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 180]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 160]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden" data-testid="hero-section">
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-[0.18]">
-        <source src={VIDEOS.network} type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-background/70" />
-      <div className="absolute inset-0 aurora" />
-      <div className="absolute inset-0"><Particles density={70} /></div>
-      <div className="absolute inset-0 grid-bg opacity-20" />
+    <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
 
-      <motion.div style={{ y, opacity }} className="relative max-w-7xl mx-auto px-6 sm:px-8 w-full pt-20">
-        <Reveal>
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs font-medium text-emerald-500 mb-7">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Berlin · Pune · Makati City
+      {/* ── Full-screen video background ── */}
+      <div className="absolute inset-0 z-0">
+        {/* Poster image loads instantly — shows even if video is blocked */}
+        <img
+          src={VIDEO_POSTER}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: "brightness(0.22) saturate(0.55)" }}
+        />
+
+        {/* Video sits on top of poster — replaces it when loaded */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={VIDEO_POSTER}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: "brightness(0.22) saturate(0.55)" }}
+        >
+          <source src={VIDEO_BG} type="video/mp4" />
+          <source src={VIDEO_BG_2} type="video/mp4" />
+          <source src={VIDEO_BG_FALLBACK} type="video/mp4" />
+        </video>
+
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/55" />
+
+        {/* Warm gold colour tint */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#C9973A]/[0.06] via-transparent to-[#07070A]/70" />
+
+        {/* Top fade — blends into navbar */}
+        <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#07070A]/80 to-transparent" />
+
+        {/* Bottom fade — merges into next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#07070A] to-transparent" />
+      </div>
+
+      {/* Particles layer — sits above video */}
+      <div className="absolute inset-0 z-[2] pointer-events-none">
+        <Particles density={30} color="201,151,58" />
+      </div>
+
+      {/* Scan lines */}
+      <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden">
+        <div className="scan-line" />
+        <div className="scan-line" style={{ animationDelay: "4s" }} />
+      </div>
+
+      {/* Decorative rings */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[800px] h-[800px] rounded-full border border-[#C9973A]/[0.07] pointer-events-none z-[1]" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[560px] h-[560px] rounded-full border border-[#C9973A]/[0.10] pointer-events-none z-[1]" />
+
+      <motion.div
+        style={{ y, opacity }}
+        className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full pt-32 pb-24"
+      >
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="inline-flex items-center gap-2.5 px-4 py-2 mb-10 rounded-full border border-[#C9973A]/25 bg-[#C9973A]/[0.07] backdrop-blur-sm"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C9973A] animate-pulse" />
+          <span className="text-[#C9973A] text-xs font-semibold tracking-[0.22em] uppercase">
+            {t.hero?.badge || "Germany · India · Philippines"}
           </span>
-        </Reveal>
-        <h1 className="font-heading text-5xl sm:text-6xl lg:text-[5.5rem] font-light tracking-tighter leading-[0.98] max-w-5xl">
-          {["AI-Driven Human Capital", "& Custom Software", "Solutions"].map((line, i) => (
-            <motion.span key={i} className="block overflow-hidden">
-              <motion.span className="block" initial={{ y: "110%" }} animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}>
-                {i === 1 ? <span className="text-gradient">{line}</span> : line}
-              </motion.span>
+        </motion.div>
+
+        {/* Main headline — staggered line reveal */}
+        <h1 className="font-heading font-light leading-[0.93] tracking-[-0.05em]">
+          {[t.hero?.line1 || "The Human Side", t.hero?.line2 || "of Intelligent", t.hero?.line3 || "Business"].map((line, i) => (
+            <motion.span
+              key={i}
+              className="block overflow-hidden"
+              initial={{ y: "110%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1.1, delay: 0.2 + i * 0.13, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className={`block ${
+                i === 1
+                  ? "text-5xl sm:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] bg-gradient-to-r from-white via-[#E8C07A] to-[#C9973A] bg-clip-text text-transparent"
+                  : "text-5xl sm:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] text-white"
+              }`}>{line}</span>
             </motion.span>
           ))}
         </h1>
-        <Reveal delay={0.6}>
-          <p className="mt-7 text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            Powering the future of work across Healthcare, Renewable Energy, Construction, and Technology.
-          </p>
-        </Reveal>
-        <Reveal delay={0.75}>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <MagneticButton to="/staffing" variant="primary" icon={ArrowRight} data-testid="hero-hire-btn">Hire Top Talent</MagneticButton>
-            <MagneticButton to="/services" variant="secondary" data-testid="hero-services-btn">Explore Services</MagneticButton>
-            <MagneticButton to="/open-roles" variant="ghost" data-testid="hero-roles-btn">View Open Roles</MagneticButton>
-          </div>
-        </Reveal>
-      </motion.div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground">
-        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <motion.div className="w-px h-10 bg-gradient-to-b from-emerald-500 to-transparent" animate={{ scaleY: [0.3, 1, 0.3] }} transition={{ duration: 2, repeat: Infinity }} />
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.65 }}
+          className="mt-10 text-lg sm:text-xl text-white/50 max-w-2xl leading-relaxed font-light"
+        >
+          {t.hero?.sub || "Elite talent placement and AI-powered software solutions — across Healthcare, Energy, Construction and Technology."}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.82 }}
+          className="mt-10 flex flex-wrap gap-4"
+        >
+          <MagneticButton to="/staffing" variant="primary" icon={ArrowRight}>
+            {t.hero?.cta1 || "Hire Top Talent"}
+          </MagneticButton>
+          <MagneticButton to="/specialities" variant="secondary">
+            {t.hero?.cta2 || "Our Specialities"}
+          </MagneticButton>
+          <MagneticButton to="/open-roles" variant="ghost">
+            {t.hero?.cta3 || "Open Roles"}
+          </MagneticButton>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/20"
+        >
+          <span className="text-[9px] tracking-[0.4em] uppercase">Scroll</span>
+          <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            <ChevronDown className="w-4 h-4" />
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+};
+
+// ── Trusted strip ─────────────────────────────────────────────────────────────
+const TrustedStrip = () => (
+  <div className="border-y border-white/[0.05] bg-white/[0.01] py-10 overflow-hidden">
+    <p className="text-center text-[9px] tracking-[0.45em] uppercase text-white/25 mb-7">
+      Trusted by enterprise leaders worldwide
+    </p>
+    <div className="relative">
+      <div className="flex w-max gap-0" style={{ animation: "marquee 45s linear infinite" }}>
+        {[...TRUSTED, ...TRUSTED].map((name, i) => (
+          <div key={i} className="mx-14 font-heading text-lg font-semibold tracking-[0.22em] text-white/15 hover:text-white/40 transition-colors whitespace-nowrap">
+            {name}
+          </div>
+        ))}
+      </div>
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#07070A] to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#07070A] to-transparent pointer-events-none" />
+    </div>
+  </div>
+);
+
+// ── Who We Are — photo left, text right ──────────────────────────────────────
+const WhoWeAre = () => {
+  const { t } = useLang();
+  const w = t.whoWeAre || {};
+  return (
+  <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8">
+    <div className="grid lg:grid-cols-2 gap-14 items-center">
+      <Reveal>
+        <div className="relative rounded-2xl overflow-hidden aspect-[4/3] group">
+          <img
+            src={MEDIA.teamMeeting}
+            alt="Felipillon team at work"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            style={{ filter: "brightness(0.75) saturate(0.85)" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07070A]/80 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6">
+            <div className="inline-flex items-center gap-3 bg-black/60 backdrop-blur-md border border-white/10 rounded-xl px-5 py-3">
+              <span className="font-heading text-2xl font-light text-[#C9973A]">500+</span>
+              <span className="text-xs text-white/60">{w.stat}</span>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.1}>
+        <div className="inline-flex items-center gap-3 mb-6">
+          <span className="w-10 h-px bg-[#C9973A]" />
+          <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{w.eyebrow}</span>
+        </div>
+        <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] mb-6">
+          {w.title}
+        </h2>
+        <p className="text-white/50 leading-relaxed mb-4">{w.body1}</p>
+        <p className="text-white/40 leading-relaxed mb-10">{w.body2}</p>
+        <div className="flex flex-wrap gap-4">
+          <MagneticButton to="/about" variant="primary" icon={ArrowRight}>{w.cta1}</MagneticButton>
+          <MagneticButton to="/leadership" variant="ghost">{w.cta2}</MagneticButton>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+  );
+};
+
+// ── Specialities — full-bleed photo cards ────────────────────────────────────
+const SpecialitiesSection = () => {
+  const { t } = useLang();
+  return (
+    <section className="py-24 sm:py-32 relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 mb-14">
+        <Reveal>
+          <div className="inline-flex items-center gap-3 mb-5">
+            <span className="w-10 h-px bg-[#C9973A]" />
+            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">
+              {t.specialities?.eyebrow || "Specialities"}
+            </span>
+          </div>
+          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] max-w-3xl leading-[1.06]">
+            {t.specialities?.title || "Where we deliver results"}
+          </h2>
+        </Reveal>
+      </div>
+
+      {/* Horizontal scroll of photo cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0.5 px-6 sm:px-8 max-w-7xl mx-auto">
+        {SPECIALITIES.map((s, i) => (
+          <Reveal key={s.id} delay={i * 0.06}>
+            <Link to="/specialities">
+              <div
+                className="group relative overflow-hidden aspect-[4/3] cursor-pointer"
+                data-testid={`speciality-${s.id}`}
+              >
+                {/* Photo */}
+                <img
+                  src={s.img}
+                  alt={s.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  style={{ filter: "brightness(0.45) saturate(0.75)" }}
+                  loading="lazy"
+                />
+                {/* Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                {/* Content */}
+                <div className="absolute inset-0 p-7 flex flex-col justify-end">
+                  <div className="mb-auto">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-0"
+                      style={{ background: `${s.color}20`, border: `1px solid ${s.color}40` }}>
+                      <s.icon className="w-5 h-5" style={{ color: s.color }} />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="mb-2">
+                      <span className="text-2xl font-heading font-light text-[#C9973A]">{s.stat}</span>
+                      <span className="text-xs text-white/40 ml-2">{s.statLabel}</span>
+                    </div>
+                    <h3 className="font-heading text-xl font-medium text-white mb-2">{s.name}</h3>
+                    <p className="text-sm text-white/50 leading-relaxed line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-2 group-hover:translate-y-0 transition-transform">
+                      {s.desc}
+                    </p>
+                    <div className="mt-4 flex items-center gap-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ color: s.color }}>
+                      Explore <ArrowUpRight className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+                {/* Color bottom bar */}
+                <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-0.5 transition-all duration-500"
+                  style={{ background: s.color }} />
+              </div>
+            </Link>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
 };
 
-const Marquee = () => (
-  <section className="py-16 border-y border-border overflow-hidden" data-testid="trusted-by">
-    <p className="text-center text-xs tracking-[0.3em] uppercase text-muted-foreground mb-8">Trusted by enterprise leaders</p>
-    <div className="relative">
-      <div className="flex w-max animate-marquee">
-        {[...TRUSTED, ...TRUSTED].map((name, i) => (
-          <div key={i} className="mx-10 font-heading text-2xl font-semibold tracking-wider text-muted-foreground/40 hover:text-foreground transition-colors whitespace-nowrap">
-            {name}
-          </div>
+// ── Full-bleed photo break ────────────────────────────────────────────────────
+const PhotoBreak = () => (
+  <div className="relative h-[50vh] overflow-hidden">
+    <img
+      src={MEDIA.officeWide}
+      alt="Felipillon office"
+      className="w-full h-full object-cover"
+      style={{ filter: "brightness(0.25) saturate(0.6)" }}
+      loading="lazy"
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-[#07070A] via-transparent to-[#07070A]" />
+    <div className="absolute inset-0 flex items-center justify-center">
+      <Reveal>
+        <blockquote className="text-center max-w-3xl px-6">
+          <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-relaxed tracking-[-0.02em]">
+            "We focus on real business problems, not just services. Long-term value over short-term fees."
+          </p>
+          <cite className="block mt-6 text-[#C9973A] text-sm tracking-widest not-italic">
+            — Ketan Bhanudas Barve, CEO
+          </cite>
+        </blockquote>
+      </Reveal>
+    </div>
+  </div>
+);
+
+// ── Why section — alternating image + text ────────────────────────────────────
+const WhySection = () => {
+  const { t } = useLang();
+  return (
+    <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8">
+      <Reveal className="mb-14">
+        <div className="inline-flex items-center gap-3 mb-5">
+          <span className="w-10 h-px bg-[#C9973A]" />
+          <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">
+            {t.why?.eyebrow || "Why Felipillon"}
+          </span>
+        </div>
+        <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] max-w-2xl leading-[1.06]">
+          {t.why?.title || "Built for enterprises that can't afford to compromise"}
+        </h2>
+      </Reveal>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {WHY.map((w, i) => (
+          <Reveal key={w.title} delay={i * 0.07}>
+            <GlowCard className="p-7 h-full group">
+              <div className="w-11 h-11 rounded-xl bg-[#C9973A]/10 border border-[#C9973A]/20 flex items-center justify-center mb-5 group-hover:bg-[#C9973A]/15 transition-colors">
+                <w.icon className="w-5 h-5 text-[#C9973A]" />
+              </div>
+              <h4 className="font-heading text-lg font-medium mb-2">{w.title}</h4>
+              <p className="text-sm text-white/40 leading-relaxed">{w.desc}</p>
+            </GlowCard>
+          </Reveal>
         ))}
       </div>
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent" />
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
-const Divisions = () => (
-  <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8" data-testid="divisions-section">
-    <SectionHeading eyebrow="Two Divisions. One Vision." title="A complete partner for talent & technology"
-      subtitle="From elite human capital to enterprise-grade software, Felipillon delivers both halves of the modern competitive advantage." />
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-14">
-      <GlowCard glow="16,185,129" className="md:col-span-7 p-8 sm:p-10 min-h-[380px] flex flex-col justify-between" data-testid="division-staffing">
-        <div>
-          <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-6">
-            <Globe2 className="w-7 h-7 text-emerald-500" />
-          </div>
-          <h3 className="font-heading text-3xl font-medium">{DIVISIONS.staffing.name}</h3>
-          <p className="mt-3 text-muted-foreground max-w-md">{DIVISIONS.staffing.tagline} — placing exceptional people where they make the greatest impact.</p>
-        </div>
-        <div className="mt-8 flex flex-wrap gap-2">
-          {DIVISIONS.staffing.services.map((s) => (
-            <span key={s} className="px-4 py-2 rounded-full glass text-sm flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-500" />{s}</span>
-          ))}
-        </div>
-        <Link to="/staffing" className="mt-8 inline-flex items-center gap-2 text-emerald-500 font-medium group">
-          Explore Staffing <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-        </Link>
-      </GlowCard>
-
-      <GlowCard glow="59,130,246" className="md:col-span-5 p-8 sm:p-10 min-h-[380px] flex flex-col justify-between" data-testid="division-innovation">
-        <div>
-          <div className="w-14 h-14 rounded-2xl bg-electric-500/10 flex items-center justify-center mb-6">
-            <Code2 className="w-7 h-7 text-electric-500" />
-          </div>
-          <h3 className="font-heading text-3xl font-medium">{DIVISIONS.innovation.name}</h3>
-          <p className="mt-3 text-muted-foreground">{DIVISIONS.innovation.tagline} for ambitious organizations.</p>
-        </div>
-        <div className="mt-8 flex flex-wrap gap-2">
-          {DIVISIONS.innovation.services.map((s) => (
-            <span key={s} className="px-3 py-1.5 rounded-full glass text-xs">{s}</span>
-          ))}
-        </div>
-        <Link to="/innovation" className="mt-8 inline-flex items-center gap-2 text-electric-500 font-medium group">
-          Explore Innovation <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-        </Link>
-      </GlowCard>
-    </div>
-  </section>
-);
-
-const IndustriesPreview = () => (
-  <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8" data-testid="industries-preview">
-    <SectionHeading eyebrow="Industries" title="Specialists where it matters most" center />
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
-      {INDUSTRIES.map((ind, i) => (
-        <Reveal key={ind.id} delay={i * 0.08}>
-          <Link to="/industries">
-            <div className="group relative h-[340px] rounded-2xl overflow-hidden" data-testid={`industry-card-${ind.id}`}>
-              <img src={ind.img} alt={ind.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
-              <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                <div className="w-12 h-12 rounded-xl glass flex items-center justify-center mb-4" style={{ color: ind.color }}>
-                  <ind.icon className="w-6 h-6" />
+// ── Metrics ───────────────────────────────────────────────────────────────────
+const MetricsSection = () => {
+  const { t } = useLang();
+  const labels = [
+    t.metrics?.placementsMade    || t.metrics?.placements    || "Placements Made",
+    t.metrics?.projectsDelivered || t.metrics?.projects      || "Projects Delivered",
+    t.metrics?.countryOffices    || t.metrics?.offices       || "Country Offices",
+    t.metrics?.clientSatisfaction|| t.metrics?.satisfaction  || "Client Satisfaction",
+  ];
+  return (
+    <div className="relative py-20 overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img src={MEDIA.team} alt="" className="w-full h-full object-cover" style={{ filter: "brightness(0.12) saturate(0.5)" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#07070A] via-transparent to-[#07070A]" />
+      </div>
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          {METRICS.map((m, i) => (
+            <Reveal key={m.label} delay={i * 0.1}>
+              <div className="py-8">
+                <div className="font-heading text-5xl sm:text-6xl lg:text-7xl font-light bg-gradient-to-r from-[#E8C07A] to-[#C9973A] bg-clip-text text-transparent">
+                  <Counter value={m.value} suffix={m.suffix} />
                 </div>
-                <h3 className="font-heading text-xl font-medium text-white">{ind.name}</h3>
-                <p className="text-sm text-white/70 mt-1 line-clamp-2">{ind.desc}</p>
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" style={{ background: ind.color }} />
-            </div>
-          </Link>
-        </Reveal>
-      ))}
-    </div>
-  </section>
-);
-
-const Why = () => (
-  <section className="py-24 sm:py-32 relative overflow-hidden" data-testid="why-section">
-    <div className="absolute inset-0 grid-bg opacity-30" />
-    <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
-      <SectionHeading eyebrow="Why Felipillon" title="Built for enterprises that can't afford to compromise" center />
-      <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
-        {WHY.map((w) => (
-          <motion.div key={w.title} variants={fadeUp}>
-            <GlowCard className="p-8 h-full" data-testid={`why-card-${w.title.toLowerCase().replace(/\s/g, "-")}`}>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/15 to-electric-500/15 flex items-center justify-center mb-5">
-                <w.icon className="w-6 h-6 text-emerald-500" />
-              </div>
-              <h3 className="font-heading text-xl font-medium">{w.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{w.desc}</p>
-            </GlowCard>
-          </motion.div>
-        ))}
-      </StaggerGroup>
-    </div>
-  </section>
-);
-
-const Metrics = () => (
-  <section className="py-24 max-w-7xl mx-auto px-6 sm:px-8" data-testid="metrics-section">
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-      {METRICS.map((m, i) => (
-        <Reveal key={m.label} delay={i * 0.1}>
-          <div className="text-center p-8 rounded-2xl glass">
-            <div className="font-heading text-5xl sm:text-6xl font-light text-gradient">
-              <Counter value={m.value} suffix={m.suffix} />
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground tracking-wide uppercase">{m.label}</p>
-          </div>
-        </Reveal>
-      ))}
-    </div>
-  </section>
-);
-
-const Footprint = () => (
-  <section className="py-24 sm:py-32 relative overflow-hidden" data-testid="footprint-section">
-    <div className="absolute inset-0 grid-bg opacity-30" />
-    <div className="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <SectionHeading eyebrow="Global Footprint" title="Three hubs. One borderless network."
-          subtitle="A follow-the-sun operating model spanning Europe and Asia-Pacific, delivering talent and technology around the clock." />
-        <div className="mt-8 space-y-3">
-          {[["Berlin", "Global Headquarters"], ["Pune", "Engineering & Delivery"], ["Makati City", "APAC Operations"]].map(([c, r], i) => (
-            <Reveal key={c} delay={i * 0.1}>
-              <div className="flex items-center gap-4 p-4 rounded-xl glass">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-heading font-medium">{c}</span>
-                <span className="text-sm text-muted-foreground ml-auto">{r}</span>
+                <p className="mt-3 text-xs tracking-[0.22em] uppercase text-white/35">{labels[i]}</p>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
-      <Globe />
     </div>
-  </section>
-);
+  );
+};
 
-const TestimonialsStrip = () => (
-  <section className="py-24 max-w-7xl mx-auto px-6 sm:px-8" data-testid="home-testimonials">
-    <SectionHeading eyebrow="Testimonials" title="Trusted by the people we serve" center />
-    <div className="grid md:grid-cols-2 gap-6 mt-14">
-      {TESTIMONIALS.slice(0, 2).map((t, i) => (
-        <Reveal key={i} delay={i * 0.1}>
-          <GlowCard className="p-8">
-            <p className="text-lg leading-relaxed">"{t.quote}"</p>
-            <div className="mt-6 flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-electric-500 flex items-center justify-center text-white font-medium">{t.name[0]}</div>
-              <div>
-                <p className="font-medium text-sm">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.title}</p>
+
+
+// ── Testimonials ──────────────────────────────────────────────────────────────
+const TestimonialsSection = () => {
+  const { t } = useLang();
+  return (
+    <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8">
+      <Reveal className="mb-14">
+        <div className="inline-flex items-center gap-3 mb-5">
+          <span className="w-10 h-px bg-[#C9973A]" />
+          <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">
+            {t.testimonials?.eyebrow || "Testimonials"}
+          </span>
+        </div>
+        <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06]">
+          {t.testimonials?.title || "Trusted by the people we serve"}
+        </h2>
+      </Reveal>
+
+      <div className="grid md:grid-cols-2 gap-5">
+        {TESTIMONIALS.map((tm, i) => (
+          <Reveal key={i} delay={i * 0.1}>
+            <GlowCard className="p-8 h-full">
+              <div className="mb-6">
+                {[...Array(5)].map((_, j) => (
+                  <span key={j} className="text-[#C9973A] text-lg">★</span>
+                ))}
               </div>
-            </div>
-          </GlowCard>
-        </Reveal>
-      ))}
-    </div>
-    <div className="text-center mt-10">
-      <MagneticButton to="/testimonials" variant="ghost" icon={ArrowRight}>Read all stories</MagneticButton>
-    </div>
-  </section>
-);
+              <p className="text-base sm:text-lg leading-relaxed text-white/70 italic mb-6">
+                "{tm.quote}"
+              </p>
+              <div className="flex items-center gap-4 pt-5 border-t border-white/[0.07]">
+                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#C9973A] to-[#8A6020] flex items-center justify-center text-black font-bold text-sm shrink-0">
+                  {tm.name[0]}
+                </div>
+                <div>
+                  <p className="font-semibold text-sm text-white">{tm.name}</p>
+                  <p className="text-xs text-white/35 mt-0.5">{tm.title}</p>
+                </div>
+              </div>
+            </GlowCard>
+          </Reveal>
+        ))}
+      </div>
 
-const CTA = () => (
-  <section className="py-24 max-w-7xl mx-auto px-6 sm:px-8">
-    <div className="relative rounded-3xl overflow-hidden p-12 sm:p-20 text-center glass">
-      <div className="absolute inset-0 aurora" />
-      <div className="relative">
+      <div className="text-center mt-10">
+        <MagneticButton to="/testimonials" variant="ghost" icon={ArrowRight}>
+          {t.readStories || "Read all stories"}
+        </MagneticButton>
+      </div>
+    </section>
+  );
+};
+
+// ── Global footprint ──────────────────────────────────────────────────────────
+const FootprintSection = () => {
+  const { t } = useLang();
+  return (
+    <section className="py-24 sm:py-32 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-tight max-w-2xl mx-auto">Let's build your competitive advantage</h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-5 text-muted-foreground max-w-xl mx-auto">Whether you need elite talent or transformative software, our teams are ready.</p>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <div className="mt-9 flex flex-wrap gap-4 justify-center">
-            <MagneticButton to="/contact" variant="primary" icon={ArrowRight} data-testid="cta-contact-btn">Send Inquiry</MagneticButton>
-            <MagneticButton to="/open-roles" variant="secondary">View Open Roles</MagneticButton>
+          <div className="inline-flex items-center gap-3 mb-6">
+            <span className="w-10 h-px bg-[#C9973A]" />
+            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">
+              {t.footprint?.eyebrow || "Global Footprint"}
+            </span>
           </div>
+          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] mb-5">
+            {t.footprint?.title || "Three countries. One seamless network."}
+          </h2>
+          <p className="text-white/45 leading-relaxed mb-10">
+            {t.footprint?.subtitle || "Operating across Europe and Asia-Pacific with a follow-the-sun model that delivers talent and technology around the clock."}
+          </p>
+
+          {[
+            { flag: "🇩🇪", country: "Germany", entity: "Felipillon UG", role: "Global Headquarters", img: MEDIA.berlin },
+            { flag: "🇮🇳", country: "India", entity: "Felipillon Innovation Pvt. Ltd.", role: "Technology Hub", img: MEDIA.india },
+            { flag: "🇵🇭", country: "Philippines", entity: "Felipillon OPC", role: "Asia-Pacific Operations", img: MEDIA.philippines },
+          ].map((loc, i) => (
+            <Reveal key={loc.country} delay={i * 0.1}>
+              <div className="flex items-center gap-4 p-4 mb-3 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:border-[#C9973A]/25 hover:bg-[#C9973A]/[0.03] transition-all duration-300 group">
+                <div className="relative w-14 h-10 rounded-md overflow-hidden shrink-0">
+                  <img src={loc.img} alt={loc.country} className="w-full h-full object-cover" style={{ filter: "brightness(0.6)" }} />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{loc.flag}</span>
+                    <span className="font-medium text-white text-sm">{loc.country}</span>
+                    <span className="text-xs text-[#C9973A]">· {loc.role}</span>
+                  </div>
+                  <p className="text-xs text-white/30 mt-0.5">{loc.entity}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <Globe />
         </Reveal>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
+// ── Final CTA ─────────────────────────────────────────────────────────────────
+const CTASection = () => {
+  const { t } = useLang();
+  return (
+    <section className="py-6">
+      <div className="relative overflow-hidden mx-6 sm:mx-8 rounded-2xl">
+        <img
+          src={MEDIA.aboutTeam}
+          alt="team"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: "brightness(0.2) saturate(0.5)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07070A]/90 via-[#07070A]/70 to-transparent" />
+        <div className="relative px-10 sm:px-16 py-20 max-w-2xl">
+          <Reveal>
+            <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] mb-5">
+              {t.cta?.title || "Let's build your competitive advantage"}
+            </h2>
+            <p className="text-white/45 mb-8 leading-relaxed">
+              {t.cta?.sub || "Whether you need elite talent or transformative software, our teams are ready."}
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <MagneticButton to="/contact" variant="primary" icon={ArrowRight}>
+                {t.cta?.btn1 || "Send Inquiry"}
+              </MagneticButton>
+              <MagneticButton to="/open-roles" variant="secondary">
+                {t.cta?.btn2 || "View Open Roles"}
+              </MagneticButton>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ── Main export ───────────────────────────────────────────────────────────────
 export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee />
-      <Divisions />
-      <IndustriesPreview />
-      <Why />
-      <Metrics />
-      <Footprint />
-      <TestimonialsStrip />
-      <CTA />
+      <TrustedStrip />
+      <WhoWeAre />
+      <SpecialitiesSection />
+      <PhotoBreak />
+      <WhySection />
+      <MetricsSection />
+      <FootprintSection />
+      <TestimonialsSection />
+      <CTASection />
     </>
   );
 }

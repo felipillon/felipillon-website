@@ -1,34 +1,97 @@
 import { PageHero } from "../components/layout/Layout";
 import { GlowCard } from "../components/shared/GlowCard";
 import { Reveal } from "../components/shared/Reveal";
+import { MagneticButton } from "../components/shared/MagneticButton";
 import { Globe } from "../components/shared/Globe";
-import { SectionHeading } from "../components/shared/SectionHeading";
-import { LOCATIONS } from "../data/content";
-import { MapPin, Clock, Building2 } from "lucide-react";
+import { LOCATIONS, MEDIA } from "../data/content";
+import { MapPin, Clock, Building2, ArrowRight } from "lucide-react";
+import { useLang } from "../context/LangContext";
 
 export default function Locations() {
+  const { t } = useLang();
+  const l = t.locations || {};
+
   return (
     <>
-      <PageHero eyebrow="Locations" title="A truly global footprint"
-        subtitle="Three strategic hubs across Europe and Asia-Pacific, working as one borderless team." />
+      <PageHero
+        eyebrow={l.eyebrow || "Locations"}
+        title={l.title || "Three countries. One borderless team."}
+        subtitle={l.subtitle}
+        img={MEDIA.berlin}
+        tall
+      />
 
-      <section className="py-16 max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
-        <Globe />
-        <div className="space-y-6">
-          {LOCATIONS.map((l, i) => (
-            <Reveal key={l.city} delay={i * 0.1}>
-              <GlowCard className="p-7" data-testid={`location-${l.city.toLowerCase().replace(/\s/g, "-")}`}>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-heading text-2xl font-medium">{l.city}<span className="text-muted-foreground text-base font-body ml-2">{l.country}</span></h3>
-                    <p className="text-emerald-500 text-sm mt-1 flex items-center gap-1.5"><Building2 className="w-4 h-4" />{l.role}</p>
-                  </div>
-                  <span className="px-3 py-1 rounded-full glass text-xs font-mono flex items-center gap-1.5"><Clock className="w-3 h-3" />{l.tz}</span>
+      {LOCATIONS.map((loc, i) => {
+        const isEven = i % 2 === 0;
+        return (
+          <section key={loc.country} className="relative">
+            <div className="grid lg:grid-cols-2 min-h-[60vh]">
+              <div className={`relative min-h-[50vh] ${isEven ? "lg:order-1" : "lg:order-2"}`}>
+                <img
+                  src={loc.img}
+                  alt={loc.country}
+                  className="w-full h-full object-cover"
+                  style={{ filter: "brightness(0.38) saturate(0.7)" }}
+                  loading="lazy"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-${isEven ? "r" : "l"} from-transparent to-[#07070A]/90`} />
+                <div className="absolute top-8 left-8">
+                  <span className="text-4xl">{loc.flag}</span>
                 </div>
-                <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2"><MapPin className="w-4 h-4 shrink-0" />{l.addr}</p>
-              </GlowCard>
-            </Reveal>
-          ))}
+              </div>
+
+              <div className={`flex items-center p-10 sm:p-16 bg-[#07070A]/50 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
+                <Reveal className="max-w-lg w-full">
+                  <div className="inline-flex items-center gap-3 mb-6">
+                    <span className="w-8 h-px bg-[#C9973A]" />
+                    <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{loc.role}</span>
+                  </div>
+                  <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-white mb-2">{loc.country}</h2>
+                  <p className="text-[#C9973A] text-sm mb-8">{loc.entity}</p>
+
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-start gap-3">
+                      <MapPin className="w-4 h-4 text-white/30 shrink-0 mt-0.5" />
+                      <p className="text-sm text-white/55 leading-relaxed">{loc.addr}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Clock className="w-4 h-4 text-white/30 shrink-0" />
+                      <p className="text-sm text-white/55">{l.timezone}: {loc.tz}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Building2 className="w-4 h-4 text-white/30 shrink-0" />
+                      <p className="text-sm text-white/55">{loc.role}</p>
+                    </div>
+                  </div>
+
+                  <GlowCard className="p-5">
+                    <p className="text-xs text-white/35 uppercase tracking-wider mb-3">{l.officeHours}</p>
+                    <p className="text-sm text-white/60">{l.officeHoursVal} {loc.tz}</p>
+                    <p className="text-xs text-white/30 mt-2">{l.alwaysOnNote}</p>
+                  </GlowCard>
+                </Reveal>
+              </div>
+            </div>
+            <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+          </section>
+        );
+      })}
+
+      {/* Globe section */}
+      <section className="py-24 max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <Reveal>
+            <div className="inline-flex items-center gap-3 mb-6">
+              <span className="w-10 h-px bg-[#C9973A]" />
+              <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{l.globalNetworkEyebrow}</span>
+            </div>
+            <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] mb-5">{l.globalNetworkTitle}</h2>
+            <p className="text-white/45 leading-relaxed mb-8">{l.globalNetworkDesc}</p>
+            <MagneticButton to="/contact" variant="primary" icon={ArrowRight}>{l.getInTouch}</MagneticButton>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <Globe />
+          </Reveal>
         </div>
       </section>
     </>
