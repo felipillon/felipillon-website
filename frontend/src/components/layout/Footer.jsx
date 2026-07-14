@@ -45,7 +45,7 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
           <div className="col-span-2">
             <Link to="/" className="block mb-5">
-              <img src="/logo.png" alt="Felipillon" className="h-10 w-auto object-contain" />
+              <img src="/logo.svg" alt="Felipillon" className="h-10 w-auto object-contain" />
             </Link>
             <p className="text-sm text-white/35 leading-relaxed max-w-xs mb-6">
               A global technology-driven services firm that builds software and deploys top talent to solve complex business challenges fast.

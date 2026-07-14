@@ -43,7 +43,7 @@ export default function Impressum() {
           <GlowCard lift={false} className="p-8 sm:p-12" data-testid="impressum-card">
 
             <Section title={t.impressum?.company || "Unternehmen"}>
-              <p className="text-sm">Felipillon UG (haftungsbeschränkt)</p>
+              <p className="text-sm">Felipillon</p>
               <p className="text-sm">Franz-Ehrlich-Straße 12</p>
               <p className="text-sm">12489 Berlin</p>
               <p className="text-sm">Deutschland</p>

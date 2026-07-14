@@ -360,7 +360,7 @@ export const VALUES = [
 ];
 
 export const TIMELINE = [
-  { year: "2019", title: "Founded in Germany", desc: "Felipillon UG launches as a specialist healthcare recruitment firm in Berlin." },
+  { year: "2019", title: "Founded in Germany", desc: "Felipillon launches as a specialist healthcare recruitment firm in Berlin." },
   { year: "2021", title: "Technology Division", desc: "Software development, digital marketing and AI practice established." },
   { year: "2023", title: "India Hub Opens", desc: "Felipillon Innovation Pvt. Ltd. opens in Pune — engineering and delivery centre." },
   { year: "2024", title: "Philippines Expansion", desc: "Felipillon OPC opens in Makati City — Asia-Pacific operations hub." },

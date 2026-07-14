@@ -47,10 +47,9 @@ export const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center shrink-0" data-testid="logo-link">
           <img
-            src="/logo.png"
+            src="/logo.svg"
             alt="Felipillon"
             className="h-10 w-auto object-contain"
-            style={{ filter: "brightness(1.05) contrast(1.05)" }}
           />
         </Link>
 
