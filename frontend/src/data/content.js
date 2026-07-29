@@ -50,6 +50,9 @@ export const MEDIA = {
   berlinOffice: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
   india: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1400&q=85",
   philippines: "https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=1400&q=85",
+  indiaLandmark: "https://images.unsplash.com/photo-1523428461295-92770e70d7ae?auto=format&fit=crop&w=1400&q=85",
+  philippinesLandmark: "https://images.unsplash.com/photo-1546068996-8da61faeceaa?auto=format&fit=crop&w=1400&q=85",
+  italy: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1400&q=85",
   office: "https://images.pexels.com/photos/13219418/pexels-photo-13219418.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&dpr=2",
   officeWide: "https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1920&q=85",
 
@@ -71,6 +74,67 @@ export const VIDEO_BG_FALLBACK = "/hero-bg.mp4";
 // Poster image — shows instantly before video loads (prevents blank screen)
 export const VIDEO_POSTER = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80";
 
+// ── Occupation-specific hero clips — cycled in the homepage hero, one per
+// speciality, so the video actually shows the kind of work Felipillon staffs
+// for (rather than one generic loop). ──────────────────────────────────────
+// ── Home hero video — single clip, naturally lit, loops continuously ───────
+export const HERO_VIDEO = {
+  src: "https://videos.pexels.com/video-files/6773475/6773475-uhd_2560_1440_30fps.mp4",
+  poster: "https://images.pexels.com/videos/6773475/pexels-photo-6773475.jpeg?auto=compress&cs=tinysrgb&w=1920",
+};
+
+export const HERO_VIDEOS = [
+  {
+    label: "Staffing & Recruitment",
+    src: "https://videos.pexels.com/video-files/6773475/6773475-uhd_2560_1440_30fps.mp4",
+    poster: "https://images.pexels.com/videos/6773475/pexels-photo-6773475.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  {
+    label: "Healthcare",
+    src: "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
+    poster: "https://images.pexels.com/videos/5722215/pexels-photo-5722215.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  {
+    label: "Construction",
+    src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
+    poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  {
+    label: "Technology",
+    src: "https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4",
+    poster: "https://images.pexels.com/videos/6804109/pexels-photo-6804109.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+];
+
+// ── Per-speciality videos (used on the Specialities page — one clip per
+// card, matched to that speciality's line of work). ────────────────────────
+export const SPECIALITY_VIDEOS = {
+  "healthcare": {
+    src: "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
+    poster: "https://images.pexels.com/videos/5722215/pexels-photo-5722215.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  "skilled-trades": {
+    src: "https://videos.pexels.com/video-files/6079420/6079420-uhd_2560_1440_24fps.mp4",
+    poster: "https://images.pexels.com/videos/6079420/pexels-photo-6079420.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  "logistics": {
+    src: "https://videos.pexels.com/video-files/2745883/2745883-hd_1920_1080_25fps.mp4",
+    poster: "https://images.pexels.com/videos/2745883/free-video-2745883.jpg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  "construction": {
+    src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
+    poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  "renewable": {
+    src: "https://videos.pexels.com/video-files/9789926/9789926-uhd_2560_1440_30fps.mp4",
+    poster: "https://images.pexels.com/videos/9789926/4-k-aerial-shot-battery-bird-eye-view-9789926.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+  "technology": {
+    src: "https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4",
+    poster: "https://images.pexels.com/videos/6804109/pexels-photo-6804109.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  },
+};
+
 // ── Navigation ──────────────────────────────────────────────────────────────
 export const NAV_LINKS = [
   { label: "home", path: "/" },
@@ -78,7 +142,6 @@ export const NAV_LINKS = [
   { label: "services", path: "/services" },
   { label: "specialities", path: "/specialities" },
   { label: "staffing", path: "/staffing" },
-  { label: "leadership", path: "/leadership" },
   { label: "team", path: "/team" },
   { label: "openRoles", path: "/open-roles" },
   { label: "caseStudies", path: "/case-studies" },
@@ -328,13 +391,13 @@ export const LOCATIONS = [
     city: "Pune", country: "India", role: "Technology Hub",
     entity: "Felipillon Innovation Pvt. Ltd.",
     tz: "IST", addr: "S. No. 97/2, Ghule Colony, Manjari BK, Haveli, Pune 412307",
-    lat: 18.52, lng: 73.85, flag: "🇮🇳", img: MEDIA.india,
+    lat: 18.52, lng: 73.85, flag: "🇮🇳", img: MEDIA.indiaLandmark,
   },
   {
     city: "Makati City", country: "Philippines", role: "Asia-Pacific Operations",
     entity: "Felipillon OPC",
     tz: "PHT", addr: "3rd Floor, Salcedo One Center, 170 Salcedo Street, Makati City",
-    lat: 14.55, lng: 121.02, flag: "🇵🇭", img: MEDIA.philippines,
+    lat: 14.55, lng: 121.02, flag: "🇵🇭", img: MEDIA.philippinesLandmark,
   },
 ];
 

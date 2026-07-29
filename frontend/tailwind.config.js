@@ -5,8 +5,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                heading: ["Outfit", "sans-serif"],
-                body: ["Plus Jakarta Sans", "sans-serif"],
+                heading: ["Cambria", "Times New Roman", "Times", "serif"],
+                body: ["Cambria", "Times New Roman", "Times", "serif"],
                 mono: ["JetBrains Mono", "monospace"],
             },
             borderRadius: {

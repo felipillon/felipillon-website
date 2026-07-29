@@ -15,7 +15,6 @@ import About from "@/pages/About";
 import Services from "@/pages/Services";
 import Specialities from "@/pages/Specialities";
 import Staffing from "@/pages/Staffing";
-import Leadership from "@/pages/Leadership";
 import Team from "@/pages/Team";
 import OpenRoles from "@/pages/OpenRoles";
 import CaseStudies from "@/pages/CaseStudies";
@@ -37,7 +36,6 @@ const AnimatedRoutes = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/specialities" element={<Specialities />} />
         <Route path="/staffing" element={<Staffing />} />
-        <Route path="/leadership" element={<Leadership />} />
         <Route path="/team" element={<Team />} />
         <Route path="/open-roles" element={<OpenRoles />} />
         <Route path="/case-studies" element={<CaseStudies />} />

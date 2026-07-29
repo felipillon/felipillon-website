@@ -16,14 +16,16 @@ export const GlobalBackground = ({ hide = false }) => {
     }
   }, []);
 
-  // On home page, render only a plain dark base — hero section has its own video
+  // On the (new, light) home page, render an opaque cream/white base that
+  // fully covers the dark app-level background — the page's own sections
+  // paint over this. Every other page keeps the original dark ambience below.
   if (hide) {
     return (
-      <div className="fixed inset-0 z-0 pointer-events-none bg-[#07070A]">
+      <div className="fixed inset-0 z-0 pointer-events-none bg-[#FBF8F3]">
         <div
-          className="absolute inset-0 opacity-[0.30]"
+          className="absolute inset-0 opacity-[0.35]"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(201,151,58,0.2) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(circle, rgba(201,151,58,0.16) 1px, transparent 1px)",
             backgroundSize: "52px 52px",
           }}
         />

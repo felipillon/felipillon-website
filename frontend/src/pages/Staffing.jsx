@@ -1,19 +1,50 @@
-import { PageHero } from "../components/layout/Layout";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { GlowCard } from "../components/shared/GlowCard";
 import { Reveal } from "../components/shared/Reveal";
 import { MagneticButton } from "../components/shared/MagneticButton";
-import { SPECIALITIES, MEDIA } from "../data/content";
+import { CursorFollower } from "../components/shared/CursorFollower";
+import { SPECIALITIES, MEDIA, VIDEO_BG } from "../data/content";
 import { ArrowRight, ArrowUpRight, Check, Users, Bot, Zap, Clock } from "lucide-react";
-import { motion } from "framer-motion";
 import { useLang } from "../context/LangContext";
 
 const STAFFING_SECTORS = SPECIALITIES.filter(s => s.id !== "technology");
+
+// ── Cursor-reactive tilt wrapper — reused from the Home page's motion language ──
+const TiltPanel = ({ children, className = "", strength = 6 }) => {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rx = useSpring(useTransform(y, [-0.5, 0.5], [strength, -strength]), { stiffness: 150, damping: 20 });
+  const ry = useSpring(useTransform(x, [-0.5, 0.5], [-strength, strength]), { stiffness: 150, damping: 20 });
+  const onMove = (e) => {
+    const r = ref.current.getBoundingClientRect();
+    x.set((e.clientX - r.left) / r.width - 0.5);
+    y.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => { x.set(0); y.set(0); };
+  return (
+    <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
+      style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d", transformPerspective: 1000 }}
+      className={className}>
+      {children}
+    </motion.div>
+  );
+};
 
 export default function Staffing() {
   const { t } = useLang();
   const s = t.staffing || {};
   const p = s.process || {};
   const stats = s.stats || {};
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const prevBg = document.body.style.background;
+    document.body.style.background = "#FBF8F3";
+    setReady(true);
+    return () => { document.body.style.background = prevBg; };
+  }, []);
 
   const PROCESS = [
     { step: "01", title: p.s1t, desc: p.s1d },
@@ -23,26 +54,44 @@ export default function Staffing() {
   ];
 
   return (
-    <>
-      <PageHero
-        eyebrow={s.eyebrow || "Staffing & Recruitment"}
-        title={s.title || "Talent that moves your business forward"}
-        subtitle={s.subtitle}
-        img={MEDIA.team}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="mt-8 flex flex-wrap gap-4"
-        >
-          <MagneticButton to="/open-roles" variant="primary" icon={ArrowRight}>{s.viewRoles}</MagneticButton>
-          <MagneticButton to="/contact" variant="secondary">{s.hireTalent}</MagneticButton>
-        </motion.div>
-      </PageHero>
+    <div className="relative bg-[#FBF8F3] text-brown-500">
+      {ready && <CursorFollower />}
 
-      {/* Stats */}
-      <section className="border-y border-white/[0.05] bg-white/[0.01]">
+      {/* ── Hero — large type left, video panel right ── */}
+      <section className="relative pt-40 pb-16 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="animate-blob absolute -top-40 -left-32 w-[560px] h-[560px] bg-gradient-to-br from-gold/20 via-gold-300/15 to-transparent blur-3xl" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 mb-8 rounded-full bg-white border border-brown-500/10 shadow-[0_2px_16px_-4px_rgba(61,35,20,0.1)]"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+              <span className="text-gold-600 text-xs font-semibold tracking-[0.2em] uppercase">{s.eyebrow || "Staffing & Recruitment"}</span>
+            </motion.div>
+            <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.4rem] text-[#231911]">
+              {s.title || "Talent that moves your business forward"}
+            </h1>
+            {s.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{s.subtitle}</p>}
+            <div className="mt-9 flex flex-wrap gap-4">
+              <MagneticButton to="/open-roles" variant="lightPrimary" icon={ArrowRight}>{s.viewRoles}</MagneticButton>
+              <MagneticButton to="/contact" variant="lightSecondary">{s.hireTalent}</MagneticButton>
+            </div>
+          </div>
+
+          <TiltPanel className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_-20px_rgba(61,35,20,0.35)] border border-white aspect-[4/5]">
+            <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
+              <source src={VIDEO_BG} type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
+          </TiltPanel>
+        </div>
+      </section>
+
+      {/* ── Stats strip ── */}
+      <section className="border-y border-brown-500/[0.07] bg-white">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
           {[
             { val: "500+", label: stats.placements },
@@ -51,74 +100,76 @@ export default function Staffing() {
             { val: "95%",  label: stats.retention },
           ].map((st) => (
             <div key={st.label} className="text-center">
-              <p className="font-heading text-3xl font-light bg-gradient-to-r from-[#E8C07A] to-[#C9973A] bg-clip-text text-transparent">{st.val}</p>
-              <p className="text-xs text-white/35 tracking-wide mt-1">{st.label}</p>
+              <p className="font-heading text-3xl font-light bg-gradient-to-r from-gold-600 to-gold bg-clip-text text-transparent">{st.val}</p>
+              <p className="text-xs text-brown-500/40 tracking-wide mt-1">{st.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Sectors */}
+      {/* ── Sectors ── */}
       <section className="py-20 max-w-7xl mx-auto px-6 sm:px-8">
         <Reveal className="mb-14">
           <div className="inline-flex items-center gap-3 mb-5">
-            <span className="w-10 h-px bg-[#C9973A]" />
-            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{s.sectorsEyebrow}</span>
+            <span className="w-10 h-px bg-gold" />
+            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{s.sectorsEyebrow}</span>
           </div>
-          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06]">{s.sectorsTitle}</h2>
-          <p className="text-white/45 mt-3 max-w-2xl">{s.sectorsSubtitle}</p>
+          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911]">{s.sectorsTitle}</h2>
+          <p className="text-brown-500/50 mt-3 max-w-2xl">{s.sectorsSubtitle}</p>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {STAFFING_SECTORS.map((spec, i) => (
             <Reveal key={spec.id} delay={i * 0.07}>
-              <div className="group relative rounded-2xl overflow-hidden border border-white/[0.07] hover:border-opacity-30 transition-all duration-500 p-7" data-testid={`sector-${spec.id}`}>
-                <div className="absolute inset-0">
-                  <img src={spec.img} alt={spec.name} className="w-full h-full object-cover opacity-0 group-hover:opacity-[0.08] transition-opacity duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#07070A] to-[#07070A]/90" />
-                </div>
+              <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                className="group relative rounded-2xl overflow-hidden bg-white border border-brown-500/[0.07] hover:border-gold/30 shadow-[0_4px_18px_-8px_rgba(61,35,20,0.12)] hover:shadow-[0_16px_40px_-12px_rgba(201,151,58,0.25)] transition-shadow duration-500 p-7"
+                data-testid={`sector-${spec.id}`}
+              >
                 <div className="relative flex items-start gap-5">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: `${spec.color}14`, border: `1px solid ${spec.color}28` }}>
+                    style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
                     <spec.icon className="w-6 h-6" style={{ color: spec.color }} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-heading text-xl font-medium text-white mb-2">{spec.name}</h3>
-                    <p className="text-sm text-white/45 leading-relaxed mb-4">{spec.desc}</p>
+                    <h3 className="font-heading text-xl font-medium text-[#231911] mb-2">{spec.name}</h3>
+                    <p className="text-sm text-brown-500/50 leading-relaxed mb-4">{spec.desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {spec.services.map(sv => (
-                        <span key={sv} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-white/[0.07] text-[10px] text-white/35">
+                        <span key={sv} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-brown-500/[0.1] text-[10px] text-brown-500/45">
                           <Check className="w-2.5 h-2.5" style={{ color: spec.color }} />{sv}
                         </span>
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-                  style={{ background: `linear-gradient(90deg, ${spec.color}, transparent)` }} />
-              </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ background: spec.color }} />
+              </motion.div>
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* Process */}
+      {/* ── Process — numbered bento ── */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(circle, rgba(201,151,58,0.18) 1px, transparent 1px)", backgroundSize: "52px 52px" }} />
+        <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "radial-gradient(circle, rgba(201,151,58,0.14) 1px, transparent 1px)", backgroundSize: "52px 52px" }} />
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
-          <Reveal className="mb-14">
-            <div className="inline-flex items-center gap-3 mb-5">
-              <span className="w-10 h-px bg-[#C9973A]" />
-              <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{s.processEyebrow}</span>
+          <Reveal className="mb-14 text-center">
+            <div className="inline-flex items-center gap-3 mb-5 justify-center">
+              <span className="w-10 h-px bg-gold" />
+              <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{s.processEyebrow}</span>
+              <span className="w-10 h-px bg-gold" />
             </div>
-            <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-center">{s.processTitle}</h2>
+            <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{s.processTitle}</h2>
           </Reveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {PROCESS.map((pr, i) => (
               <Reveal key={i} delay={i * 0.08}>
-                <GlowCard className="p-7 h-full">
-                  <span className="font-mono text-xs text-[#C9973A] tracking-wider">{pr.step}</span>
-                  <h4 className="font-heading text-lg font-medium text-white mt-3 mb-3">{pr.title}</h4>
-                  <p className="text-sm text-white/40 leading-relaxed">{pr.desc}</p>
+                <GlowCard variant="light" className="p-7 h-full">
+                  <span className="font-heading text-4xl font-light text-gold/25">{pr.step}</span>
+                  <h4 className="font-heading text-lg font-medium text-[#231911] mt-3 mb-3">{pr.title}</h4>
+                  <p className="text-sm text-brown-500/45 leading-relaxed">{pr.desc}</p>
                 </GlowCard>
               </Reveal>
             ))}
@@ -126,15 +177,15 @@ export default function Staffing() {
         </div>
       </section>
 
-      {/* Why + photo */}
+      {/* ── Why + quote photo ── */}
       <section className="py-20 max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <Reveal>
             <div className="inline-flex items-center gap-3 mb-6">
-              <span className="w-10 h-px bg-[#C9973A]" />
-              <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{s.whyEyebrow}</span>
+              <span className="w-10 h-px bg-gold" />
+              <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{s.whyEyebrow}</span>
             </div>
-            <h2 className="font-heading text-4xl font-light tracking-[-0.04em] leading-[1.08] mb-6">{s.whyTitle}</h2>
+            <h2 className="font-heading text-4xl font-light tracking-[-0.04em] leading-[1.08] mb-6 text-[#231911]">{s.whyTitle}</h2>
             <div className="space-y-3 mb-10">
               {[
                 { icon: Bot,   text: "People Match AI scans 50+ global platforms for the best fit" },
@@ -143,29 +194,29 @@ export default function Staffing() {
                 { icon: Clock, text: "Follow-the-sun coverage across Germany, India and Philippines" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#C9973A]/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon className="w-4 h-4 text-[#C9973A]" />
+                  <div className="w-8 h-8 rounded-lg bg-gold/10 border border-gold/25 flex items-center justify-center shrink-0 mt-0.5">
+                    <Icon className="w-4 h-4 text-gold-600" />
                   </div>
-                  <p className="text-white/60 text-sm leading-relaxed">{text}</p>
+                  <p className="text-brown-500/60 text-sm leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>
-            <MagneticButton to="/contact" variant="primary" icon={ArrowUpRight}>{s.startConversation}</MagneticButton>
+            <MagneticButton to="/contact" variant="lightPrimary" icon={ArrowUpRight}>{s.startConversation}</MagneticButton>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-              <img src={MEDIA.team} alt="Team" className="w-full h-full object-cover opacity-60" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#07070A] via-transparent to-transparent" />
+            <TiltPanel className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-[0_24px_60px_-16px_rgba(61,35,20,0.25)] border border-white">
+              <img src={MEDIA.team} alt="Team" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
-                <GlowCard className="p-5">
-                  <p className="text-sm text-white/60 italic">"From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone."</p>
-                  <p className="text-xs text-[#C9973A] mt-3 font-medium">— Priya Nair, Head of Talent, Solaris Energy</p>
-                </GlowCard>
+                <div className="bg-white/95 backdrop-blur-md rounded-xl p-5 shadow-lg">
+                  <p className="text-sm text-brown-500/70 italic">"From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone."</p>
+                  <p className="text-xs text-gold-600 mt-3 font-medium">— Priya Nair, Head of Talent, Solaris Energy</p>
+                </div>
               </div>
-            </div>
+            </TiltPanel>
           </Reveal>
         </div>
       </section>
-    </>
+    </div>
   );
 }

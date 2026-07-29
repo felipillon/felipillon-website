@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon, ChevronDown, ArrowUpRight } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
+import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useLang } from "../../context/LangContext";
 import { NAV_LINKS } from "../../data/content";
 import { LANGUAGES } from "../../data/i18n";
@@ -10,7 +9,6 @@ import { LANGUAGES } from "../../data/i18n";
 const PRIMARY_NAV = ["home", "about", "specialities", "staffing", "openRoles"];
 
 export const Navbar = () => {
-  const { theme, toggle } = useTheme();
   const { lang, switchLang, t } = useLang();
   const [scrolled, setScrolled]   = useState(false);
   const [open, setOpen]           = useState(false);
@@ -35,10 +33,10 @@ export const Navbar = () => {
       initial={{ y: -90 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-[#0D0D10] backdrop-blur-xl border-b border-white/[0.06] ${
         scrolled
-          ? "bg-[#0D0D10]/90 backdrop-blur-xl border-b border-white/[0.06] py-3 shadow-[0_1px_40px_rgba(0,0,0,0.5)]"
-          : "bg-transparent py-5"
+          ? "py-3 shadow-[0_1px_40px_rgba(0,0,0,0.5)]"
+          : "py-5 shadow-[0_1px_20px_rgba(0,0,0,0.35)]"
       }`}
       data-testid="navbar"
     >
@@ -47,9 +45,9 @@ export const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center shrink-0" data-testid="logo-link">
           <img
-            src="/logo.svg"
+            src="/logo-new.png"
             alt="Felipillon"
-            className="h-10 w-auto object-contain"
+            className="h-16 w-auto object-contain"
           />
         </Link>
 
@@ -144,27 +142,6 @@ export const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          {/* Theme toggle */}
-          <button
-            onClick={toggle}
-            data-testid="theme-toggle"
-            aria-label="Toggle theme"
-            className="w-9 h-9 rounded-full border border-white/[0.1] flex items-center justify-center text-white/60 hover:text-white hover:border-white/20 transition-colors"
-          >
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={theme}
-                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.25 }}
-              >
-                {theme === "dark"
-                  ? <Sun className="w-4 h-4 text-[#C9973A]" />
-                  : <Moon className="w-4 h-4" />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
 
           {/* Contact CTA */}
           <Link

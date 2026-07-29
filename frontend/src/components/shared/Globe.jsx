@@ -4,9 +4,10 @@ import { LOCATIONS } from "../../data/content";
 // CSS/SVG interactive rotating globe with pulsing office markers
 export const Globe = () => {
   const markers = [
-    { city: "Berlin", top: "30%", left: "52%", color: "#10B981" },
-    { city: "Pune", top: "52%", left: "68%", color: "#3B82F6" },
-    { city: "Makati City", top: "58%", left: "82%", color: "#F59E0B" },
+    { city: "Germany", top: "30%", left: "52%", color: "#10B981" },
+    { city: "India", top: "52%", left: "68%", color: "#3B82F6" },
+    { city: "Philippines", top: "58%", left: "82%", color: "#F59E0B" },
+    { city: "Italy", top: "36%", left: "44%", color: "#EF4444" },
   ];
 
   return (
@@ -18,15 +19,24 @@ export const Globe = () => {
         className="absolute inset-0 rounded-full border border-emerald-500/20 overflow-hidden"
         style={{ background: "radial-gradient(circle at 35% 30%, rgba(16,185,129,0.15), transparent 60%), radial-gradient(circle at 70% 70%, rgba(59,130,246,0.12), transparent 55%), #05060a" }}
       >
-        {/* longitude/latitude grid */}
+        {/* longitude/latitude grid — proper wireframe sphere geometry */}
         <div className="absolute inset-0 animate-spin-slow" style={{ transformOrigin: "center" }}>
           <svg viewBox="0 0 200 200" className="w-full h-full opacity-40">
+            {/* Meridians — vertical ellipses, pole to pole, varying width */}
             {[...Array(8)].map((_, i) => (
-              <ellipse key={`v${i}`} cx="100" cy="100" rx={12 + i * 12} ry="100" fill="none" stroke="rgba(16,185,129,0.25)" strokeWidth="0.4" />
+              <ellipse key={`v${i}`} cx="100" cy="100" rx={8 + i * 12.5} ry="96" fill="none" stroke="rgba(16,185,129,0.25)" strokeWidth="0.4" />
             ))}
-            {[...Array(7)].map((_, i) => (
-              <ellipse key={`h${i}`} cx="100" cy="100" rx="100" ry={12 + i * 12} fill="none" stroke="rgba(59,130,246,0.18)" strokeWidth="0.4" />
-            ))}
+            {/* Latitudes — rings stacked toward the poles, narrowing as they approach top/bottom */}
+            {[-75, -50, -25, 0, 25, 50, 75].map((deg) => {
+              const rad = (deg * Math.PI) / 180;
+              const R = 96;
+              const cy = 100 - R * Math.sin(rad);
+              const rx = R * Math.cos(rad);
+              const ry = Math.max(2.5, 9 * Math.cos(rad));
+              return (
+                <ellipse key={`h${deg}`} cx="100" cy={cy} rx={rx} ry={ry} fill="none" stroke="rgba(59,130,246,0.2)" strokeWidth="0.4" />
+              );
+            })}
           </svg>
         </div>
       </motion.div>
@@ -54,7 +64,7 @@ export const Globe = () => {
             <span className="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping" style={{ background: m.color }} />
             <span className="relative inline-flex rounded-full h-3 w-3" style={{ background: m.color }} />
           </span>
-          <span className="mt-2 text-[10px] font-mono tracking-wider px-2 py-0.5 rounded-full glass whitespace-nowrap">{m.city}</span>
+          <span className="mt-2 text-[10px] font-mono tracking-wider px-2 py-0.5 rounded-full glass whitespace-nowrap text-white">{m.city}</span>
         </motion.div>
       ))}
     </div>

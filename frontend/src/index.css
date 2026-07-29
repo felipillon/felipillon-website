@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -62,11 +62,11 @@
   body {
     background: #07070A;
     color: white;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Cambria', 'Times New Roman', Times, serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-  h1,h2,h3,h4,h5 { font-family: 'Outfit', sans-serif; }
+  h1,h2,h3,h4,h5 { font-family: 'Cambria', 'Times New Roman', Times, serif; }
   html { scroll-behavior: smooth; }
   ::selection { background: rgba(201,151,58,0.25); color: white; }
 }
@@ -162,4 +162,57 @@
 
 @layer base {
   [data-debug-wrapper="true"] { display: contents !important; }
+}
+
+/* ── Light homepage redesign additions (does not affect existing dark pages) ── */
+
+/* Slow morphing blob shapes for hero/background ambience */
+@keyframes blob-morph {
+  0%, 100% { border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%; transform: translate(0,0) scale(1); }
+  33%      { border-radius: 60% 40% 35% 65% / 55% 65% 35% 45%; transform: translate(2%, -3%) scale(1.05); }
+  66%      { border-radius: 35% 65% 55% 45% / 40% 45% 55% 60%; transform: translate(-2%, 2%) scale(0.97); }
+}
+.animate-blob { animation: blob-morph 16s ease-in-out infinite; }
+.animate-blob-slow { animation: blob-morph 24s ease-in-out infinite reverse; }
+
+/* Reverse marquee for alternating rows */
+@keyframes marquee-reverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.animate-marquee-reverse { animation: marquee-reverse 40s linear infinite; }
+
+/* Gentle drift for floating chips/cards */
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-10px) rotate(1.5deg); }
+}
+.animate-drift { animation: drift 7s ease-in-out infinite; }
+
+/* Shimmer sweep for light-theme accents */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3.5s linear infinite;
+}
+
+/* Hide scrollbar for horizontally-scrolling pill navs */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.cursor-spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.4s ease;
+}
+
+/* Custom cursor — only enabled on fine-pointer desktop devices via JS toggle */
+.felipillon-light-page.cursor-enabled { cursor: none; }
+.felipillon-light-page.cursor-enabled a,
+.felipillon-light-page.cursor-enabled button {
+  cursor: none;
 }

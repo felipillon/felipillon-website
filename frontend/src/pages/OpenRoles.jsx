@@ -1,45 +1,176 @@
-import { useState, useMemo } from "react";
-import { PageHero } from "../components/layout/Layout";
+import { useState, useMemo, useEffect } from "react";
 import { GlowCard } from "../components/shared/GlowCard";
-import { Reveal } from "../components/shared/Reveal";
-import { MagneticButton } from "../components/shared/MagneticButton";
-import { ROLES, DEPARTMENTS, LOCATIONS_FILTER, MEDIA } from "../data/content";
-import { Search, MapPin, Briefcase, ArrowUpRight, X, Upload, User, Mail, Phone, FileText, Send } from "lucide-react";
+import { CursorFollower } from "../components/shared/CursorFollower";
+import { ScrollProgress } from "../components/shared/ScrollProgress";
+import { AmbientBackground } from "../components/shared/AmbientBackground";
+import { Search, MapPin, Briefcase, ArrowUpRight, X, Upload, Send, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { useLang } from "../context/LangContext";
 
 const PER_PAGE = 6;
+const BACKEND = process.env.REACT_APP_BACKEND_URL;
 
+// ── Dynamic field renderer — one job's form can differ completely from
+// another's, so every field is rendered generically off its `kind`. ────────
+const DynamicField = ({ field, value, onChange }) => {
+  const labelCls = "text-xs uppercase tracking-wide text-white/35";
+  const inputCls = "w-full mt-2 px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors text-white placeholder:text-white/20 text-sm";
+
+  switch (field.kind) {
+    case "textarea":
+      return (
+        <div>
+          <label className={labelCls}>{field.label}{field.required && " *"}</label>
+          <textarea rows={3} value={value || ""} onChange={(e) => onChange(e.target.value)}
+            className={`${inputCls} resize-none`} />
+        </div>
+      );
+    case "select":
+      return (
+        <div>
+          <label className={labelCls}>{field.label}{field.required && " *"}</label>
+          <select value={value || ""} onChange={(e) => onChange(e.target.value)} className={inputCls}>
+            <option value="" disabled>Select…</option>
+            {field.options.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </div>
+      );
+    case "multiselect": {
+      const selected = Array.isArray(value) ? value : [];
+      const toggle = (v) =>
+        onChange(selected.includes(v) ? selected.filter((x) => x !== v) : [...selected, v]);
+      return (
+        <div>
+          <label className={labelCls}>{field.label}{field.required && " *"}</label>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {field.options.map((o) => (
+              <button type="button" key={o.value} onClick={() => toggle(o.value)}
+                className={`px-3 py-1.5 rounded-full text-xs border transition-colors ${
+                  selected.includes(o.value)
+                    ? "bg-[#C9973A] border-[#C9973A] text-black font-semibold"
+                    : "border-white/15 text-white/50 hover:text-white"
+                }`}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    case "checkbox":
+      return (
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" checked={!!value} onChange={(e) => onChange(e.target.checked)}
+            className="w-4 h-4 accent-[#C9973A]" />
+          <span className="text-sm text-white/60">{field.label}{field.required && " *"}</span>
+        </label>
+      );
+    case "file":
+      return (
+        <div>
+          <label className={labelCls}>{field.label}{field.required && " *"}</label>
+          <label className={`mt-2 flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-dashed cursor-pointer transition-colors ${value ? "border-[#C9973A]/60 text-[#C9973A]" : "border-white/10 hover:border-[#C9973A]/40 text-white/40"}`}>
+            <Upload className="w-4 h-4 shrink-0" />
+            <span className="text-sm truncate">{value?.name || "Click to upload (PDF, max 5MB)"}</span>
+            <input type="file" accept=".pdf" className="hidden" onChange={(e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              if (file.type !== "application/pdf") { toast.error("Please upload a PDF file."); return; }
+              if (file.size > 5 * 1024 * 1024) { toast.error("File must be under 5MB."); return; }
+              onChange(file);
+            }} />
+          </label>
+        </div>
+      );
+    case "email":
+    case "tel":
+    case "number":
+    case "date":
+      return (
+        <div>
+          <label className={labelCls}>{field.label}{field.required && " *"}</label>
+          <input type={field.kind} value={value || ""} onChange={(e) => onChange(e.target.value)} className={inputCls} />
+        </div>
+      );
+    default:
+      return (
+        <div>
+          <label className={labelCls}>{field.label}{field.required && " *"}</label>
+          <input type="text" value={value || ""} onChange={(e) => onChange(e.target.value)} className={inputCls} />
+        </div>
+      );
+  }
+};
+
+// ── Application modal — fetches this job's specific form, renders it
+// dynamically, then submits to our backend's Manatal proxy. ────────────────
 const ApplyModal = ({ role, onClose, t }) => {
   const r = t.openRoles || {};
-  const [form, setForm] = useState({ name: "", email: "", phone: "", coverNote: "", cvFile: null });
+  const [loadingForm, setLoadingForm] = useState(true);
+  const [formError, setFormError] = useState(false);
+  const [fields, setFields] = useState([]);
+  const [answers, setAnswers] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const [cvName, setCvName] = useState("");
 
-  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${BACKEND}/api/jobs/${role.id}/application-form`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (!cancelled) { setFields(data.fields || []); setLoadingForm(false); }
+      } catch {
+        if (!cancelled) { setFormError(true); setLoadingForm(false); }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [role.id]);
 
-  const handleFile = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (file.type !== "application/pdf") { toast.error("Please upload a PDF file."); return; }
-    if (file.size > 5 * 1024 * 1024) { toast.error("File must be under 5MB."); return; }
-    setForm({ ...form, cvFile: file });
-    setCvName(file.name);
-  };
+  const setAnswer = (fieldId, value) => setAnswers((a) => ({ ...a, [fieldId]: value }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email) { toast.error("Please fill in your name and email."); return; }
-    if (!form.cvFile) { toast.error("Please upload your CV."); return; }
+
+    const missing = fields.filter((f) => f.required && !answers[f.id] && f.kind !== "checkbox");
+    if (missing.length > 0) {
+      toast.error(`Please fill in: ${missing.map((f) => f.label).join(", ")}`);
+      return;
+    }
+
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const fileField = fields.find((f) => f.kind === "file");
+      const answersPayload = {};
+      for (const f of fields) {
+        if (f.kind === "file") continue; // sent separately below
+        if (answers[f.id] !== undefined) answersPayload[f.id] = answers[f.id];
+      }
+
+      const fd = new FormData();
+      fd.append("answers", JSON.stringify(answersPayload));
+      if (fileField && answers[fileField.id]) {
+        fd.append("cv_field_id", fileField.id);
+        fd.append("cv", answers[fileField.id]);
+      }
+
+      const res = await fetch(`${BACKEND}/api/jobs/${role.id}/apply`, { method: "POST", body: fd });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.detail || "Submission failed");
+      }
       onClose();
-      toast.success(r.apply + "!", {
-        description: `${r.contactWithin} ${role.title} ${r.contactDays}`,
+      toast.success(r.apply || "Application sent!", {
+        description: `${r.contactWithin || "We'll be in touch about"} ${role.title}.`,
       });
-    }, 1200);
+    } catch (err) {
+      toast.error(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -57,12 +188,11 @@ const ApplyModal = ({ role, onClose, t }) => {
         >
           <div className="flex items-start justify-between mb-6">
             <div>
-              <span className="text-xs text-[#C9973A] font-semibold uppercase tracking-widest">{r.applyNow}</span>
+              <span className="text-xs text-[#C9973A] font-semibold uppercase tracking-widest">{r.applyNow || "Apply Now"}</span>
               <h2 className="font-heading text-2xl font-medium mt-1 text-white">{role.title}</h2>
               <div className="flex gap-3 mt-2 text-sm text-white/40">
                 <span className="flex items-center gap-1"><Briefcase className="w-3.5 h-3.5" />{role.department}</span>
                 <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{role.location}</span>
-                <span className="px-2 py-0.5 rounded-full border border-white/10 text-xs">{role.type}</span>
               </div>
             </div>
             <button onClick={onClose} data-testid="apply-modal-close"
@@ -71,75 +201,43 @@ const ApplyModal = ({ role, onClose, t }) => {
             </button>
           </div>
 
-          <form onSubmit={submit} className="space-y-4" data-testid="apply-form">
-            {/* Name */}
-            <div>
-              <label className="text-xs uppercase tracking-wide text-white/35">{r.fullName} *</label>
-              <div className="relative mt-2">
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25" />
-                <input type="text" value={form.name} onChange={set("name")} placeholder="Jane Doe"
-                  data-testid="apply-name"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors text-white placeholder:text-white/20 text-sm" />
-              </div>
+          {loadingForm && (
+            <div className="py-16 flex justify-center">
+              <motion.div className="w-6 h-6 border-2 border-white/20 border-t-[#C9973A] rounded-full"
+                animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} />
             </div>
-            {/* Email */}
-            <div>
-              <label className="text-xs uppercase tracking-wide text-white/35">{r.emailAddress} *</label>
-              <div className="relative mt-2">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25" />
-                <input type="email" value={form.email} onChange={set("email")} placeholder="jane@company.com"
-                  data-testid="apply-email"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors text-white placeholder:text-white/20 text-sm" />
-              </div>
-            </div>
-            {/* Phone */}
-            <div>
-              <label className="text-xs uppercase tracking-wide text-white/35">{r.phoneNumber}</label>
-              <div className="relative mt-2">
-                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25" />
-                <input type="tel" value={form.phone} onChange={set("phone")} placeholder="+49 30 1234 567"
-                  data-testid="apply-phone"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors text-white placeholder:text-white/20 text-sm" />
-              </div>
-            </div>
-            {/* CV */}
-            <div>
-              <label className="text-xs uppercase tracking-wide text-white/35">{r.uploadCV} *</label>
-              <label data-testid="apply-cv-upload"
-                className={`mt-2 flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-dashed cursor-pointer transition-colors ${cvName ? "border-[#C9973A]/60 text-[#C9973A]" : "border-white/10 hover:border-[#C9973A]/40 text-white/40"}`}>
-                <Upload className="w-4 h-4 shrink-0" />
-                <span className="text-sm truncate">{cvName || r.clickUpload}</span>
-                <input type="file" accept=".pdf" onChange={handleFile} className="hidden" />
-              </label>
-            </div>
-            {/* Cover note */}
-            <div>
-              <label className="text-xs uppercase tracking-wide text-white/35">{r.coverNote}</label>
-              <div className="relative mt-2">
-                <FileText className="absolute left-3.5 top-3.5 w-4 h-4 text-white/25" />
-                <textarea value={form.coverNote} onChange={set("coverNote")} rows={3}
-                  placeholder={r.coverPlaceholder}
-                  data-testid="apply-cover-note"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors resize-none text-white placeholder:text-white/20 text-sm" />
-              </div>
-            </div>
+          )}
 
-            <motion.button type="submit" disabled={submitting}
-              whileHover={{ scale: submitting ? 1 : 1.03 }} whileTap={{ scale: submitting ? 1 : 0.97 }}
-              data-testid="apply-submit"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#C9973A] text-black font-semibold hover:shadow-[0_0_28px_-6px_rgba(201,151,58,0.7)] transition-all disabled:opacity-60">
-              {submitting ? (
-                <>
-                  <motion.div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full"
-                    animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} />
-                  {r.submitting}
-                </>
-              ) : (
-                <><Send className="w-4 h-4" />{r.submitApplication}</>
-              )}
-            </motion.button>
-            <p className="text-xs text-white/25 text-center">{r.contactDays2}</p>
-          </form>
+          {!loadingForm && formError && (
+            <div className="py-12 text-center">
+              <AlertCircle className="w-8 h-8 text-white/20 mx-auto mb-3" />
+              <p className="text-white/50 text-sm">Couldn't load this application form. Please try again shortly.</p>
+            </div>
+          )}
+
+          {!loadingForm && !formError && (
+            <form onSubmit={submit} className="space-y-4" data-testid="apply-form">
+              {fields.map((f) => (
+                <DynamicField key={f.id} field={f} value={answers[f.id]} onChange={(v) => setAnswer(f.id, v)} />
+              ))}
+
+              <motion.button type="submit" disabled={submitting}
+                whileHover={{ scale: submitting ? 1 : 1.03 }} whileTap={{ scale: submitting ? 1 : 0.97 }}
+                data-testid="apply-submit"
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#C9973A] text-black font-semibold hover:shadow-[0_0_28px_-6px_rgba(201,151,58,0.7)] transition-all disabled:opacity-60">
+                {submitting ? (
+                  <>
+                    <motion.div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full"
+                      animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} />
+                    {r.submitting || "Submitting..."}
+                  </>
+                ) : (
+                  <><Send className="w-4 h-4" />{r.submitApplication || "Submit Application"}</>
+                )}
+              </motion.button>
+              <p className="text-xs text-white/25 text-center">{r.contactDays2 || "We'll be in touch within 2 business days."}</p>
+            </form>
+          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>
@@ -149,6 +247,33 @@ const ApplyModal = ({ role, onClose, t }) => {
 export default function OpenRoles() {
   const { t } = useLang();
   const r = t.openRoles || {};
+  const [ready, setReady] = useState(false);
+
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+
+  useEffect(() => {
+    const prevBg = document.body.style.background;
+    document.body.style.background = "#FBF8F3";
+    setReady(true);
+    return () => { document.body.style.background = prevBg; };
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(`${BACKEND}/api/jobs?size=100`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        setJobs(data.jobs || []);
+      } catch {
+        setLoadError(true);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   const [query, setQuery] = useState("");
   const [dept, setDept] = useState("All");
@@ -156,11 +281,14 @@ export default function OpenRoles() {
   const [page, setPage] = useState(1);
   const [applyRole, setApplyRole] = useState(null);
 
-  const filtered = useMemo(() => ROLES.filter((role) =>
-    (dept === "All" || role.department === dept) &&
-    (loc === "All" || role.location === loc) &&
-    role.title.toLowerCase().includes(query.toLowerCase())
-  ), [query, dept, loc]);
+  const departments = useMemo(() => ["All", ...new Set(jobs.map((j) => j.department).filter(Boolean))], [jobs]);
+  const locations   = useMemo(() => ["All", ...new Set(jobs.map((j) => j.location).filter(Boolean))], [jobs]);
+
+  const filtered = useMemo(() => jobs.filter((job) =>
+    (dept === "All" || job.department === dept) &&
+    (loc === "All" || job.location === loc) &&
+    job.title.toLowerCase().includes(query.toLowerCase())
+  ), [jobs, query, dept, loc]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const current = Math.min(page, totalPages);
@@ -168,97 +296,127 @@ export default function OpenRoles() {
   const reset = (fn) => (v) => { fn(v); setPage(1); };
 
   return (
-    <>
-      <PageHero
-        eyebrow={r.eyebrow || "Open Roles"}
-        title={r.title || "Find your next defining role"}
-        subtitle={r.subtitle}
-        img={MEDIA.teamMeeting}
-      />
+    <div className="relative bg-[#FBF8F3] text-brown-500">
+      <ScrollProgress />
+      <AmbientBackground />
+      {ready && <CursorFollower />}
 
-      <section className="py-12 max-w-7xl mx-auto px-6 sm:px-8">
-        {/* Search + filters */}
-        <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 mb-10">
-          <div className="relative mb-5">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/25" />
-            <input value={query} onChange={(e) => reset(setQuery)(e.target.value)}
-              placeholder={r.searchPlaceholder}
-              data-testid="roles-search"
-              className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-transparent border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors text-white placeholder:text-white/20 text-sm" />
-          </div>
-          <div className="flex flex-col sm:flex-row gap-6">
-            <div className="flex-1">
-              <p className="text-xs text-white/30 mb-2 uppercase tracking-wide">{r.department}</p>
-              <div className="flex flex-wrap gap-2">
-                {DEPARTMENTS.map((d) => (
-                  <button key={d} onClick={() => reset(setDept)(d)}
-                    data-testid={`dept-filter-${d.toLowerCase().replace(/\s/g, "-")}`}
-                    className={`px-4 py-1.5 rounded-full text-sm transition-colors ${dept === d ? "bg-[#C9973A] text-black font-semibold" : "border border-white/10 text-white/50 hover:text-white hover:border-white/20"}`}>
-                    {d}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex-1">
-              <p className="text-xs text-white/30 mb-2 uppercase tracking-wide">{r.location}</p>
-              <div className="flex flex-wrap gap-2">
-                {LOCATIONS_FILTER.map((l) => (
-                  <button key={l} onClick={() => reset(setLoc)(l)}
-                    data-testid={`loc-filter-${l.toLowerCase().replace(/[\s,]/g, "-")}`}
-                    className={`px-4 py-1.5 rounded-full text-sm transition-colors ${loc === l ? "bg-[#C9973A] text-black font-semibold" : "border border-white/10 text-white/50 hover:text-white hover:border-white/20"}`}>
-                    {l}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+      {/* ── Hero ── */}
+      <section className="relative pt-40 pb-16 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+            className="inline-flex items-center gap-2.5 px-4 py-2 mb-8 rounded-full bg-white border border-brown-500/10 shadow-[0_2px_16px_-4px_rgba(61,35,20,0.1)]"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="text-gold-600 text-xs font-semibold tracking-[0.2em] uppercase">{r.eyebrow || "Open Roles"}</span>
+          </motion.div>
+          <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
+            {r.title || "Find your next defining role"}
+          </h1>
+          {r.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{r.subtitle}</p>}
         </div>
+      </section>
 
-        <p className="text-sm text-white/35 mb-6" data-testid="roles-count">
-          {filtered.length} {filtered.length === 1 ? r.roles : r.rolesPlural}
-        </p>
+      <section className="py-6 max-w-7xl mx-auto px-6 sm:px-8 pb-24">
 
-        <AnimatePresence mode="wait">
-          <motion.div key={`${dept}-${loc}-${query}-${current}`}
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="space-y-4">
-            {paged.length === 0 && (
-              <p className="text-center py-16 text-white/35">{r.noRoles}</p>
-            )}
-            {paged.map((role) => (
-              <GlowCard key={role.id} lift={false}
-                className="p-6 flex flex-col sm:flex-row sm:items-center gap-4"
-                data-testid={`role-${role.id}`}>
+        {loading && (
+          <div className="py-24 flex justify-center">
+            <motion.div className="w-7 h-7 border-2 border-brown-500/15 border-t-gold rounded-full"
+              animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} />
+          </div>
+        )}
+
+        {!loading && loadError && (
+          <div className="py-24 text-center">
+            <AlertCircle className="w-10 h-10 text-brown-500/20 mx-auto mb-4" />
+            <p className="text-brown-500/50">Open roles are temporarily unavailable. Please check back shortly.</p>
+          </div>
+        )}
+
+        {!loading && !loadError && (
+          <>
+            {/* ── Search + filters ── */}
+            <div className="bg-white border border-brown-500/[0.07] rounded-2xl shadow-[0_4px_20px_-10px_rgba(61,35,20,0.15)] p-6 mb-10">
+              <div className="relative mb-5">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brown-500/30" />
+                <input value={query} onChange={(e) => reset(setQuery)(e.target.value)}
+                  placeholder={r.searchPlaceholder || "Search roles..."}
+                  data-testid="roles-search"
+                  className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-cream-100/60 border border-brown-500/[0.08] focus:border-gold/60 outline-none transition-colors text-[#231911] placeholder:text-brown-500/30 text-sm" />
+              </div>
+              <div className="flex flex-col sm:flex-row gap-6">
                 <div className="flex-1">
-                  <h3 className="font-heading text-xl font-medium text-white">{role.title}</h3>
-                  <div className="flex flex-wrap gap-4 mt-2 text-sm text-white/40">
-                    <span className="flex items-center gap-1.5"><Briefcase className="w-4 h-4" />{role.department}</span>
-                    <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" />{role.location}</span>
-                    <span className="px-2.5 py-0.5 rounded-full border border-white/10 text-xs">{role.type}</span>
+                  <p className="text-xs text-brown-500/40 mb-2 uppercase tracking-wide">{r.department || "Department"}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {departments.map((d) => (
+                      <button key={d} onClick={() => reset(setDept)(d)}
+                        className={`px-4 py-1.5 rounded-full text-sm transition-colors ${dept === d ? "bg-gold text-white font-semibold" : "border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40"}`}>
+                        {d}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <button onClick={() => setApplyRole(role)} data-testid={`apply-${role.id}`}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#C9973A] text-black text-sm font-semibold hover:bg-[#D4A853] hover:shadow-[0_0_22px_-6px_rgba(201,151,58,0.7)] transition-all shrink-0">
-                  {r.apply} <ArrowUpRight className="w-4 h-4" />
-                </button>
-              </GlowCard>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+                <div className="flex-1">
+                  <p className="text-xs text-brown-500/40 mb-2 uppercase tracking-wide">{r.location || "Location"}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {locations.map((l) => (
+                      <button key={l} onClick={() => reset(setLoc)(l)}
+                        className={`px-4 py-1.5 rounded-full text-sm transition-colors ${loc === l ? "bg-gold text-white font-semibold" : "border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40"}`}>
+                        {l}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        {totalPages > 1 && (
-          <div className="flex justify-center gap-2 mt-10" data-testid="pagination">
-            {[...Array(totalPages)].map((_, i) => (
-              <button key={i} onClick={() => setPage(i + 1)}
-                className={`w-10 h-10 rounded-full text-sm transition-colors ${current === i + 1 ? "bg-[#C9973A] text-black font-semibold" : "border border-white/10 text-white/50 hover:text-white hover:border-white/20"}`}>
-                {i + 1}
-              </button>
-            ))}
-          </div>
+            <p className="text-sm text-brown-500/40 mb-6" data-testid="roles-count">
+              {filtered.length} {filtered.length === 1 ? (r.roles || "open role") : (r.rolesPlural || "open roles")}
+            </p>
+
+            <AnimatePresence mode="wait">
+              <motion.div key={`${dept}-${loc}-${query}-${current}`}
+                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                className="space-y-4">
+                {paged.length === 0 && (
+                  <p className="text-center py-16 text-brown-500/40">{r.noRoles || "No roles match your filters."}</p>
+                )}
+                {paged.map((job) => (
+                  <GlowCard key={job.id} lift={false} variant="light"
+                    className="p-6 flex flex-col sm:flex-row sm:items-center gap-4"
+                    data-testid={`role-${job.id}`}>
+                    <div className="flex-1">
+                      <h3 className="font-heading text-xl font-medium text-[#231911]">{job.title}</h3>
+                      <div className="flex flex-wrap gap-4 mt-2 text-sm text-brown-500/45">
+                        <span className="flex items-center gap-1.5"><Briefcase className="w-4 h-4" />{job.department}</span>
+                        <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" />{job.location}</span>
+                      </div>
+                    </div>
+                    <button onClick={() => setApplyRole(job)} data-testid={`apply-${job.id}`}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gold text-white text-sm font-semibold hover:bg-gold-600 hover:shadow-[0_0_22px_-6px_rgba(201,151,58,0.5)] transition-all shrink-0">
+                      {r.apply || "Apply"} <ArrowUpRight className="w-4 h-4" />
+                    </button>
+                  </GlowCard>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-2 mt-10" data-testid="pagination">
+                {[...Array(totalPages)].map((_, i) => (
+                  <button key={i} onClick={() => setPage(i + 1)}
+                    className={`w-10 h-10 rounded-full text-sm transition-colors ${current === i + 1 ? "bg-gold text-white font-semibold" : "border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40"}`}>
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </section>
 
       {applyRole && <ApplyModal role={applyRole} onClose={() => setApplyRole(null)} t={t} />}
-    </>
+    </div>
   );
 }
