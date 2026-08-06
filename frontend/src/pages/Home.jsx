@@ -288,14 +288,7 @@ const OrbitCard = ({ item, index, count, rotation, radius, cardW, cardH, onOpen,
       <img src={item.img} alt={name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/30 to-black/5" />
 
-      <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
-        <div
-          className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center"
-          style={{ background: `${item.color}30`, border: `1px solid ${item.color}60` }}
-        >
-          <item.icon className="w-5 h-5" style={{ color: item.color }} />
-        </div>
-
+      <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
         <div>
           <div className="mb-2">
             <span className="text-xl sm:text-2xl font-heading font-light text-gold-300">{item.stat}</span>

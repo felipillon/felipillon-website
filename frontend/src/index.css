@@ -216,3 +216,11 @@
 .felipillon-light-page.cursor-enabled button {
   cursor: none;
 }
+
+.felipillon-light-page.cursor-enabled .chat-support-widget,
+.felipillon-light-page.cursor-enabled .chat-support-widget *,
+.felipillon-light-page.cursor-enabled .chat-support-widget a,
+.felipillon-light-page.cursor-enabled .chat-support-widget button,
+.felipillon-light-page.cursor-enabled .chat-support-widget textarea {
+  cursor: auto;
+}

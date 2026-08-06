@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { LangProvider } from "@/context/LangContext";
 import { Layout } from "@/components/layout/Layout";
 import { Toaster } from "@/components/ui/sonner";
+import { ChatSupportWidget } from "@/components/chat/ChatSupportWidget";
 
 // 👇 ADDED: Import the new background component
 import { GlobalBackground } from "@/components/layout/GlobalBackground";
@@ -64,6 +65,7 @@ function App() {
             <Layout>
               <AnimatedRoutes />
             </Layout>
+            <ChatSupportWidget />
             <Toaster position="bottom-right" richColors />
           </GlobalBackground>
         </BrowserRouter>
