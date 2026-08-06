@@ -46,7 +46,7 @@ export const Footer = () => {
             <Link to="/" className="block mb-5">
               <img src="/logo-new.png" alt="Felipillon" className="h-10 w-auto object-contain" />
             </Link>
-            <p className="text-sm text-white/35 leading-relaxed max-w-xs mb-6">
+            <p className="text-sm text-white/68 leading-relaxed max-w-xs mb-6">
               A global technology-driven services firm that builds software and deploys top talent to solve complex business challenges fast.
             </p>
             <div className="space-y-2 mb-6">
@@ -55,7 +55,7 @@ export const Footer = () => {
                 { flag: "🇮🇳", text: "Manjari BK, Haveli, Pune 412307" },
                 { flag: "🇵🇭", text: "170 Salcedo Street, Makati City" },
               ].map((loc) => (
-                <p key={loc.flag} className="flex items-start gap-2 text-xs text-white/25">
+                <p key={loc.flag} className="flex items-start gap-2 text-xs text-white/58">
                   <span>{loc.flag}</span><span>{loc.text}</span>
                 </p>
               ))}
@@ -67,7 +67,7 @@ export const Footer = () => {
                 { icon: Mail, label: "Email", href: "mailto:hello@felipillon.com" },
               ].map(({ icon: Icon, label, href }) => (
                 <a key={label} href={href || "#"} aria-label={label}
-                  className="w-9 h-9 rounded-full border border-white/[0.09] flex items-center justify-center text-white/35 hover:text-[#C9973A] hover:border-[#C9973A]/40 transition-all">
+                  className="w-9 h-9 rounded-full border border-white/[0.14] flex items-center justify-center text-white/62 hover:text-[#C9973A] hover:border-[#C9973A]/40 transition-all">
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
@@ -75,11 +75,11 @@ export const Footer = () => {
           </div>
           {COLS.map((col) => (
             <div key={col.title}>
-              <h4 className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/25 mb-5">{col.title}</h4>
+              <h4 className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/52 mb-5">{col.title}</h4>
               <ul className="space-y-3">
-                {col.links.map(({ label, path }) => (
+                {col.links.map(({label, path }) => (
                   <li key={path}>
-                    <Link to={path} className="group inline-flex items-center gap-1 text-sm text-white/40 hover:text-white transition-colors">
+                    <Link to={path} className="group inline-flex items-center gap-1 text-sm text-white/68 hover:text-white transition-colors">
                       {label}
                       <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     </Link>
@@ -91,13 +91,13 @@ export const Footer = () => {
         </div>
 
         <div className="flex flex-wrap gap-6 pb-10 mb-10 border-b border-white/[0.05]">
-          <a href="mailto:hello@felipillon.com" className="flex items-center gap-2 text-xs text-white/30 hover:text-[#C9973A] transition-colors">
+          <a href="mailto:hello@felipillon.com" className="flex items-center gap-2 text-xs text-white/62 hover:text-[#C9973A] transition-colors">
             <Mail className="w-3.5 h-3.5" /> hello@felipillon.com
           </a>
-          <a href="tel:+4930000000" className="flex items-center gap-2 text-xs text-white/30 hover:text-[#C9973A] transition-colors">
+          <a href="tel:+4930000000" className="flex items-center gap-2 text-xs text-white/62 hover:text-[#C9973A] transition-colors">
             <Phone className="w-3.5 h-3.5" /> +49 30 000 0000
           </a>
-          <Link to="/contact" className="flex items-center gap-2 text-xs text-white/30 hover:text-[#C9973A] transition-colors">
+          <Link to="/contact" className="flex items-center gap-2 text-xs text-white/62 hover:text-[#C9973A] transition-colors">
             <MapPin className="w-3.5 h-3.5" /> Contact us
           </Link>
         </div>
@@ -110,7 +110,7 @@ export const Footer = () => {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/20">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
           <p>© 2026 Felipillon UG (haftungsbeschränkt). All rights reserved.</p>
           <div className="flex gap-5">
             <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>

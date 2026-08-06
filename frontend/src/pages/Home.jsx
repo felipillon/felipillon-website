@@ -69,7 +69,7 @@ const Hero = () => {
   const current = HERO_VIDEOS[active];
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-end overflow-hidden">
+    <section ref={ref} className="relative h-screen min-h-[100svh] flex items-end overflow-hidden">
 
       {/* ── Hero video — 4-clip carousel, light/white wash instead of dark tint ── */}
       <div className="absolute inset-0 z-0">
@@ -89,10 +89,9 @@ const Hero = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* White/cream wash — strongest where the text sits, fading elsewhere. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FBF8F3]/92 via-[#FBF8F3]/55 to-[#FBF8F3]/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FBF8F3]/80 via-transparent to-[#FBF8F3]/25" />
-        <div className="absolute bottom-0 left-0 right-0 h-72 bg-gradient-to-t from-[#FBF8F3] via-[#FBF8F3]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/68 via-black/32 to-black/8" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/12" />
+        <div className="absolute inset-0 bg-black/18" />
       </div>
 
       {/* Decorative rings */}
@@ -113,7 +112,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 mb-9 rounded-full bg-white border border-brown-500/10 shadow-[0_2px_16px_-4px_rgba(61,35,20,0.15)]"
+          className="inline-flex items-center gap-2.5 px-4 py-2 mb-9 rounded-full bg-black/28 border border-white/15 shadow-[0_12px_32px_-18px_rgba(0,0,0,0.8)]"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
           <span className="text-gold-600 text-xs font-semibold tracking-[0.22em] uppercase">
@@ -122,7 +121,10 @@ const Hero = () => {
         </motion.div>
 
         {/* Main headline */}
-        <h1 className="font-heading font-light leading-[0.95] tracking-[-0.05em] max-w-4xl">
+        <h1
+          className="font-heading font-light leading-[0.95] tracking-[-0.05em] max-w-4xl"
+          style={{ textShadow: "0 3px 20px rgba(0,0,0,0.55)" }}
+        >
           {[t.hero?.line1 || "The Human Side", t.hero?.line2 || "of Intelligent", t.hero?.line3 || "Business"].map((line, i) => (
             <motion.span
               key={i}
@@ -134,8 +136,8 @@ const Hero = () => {
               <span className={`block text-4xl sm:text-6xl lg:text-[5.4rem] xl:text-[6.2rem] ${
                 i === 1
                   ? "bg-gradient-to-r from-gold-600 via-gold to-gold-700 bg-clip-text text-transparent"
-                  : "text-[#231911]"
-              }`}>{line}</span>
+                  : "text-white"
+              }`} style={{ filter: "drop-shadow(0 3px 14px rgba(0,0,0,0.45))" }}>{line}</span>
             </motion.span>
           ))}
         </h1>
@@ -144,7 +146,8 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-7 text-lg sm:text-xl text-brown-500/60 max-w-2xl leading-relaxed font-light"
+          className="mt-7 text-lg sm:text-xl text-white/82 max-w-2xl leading-relaxed font-light"
+          style={{ textShadow: "0 2px 12px rgba(0,0,0,0.45)" }}
         >
           {t.hero?.sub || "Elite talent placement and AI-powered software solutions — across Healthcare, Energy, Construction and Technology."}
         </motion.p>
@@ -155,13 +158,13 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.75 }}
           className="mt-9 flex flex-wrap gap-4"
         >
-          <MagneticButton to="/staffing" variant="lightPrimary" icon={ArrowRight}>
+          <MagneticButton to="/staffing" variant="primary" icon={ArrowRight}>
             {t.hero?.cta1 || "Hire Top Talent"}
           </MagneticButton>
-          <MagneticButton to="/specialities" variant="lightSecondary">
+          <MagneticButton to="/specialities" variant="secondary">
             {t.hero?.cta2 || "Our Specialities"}
           </MagneticButton>
-          <MagneticButton to="/open-roles" variant="lightGhost">
+          <MagneticButton to="/open-roles" variant="ghost">
             {t.hero?.cta3 || "Open Roles"}
           </MagneticButton>
         </motion.div>

@@ -33,21 +33,25 @@ export const Navbar = () => {
       initial={{ y: -90 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-[#0D0D10] backdrop-blur-xl border-b border-white/[0.06] ${
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 backdrop-blur-xl border-b border-brown-500/[0.1] ${
         scrolled
-          ? "py-3 shadow-[0_1px_40px_rgba(0,0,0,0.5)]"
-          : "py-5 shadow-[0_1px_20px_rgba(0,0,0,0.35)]"
+          ? "py-2 bg-[#FBF8F3]/98 shadow-[0_14px_36px_-22px_rgba(61,35,20,0.45)]"
+          : "py-3 bg-[#FBF8F3]/92 shadow-[0_8px_28px_-24px_rgba(61,35,20,0.28)]"
       }`}
       data-testid="navbar"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between gap-6">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center shrink-0" data-testid="logo-link">
+        <Link
+          to="/"
+          className="flex items-center shrink-0 rounded-full bg-[#160E09] border border-gold/25 px-3 py-1.5 shadow-[0_12px_30px_-18px_rgba(22,14,9,0.95)]"
+          data-testid="logo-link"
+        >
           <img
             src="/logo-new.png"
             alt="Felipillon"
-            className="h-16 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         </Link>
 
@@ -61,15 +65,17 @@ export const Navbar = () => {
                 key={l.path}
                 to={l.path}
                 data-testid={`nav-${l.label}`}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-colors ${
-                  active ? "text-[#C9973A]" : "text-white/60 hover:text-white"
+                className={`relative px-3 py-1.5 text-[13px] font-semibold rounded-full transition-colors ${
+                  active
+                    ? "text-gold-700"
+                    : "text-[#3D2314]/80 hover:text-[#231911]"
                 }`}
               >
                 {label}
                 {active && (
                   <motion.span
                     layoutId="nav-indicator"
-                    className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 w-1 h-1 rounded-full bg-[#C9973A]"
+                    className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 w-1 h-1 rounded-full bg-gold"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -79,17 +85,17 @@ export const Navbar = () => {
 
           {/* More dropdown */}
           <div className="relative group">
-            <button className="px-4 py-2 text-sm font-medium text-white/60 hover:text-white rounded-full transition-colors flex items-center gap-1">
+            <button className="px-3 py-1.5 text-[13px] font-semibold text-[#3D2314]/80 hover:text-[#231911] rounded-full transition-colors flex items-center gap-1">
               {nav.more || "More"}
               <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-300" />
             </button>
-            <div className="absolute top-full left-0 mt-2 w-52 rounded-2xl bg-[#0D0D10]/95 backdrop-blur-xl border border-white/[0.08] overflow-hidden invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 shadow-2xl">
+            <div className="absolute top-full left-0 mt-2 w-52 rounded-2xl bg-[#FBF8F3]/96 backdrop-blur-xl border border-brown-500/[0.08] overflow-hidden invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 shadow-[0_18px_50px_-28px_rgba(61,35,20,0.55)]">
               {moreLinks.map((l) => (
                 <Link
                   key={l.path}
                   to={l.path}
-                  className={`flex items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-white/[0.04] ${
-                    pathname === l.path ? "text-[#C9973A]" : "text-white/60 hover:text-white"
+                  className={`flex items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-brown-500/[0.04] ${
+                    pathname === l.path ? "text-gold-600" : "text-brown-500/65 hover:text-[#231911]"
                   }`}
                 >
                   {nav[l.label] || l.label}
@@ -108,7 +114,7 @@ export const Navbar = () => {
             <button
               onClick={() => setLangOpen(!langOpen)}
               data-testid="lang-switcher"
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full border border-white/[0.1] text-white/60 hover:text-white hover:border-white/20 text-sm font-medium transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FBF8F3] border border-brown-500/[0.16] text-[#231911] hover:border-gold/45 text-[13px] font-semibold shadow-[0_8px_22px_-18px_rgba(61,35,20,0.55)] transition-colors"
             >
               {currentLang?.label}
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
@@ -120,7 +126,7 @@ export const Navbar = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.95 }}
                   transition={{ duration: 0.18 }}
-                  className="absolute top-full right-0 mt-2 w-44 rounded-2xl bg-[#0D0D10]/95 backdrop-blur-xl border border-white/[0.08] overflow-hidden shadow-2xl"
+                  className="absolute top-full right-0 mt-2 w-44 rounded-2xl bg-[#FBF8F3] border border-brown-500/[0.14] overflow-hidden shadow-[0_18px_50px_-28px_rgba(61,35,20,0.65)]"
                 >
                   {LANGUAGES.map((lng) => (
                     <button
@@ -129,12 +135,12 @@ export const Navbar = () => {
                       data-testid={`lang-${lng.code}`}
                       className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
                         lang === lng.code
-                          ? "text-[#C9973A] bg-[#C9973A]/08"
-                          : "text-white/60 hover:text-white hover:bg-white/[0.04]"
+                          ? "text-gold-700 bg-gold/12"
+                          : "text-[#3D2314] hover:text-[#231911] hover:bg-brown-500/[0.05]"
                       }`}
                     >
                       <span className="font-semibold w-6">{lng.label}</span>
-                      <span className="text-white/40 text-xs">{lng.name}</span>
+                      <span className="text-brown-500/70 text-xs">{lng.name}</span>
                     </button>
                   ))}
                 </motion.div>
@@ -147,7 +153,7 @@ export const Navbar = () => {
           <Link
             to="/contact"
             data-testid="nav-contact-cta"
-            className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#C9973A] text-black text-sm font-semibold hover:bg-[#D4A853] hover:shadow-[0_0_28px_-6px_rgba(201,151,58,0.7)] transition-all duration-300"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#C9973A] text-[#1A0E08] text-[13px] font-semibold hover:bg-[#D4A853] hover:shadow-[0_12px_28px_-18px_rgba(201,151,58,0.75)] transition-all duration-300"
           >
             {nav.contact || "Contact"} <ArrowUpRight className="w-4 h-4" />
           </Link>
@@ -156,7 +162,7 @@ export const Navbar = () => {
           <button
             onClick={() => setOpen(!open)}
             data-testid="mobile-menu-toggle"
-            className="lg:hidden w-9 h-9 rounded-full border border-white/[0.1] flex items-center justify-center text-white/70"
+            className="lg:hidden w-9 h-9 rounded-full border border-brown-500/[0.12] flex items-center justify-center text-brown-500/75"
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
