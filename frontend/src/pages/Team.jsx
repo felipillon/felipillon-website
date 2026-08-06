@@ -204,20 +204,18 @@ export default function Team() {
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{tm.deptsTitle}</h2>
         </Reveal>
-        <div className="space-y-8">
+        <div className="space-y-16">
           {TEAMS.map((team, i) => (
             <Reveal key={team.dept} delay={i * 0.08}>
-              <GlowCard variant="light" className="p-6 sm:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-7">
-                  <div>
-                    <div className="mb-3 h-1 w-12 rounded-full" style={{ background: team.color }} />
-                    <h3 className="font-heading text-2xl sm:text-3xl font-light text-[#231911]">{team.dept}</h3>
-                  </div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brown-500/50">
+              <div>
+                <div className="mb-10 text-center">
+                  <h3 className="font-heading text-3xl sm:text-4xl font-medium tracking-[-0.03em] text-[#231911]">{team.dept}</h3>
+                  <div className="mx-auto mt-4 h-1 w-14 rounded-full" style={{ background: team.color }} />
+                  <p className="mt-4 text-xs font-semibold uppercase tracking-[0.24em] text-brown-500/55">
                     {team.members.length} People
                   </p>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-8">
+                <div className="flex flex-wrap justify-center gap-x-6 gap-y-8">
                   {team.members.map((m) => {
                     const img = imageFor(m);
                     return (
@@ -225,17 +223,17 @@ export default function Team() {
                         key={m}
                         type="button"
                         onClick={() => setSelectedMember({ name: m, group: team })}
-                        className="group text-center rounded-2xl px-2 py-3 transition-all duration-300 hover:bg-brown-500/[0.04] focus:outline-none focus:ring-2 focus:ring-gold/60"
+                        className="group w-[9.5rem] text-center rounded-2xl px-2 py-3 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold/60"
                       >
                         {img ? (
                           <img
                             src={img}
                             alt={m}
-                            className="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-white shadow-[0_18px_42px_-26px_rgba(61,35,20,0.65)] transition-all duration-300 group-hover:scale-105 group-hover:border-gold/70"
+                            className="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-[0_18px_42px_-26px_rgba(61,35,20,0.65)] transition-all duration-300 group-hover:scale-105"
                           />
                         ) : (
                           <div
-                            className="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center border-4 border-white text-lg font-heading text-white shadow-[0_18px_42px_-26px_rgba(61,35,20,0.65)] transition-all duration-300 group-hover:scale-105 group-hover:border-gold/70"
+                            className="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center text-lg font-heading text-white shadow-[0_18px_42px_-26px_rgba(61,35,20,0.65)] transition-all duration-300 group-hover:scale-105"
                             style={{ background: team.color }}
                           >
                             {initialsFor(m)}
@@ -247,7 +245,7 @@ export default function Team() {
                     );
                   })}
                 </div>
-              </GlowCard>
+              </div>
             </Reveal>
           ))}
         </div>
