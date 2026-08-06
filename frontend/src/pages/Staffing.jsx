@@ -5,7 +5,7 @@ import { Reveal } from "../components/shared/Reveal";
 import { MagneticButton } from "../components/shared/MagneticButton";
 import { CursorFollower } from "../components/shared/CursorFollower";
 import { SPECIALITIES, MEDIA, VIDEO_BG } from "../data/content";
-import { ArrowRight, ArrowUpRight, Check, Users, Bot, Zap, Clock } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
 
 const STAFFING_SECTORS = SPECIALITIES.filter(s => s.id !== "technology");
@@ -126,18 +126,15 @@ export default function Staffing() {
                 className="group relative rounded-2xl overflow-hidden bg-white border border-brown-500/[0.07] hover:border-gold/30 shadow-[0_4px_18px_-8px_rgba(61,35,20,0.12)] hover:shadow-[0_16px_40px_-12px_rgba(201,151,58,0.25)] transition-shadow duration-500 p-7"
                 data-testid={`sector-${spec.id}`}
               >
-                <div className="relative flex items-start gap-5">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
-                    <spec.icon className="w-6 h-6" style={{ color: spec.color }} />
-                  </div>
+                <div className="relative">
                   <div className="flex-1">
+                    <div className="mb-4 h-1 w-12 rounded-full" style={{ background: spec.color }} />
                     <h3 className="font-heading text-xl font-medium text-[#231911] mb-2">{spec.name}</h3>
                     <p className="text-sm text-brown-500/50 leading-relaxed mb-4">{spec.desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {spec.services.map(sv => (
-                        <span key={sv} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-brown-500/[0.1] text-[10px] text-brown-500/45">
-                          <Check className="w-2.5 h-2.5" style={{ color: spec.color }} />{sv}
+                        <span key={sv} className="px-2.5 py-1 rounded-full border border-brown-500/[0.1] text-[10px] text-brown-500/45">
+                          {sv}
                         </span>
                       ))}
                     </div>
@@ -188,15 +185,13 @@ export default function Staffing() {
             <h2 className="font-heading text-4xl font-light tracking-[-0.04em] leading-[1.08] mb-6 text-[#231911]">{s.whyTitle}</h2>
             <div className="space-y-3 mb-10">
               {[
-                { icon: Bot,   text: "People Match AI scans 50+ global platforms for the best fit" },
-                { icon: Users, text: "Specialist recruiters with lived sector experience" },
-                { icon: Zap,   text: "Shortlists delivered in days, not weeks" },
-                { icon: Clock, text: "Follow-the-sun coverage across Germany, India and Philippines" },
-              ].map(({ icon: Icon, text }) => (
+                "People Match AI scans 50+ global platforms for the best fit",
+                "Specialist recruiters with lived sector experience",
+                "Shortlists delivered in days, not weeks",
+                "Follow-the-sun coverage across Germany, India and Philippines",
+              ].map((text) => (
                 <div key={text} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-gold/10 border border-gold/25 flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon className="w-4 h-4 text-gold-600" />
-                  </div>
+                  <span className="mt-2 h-px w-8 shrink-0 bg-gold" />
                   <p className="text-brown-500/60 text-sm leading-relaxed">{text}</p>
                 </div>
               ))}

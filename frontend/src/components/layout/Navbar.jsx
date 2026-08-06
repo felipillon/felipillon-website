@@ -5,6 +5,7 @@ import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useLang } from "../../context/LangContext";
 import { NAV_LINKS } from "../../data/content";
 import { LANGUAGES } from "../../data/i18n";
+import felipillonLogo from "../../Team/felipillon.jpg";
 
 const PRIMARY_NAV = ["home", "about", "specialities", "staffing", "openRoles"];
 
@@ -45,13 +46,13 @@ export const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center shrink-0 rounded-full bg-[#160E09] border border-gold/25 px-3 py-1.5 shadow-[0_12px_30px_-18px_rgba(22,14,9,0.95)]"
+          className="flex items-center shrink-0 overflow-hidden rounded-lg"
           data-testid="logo-link"
         >
           <img
-            src="/logo-new.png"
+            src={felipillonLogo}
             alt="Felipillon"
-            className="h-10 w-auto object-contain"
+            className="h-12 w-auto object-contain"
           />
         </Link>
 
@@ -89,17 +90,19 @@ export const Navbar = () => {
               {nav.more || "More"}
               <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-300" />
             </button>
-            <div className="absolute top-full left-0 mt-2 w-52 rounded-2xl bg-[#FBF8F3]/96 backdrop-blur-xl border border-brown-500/[0.08] overflow-hidden invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 shadow-[0_18px_50px_-28px_rgba(61,35,20,0.55)]">
+            <div className="absolute top-full left-0 mt-3 w-60 rounded-2xl bg-[#FBF8F3] border border-brown-500/[0.14] overflow-hidden invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-[0_22px_60px_-26px_rgba(61,35,20,0.65)]">
               {moreLinks.map((l) => (
                 <Link
                   key={l.path}
                   to={l.path}
-                  className={`flex items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-brown-500/[0.04] ${
-                    pathname === l.path ? "text-gold-600" : "text-brown-500/65 hover:text-[#231911]"
+                  className={`flex items-center justify-between px-4 py-3.5 text-sm font-medium transition-colors ${
+                    pathname === l.path
+                      ? "bg-gold/12 text-gold-700"
+                      : "text-[#3D2314] hover:bg-white hover:text-[#231911]"
                   }`}
                 >
                   {nav[l.label] || l.label}
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               ))}
             </div>

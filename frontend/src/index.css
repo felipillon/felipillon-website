@@ -71,6 +71,21 @@
   ::selection { background: rgba(201,151,58,0.25); color: white; }
 }
 
+/* Global readability pass for muted supporting copy. */
+.text-brown-500\/30 { color: rgb(61 35 20 / 0.45); }
+.text-brown-500\/35 { color: rgb(61 35 20 / 0.50); }
+.text-brown-500\/40 { color: rgb(61 35 20 / 0.56); }
+.text-brown-500\/45 { color: rgb(61 35 20 / 0.62); }
+.text-brown-500\/50 { color: rgb(61 35 20 / 0.68); }
+.text-brown-500\/55 { color: rgb(61 35 20 / 0.72); }
+.text-brown-500\/60 { color: rgb(61 35 20 / 0.76); }
+.text-white\/35 { color: rgb(255 255 255 / 0.56); }
+.text-white\/40 { color: rgb(255 255 255 / 0.62); }
+.text-white\/45 { color: rgb(255 255 255 / 0.68); }
+.text-white\/50 { color: rgb(255 255 255 / 0.72); }
+.text-white\/55 { color: rgb(255 255 255 / 0.76); }
+.text-white\/60 { color: rgb(255 255 255 / 0.80); }
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -223,4 +238,14 @@
 .felipillon-light-page.cursor-enabled .chat-support-widget button,
 .felipillon-light-page.cursor-enabled .chat-support-widget textarea {
   cursor: auto;
+}
+
+.felipillon-light-page.cursor-enabled .team-member-modal,
+.felipillon-light-page.cursor-enabled .team-member-modal * {
+  cursor: auto;
+}
+
+.felipillon-light-page.cursor-enabled .team-member-modal button,
+.felipillon-light-page.cursor-enabled .team-member-modal a {
+  cursor: pointer;
 }

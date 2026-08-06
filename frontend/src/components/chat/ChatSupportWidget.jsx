@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2 } from "lucide-react";
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/felipillon";
+const BACKEND = process.env.REACT_APP_BACKEND_URL;
 
 const STARTER_MESSAGES = [
   {
@@ -106,17 +107,54 @@ export const ChatSupportWidget = () => {
     [messages],
   );
 
-  const sendMessage = (value = input) => {
+  const fetchAiReply = async (text) => {
+    if (!BACKEND) return getReply(text);
+    const history = messages
+      .filter((message) => message.role === "user" || message.role === "assistant")
+      .slice(-8)
+      .map(({ role, content }) => ({ role, content }));
+
+    const res = await fetch(`${BACKEND}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, history }),
+    });
+
+    if (!res.ok) throw new Error("Chat request failed");
+    const data = await res.json();
+    return {
+      content: data.reply,
+      support: !!data.support,
+      jobs: !!data.jobs,
+    };
+  };
+
+  const sendMessage = async (value = input) => {
     const text = value.trim();
     if (!text || isTyping) return;
-    const reply = getReply(text);
     setMessages((current) => [...current, { role: "user", content: text }]);
     setInput("");
     setIsTyping(true);
-    window.setTimeout(() => {
+
+    try {
+      const [reply] = await Promise.all([
+        fetchAiReply(text),
+        new Promise((resolve) => window.setTimeout(resolve, 650)),
+      ]);
       setMessages((current) => [...current, { role: "assistant", ...reply }]);
+    } catch {
+      const fallback = getReply(text);
+      setMessages((current) => [
+        ...current,
+        {
+          role: "assistant",
+          ...fallback,
+          content: `${fallback.content} The live assistant is temporarily unavailable.`,
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 650);
+    }
   };
 
   const onSubmit = (event) => {

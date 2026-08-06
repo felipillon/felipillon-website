@@ -6,7 +6,7 @@ import { CursorFollower } from "../components/shared/CursorFollower";
 import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { ScrollProgress } from "../components/shared/ScrollProgress";
 import { SPECIALITIES, MEDIA, SPECIALITY_VIDEOS } from "../data/content";
-import { ArrowRight, Check, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
 
 export default function Specialities() {
@@ -132,10 +132,7 @@ export default function Specialities() {
                 <div className={`${isEven ? "lg:order-2" : "lg:order-1"} py-6`}>
                   <Reveal className="max-w-lg">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center"
-                        style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
-                        <spec.icon className="w-6 h-6" style={{ color: spec.color }} />
-                      </div>
+                      <span className="w-10 h-px" style={{ background: spec.color }} />
                       <span className="text-[10px] font-bold tracking-[0.35em] uppercase" style={{ color: spec.color }}>
                         {s.eyebrow}
                       </span>
@@ -149,8 +146,7 @@ export default function Specialities() {
                       <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/35 mb-4">{s.services}</p>
                       <div className="space-y-2.5">
                         {spec.services.map((svc) => (
-                          <div key={svc} className="flex items-center gap-3 text-sm text-brown-500/60">
-                            <Check className="w-4 h-4 shrink-0" style={{ color: spec.color }} />
+                          <div key={svc} className="text-sm text-brown-500/60">
                             {svc}
                           </div>
                         ))}
@@ -161,8 +157,8 @@ export default function Specialities() {
                       <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/35 mb-4">{s.markets}</p>
                       <div className="flex gap-3">
                         {spec.markets.map((m) => (
-                          <span key={m} className="flex items-center gap-1.5 text-xs text-brown-500/45">
-                            <MapPin className="w-3 h-3" /> {m}
+                          <span key={m} className="text-xs text-brown-500/45">
+                            {m}
                           </span>
                         ))}
                       </div>
