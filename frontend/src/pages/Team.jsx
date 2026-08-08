@@ -10,58 +10,70 @@ import { ScrollProgress } from "../components/shared/ScrollProgress";
 import { TEAMS, LEADERSHIP, MEDIA } from "../data/content";
 import { ArrowRight, Linkedin, X } from "lucide-react";
 import { useLang } from "../context/LangContext";
-import annaImg from "../Team/Anna.jpg";
-import chiaraImg from "../Team/Chiara.png";
-import dereckImg from "../Team/Dereck.jpg";
-import gotiImg from "../Team/Goti.jpg";
+import annaImg from "../Team/anna.png";
+import dereckImg from "../Team/Dereck.png";
+import gotiImg from "../Team/Goti.png";
 import harrisonImg from "../Team/Harrison.png";
-import kavitaImg from "../Team/Kavita.jpg";
-import lunaImg from "../Team/Luna.jpg";
-import meltemImg from "../Team/Meltem.jpg";
+import krupashreeImg from "../Team/Krupashree.png";
+import meltemImg from "../Team/Meltem.png";
+import nareshImg from "../Team/Naresh.png";
 import neshImg from "../Team/Nesh.png";
-import oykuImg from "../Team/Oyku.jpg";
+import niharikaImg from "../Team/Niharika.png";
+import oykuImg from "../Team/Oyku.png";
 import poulomiImg from "../Team/Poulomi.png";
 import priyankaImg from "../Team/Priyanka.png";
-import saurabhImg from "../Team/Saurabh.jpg";
+import razanImg from "../Team/Razan.png";
+import saurabhImg from "../Team/Saurabh.png";
+import savaniImg from "../Team/Savani.png";
 import ketakiImg from "../Team/ketaki.png";
 import ketanImg from "../Team/ketan.png";
-import kojoImg from "../Team/kojo.jpg";
+import kojoImg from "../Team/Kojo.png";
+import muzaffarImg from "../Team/Muzaffar.png";
+import yarenImg from "../Team/Yaren.png";
 
 const TEAM_IMAGES = {
   "Anna Angold": annaImg,
   "Harrison Coviello": harrisonImg,
+  "Krupashree Kannan": krupashreeImg,
+  "Naresh Malake": nareshImg,
+  "Niharika Singh": niharikaImg,
+  "Razan Anwar": razanImg,
   "Saurabh Gaikwad": saurabhImg,
-  "Kavita Borse": kavitaImg,
-  "Luna Busra Akman": lunaImg,
-  "Luna Büsra Akman": lunaImg,
+  "Savani Redkar": savaniImg,
+  "Dereck Boateng": dereckImg,
+  "Ketaki Malwade": ketakiImg,
+  "Meltem Özer": meltemImg,
   "Öykü Usumu": oykuImg,
   "Oyku Usumu": oykuImg,
   "Poulomi Ghosh": poulomiImg,
   "Ketan Bhanudas Barve": ketanImg,
   "Kojo Quansah": kojoImg,
-  "Kojo Arhin Q.": kojoImg,
   "Prince Goti": gotiImg,
-  "Chiara": chiaraImg,
-  "Dereck": dereckImg,
-  "Kavita": kavitaImg,
-  "Luna": lunaImg,
   "Meltem": meltemImg,
   "Neslihan Ünlükurt": neshImg,
   "Neslihan Unlukurt": neshImg,
   "Nesh": neshImg,
-  "Priyanka": priyankaImg,
+  "Priyanka Das": priyankaImg,
   "Ketaki": ketakiImg,
+  "Muzaffar": muzaffarImg,
+  "Muzaffar Mirzaliev": muzaffarImg,
+  "Yaren Akin": yarenImg,
 };
 
 const MEMBER_ROLES = {
-  "Chiara": "Business Development Executive",
-  "Dereck": "Software Developer",
-  "Prince Goti": "Software Developer",
-  "Priyanka": "Talent Acquisition Team",
+  "Anna Angold": "Business Development Manager",
+  "Dereck Boateng": "Software Developer",
+  "Ketaki Malwade": "Content Marketing & Communication",
+  "Kojo Quansah": "Head of Administration",
+  "Meltem Özer": "HR Team",
+  "Muzaffar Mirzaliev": "IT & Administration",
+  "Naresh Malake": "Business Development Team",
   "Neslihan Ünlükurt": "HR Team",
   "Neslihan Unlukurt": "HR Team",
-  "Meltem": "HR Team",
-  "Ketaki": "Content Marketing & Communication",
+  "Öykü Usumu": "HR Team",
+  "Prince Goti": "Software Developer",
+  "Priyanka Das": "Talent Acquisition Team",
+  "Yaren Akin": "Talent Acquisition Team",
 };
 
 const initialsFor = (name) => name.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();

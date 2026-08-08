@@ -273,38 +273,38 @@ export const LEADERSHIP = [
 export const TEAMS = [
   {
     dept: "Business Development",
-    count: 5,
+    count: 2,
     color: "#C9973A",
     icon: TrendingUp,
-    members: ["Anna Angold", "Abdulsalam A.", "Maria Eduarda Treiger", "Kavita Borse", "Chiara"],
+    members: ["Anna Angold", "Naresh Malake"],
   },
   {
     dept: "Talent Acquisition",
-    count: 6,
+    count: 8,
     color: "#3B82F6",
     icon: Search,
-    members: ["Srijani Chowdhury", "Savani Redkar", "Vidhi Patel", "Harrison Coviello", "Saurabh Gaikwad", "Priyanka"],
+    members: ["Harrison Coviello", "Krupashree Kannan", "Niharika Singh", "Priyanka Das", "Razan Anwar", "Saurabh Gaikwad", "Savani Redkar", "Yaren Akin"],
   },
   {
     dept: "HR Operations",
-    count: 5,
+    count: 3,
     color: "#EC4899",
     icon: Users,
-    members: ["Luna Busra Akman", "Kavita Borse", "Oyku Usumu", "Neslihan Ünlükurt", "Meltem"],
+    members: ["Meltem Özer", "Neslihan Ünlükurt", "Öykü Usumu"],
   },
   {
     dept: "Marketing",
-    count: 4,
+    count: 1,
     color: "#F59E0B",
     icon: Megaphone,
-    members: ["Nicoli Schwaab", "Beyza Tuna", "Zehra Şahin", "Ketaki"],
+    members: ["Ketaki Malwade"],
   },
   {
     dept: "IT & Administration",
     count: 4,
     color: "#8B5CF6",
     icon: Code2,
-    members: ["Kojo Arhin Q.", "Prince Goti", "Muzaffar Mirzaliev", "Dereck"],
+    members: ["Kojo Quansah", "Prince Goti", "Muzaffar Mirzaliev", "Dereck Boateng"],
   },
 ];
 
