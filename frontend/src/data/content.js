@@ -74,35 +74,17 @@ export const VIDEO_BG_FALLBACK = "/hero-bg.mp4";
 // Poster image — shows instantly before video loads (prevents blank screen)
 export const VIDEO_POSTER = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80";
 
-// ── Occupation-specific hero clips — cycled in the homepage hero, one per
-// speciality, so the video actually shows the kind of work Felipillon staffs
-// for (rather than one generic loop). ──────────────────────────────────────
-// ── Home hero video — single clip, naturally lit, loops continuously ───────
+// ── Home hero video — Felipillon brand video, loops continuously ───────────
 export const HERO_VIDEO = {
-  src: "https://videos.pexels.com/video-files/6773475/6773475-uhd_2560_1440_30fps.mp4",
-  poster: "https://images.pexels.com/videos/6773475/pexels-photo-6773475.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  src: "/felipillon-linkedin-hero.mp4",
+  poster: "/felipillon-linkedin-hero-poster.jpg",
 };
 
 export const HERO_VIDEOS = [
   {
-    label: "Staffing & Recruitment",
-    src: "https://videos.pexels.com/video-files/6773475/6773475-uhd_2560_1440_30fps.mp4",
-    poster: "https://images.pexels.com/videos/6773475/pexels-photo-6773475.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    label: "Healthcare",
-    src: "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
-    poster: "https://images.pexels.com/videos/5722215/pexels-photo-5722215.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    label: "Construction",
-    src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
-    poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    label: "Technology",
-    src: "https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4",
-    poster: "https://images.pexels.com/videos/6804109/pexels-photo-6804109.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    label: "Felipillon",
+    src: HERO_VIDEO.src,
+    poster: HERO_VIDEO.poster,
   },
 ];
 

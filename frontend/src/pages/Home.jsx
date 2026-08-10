@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, animate } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion, animate } from "framer-motion";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MagneticButton } from "../components/shared/MagneticButton";
@@ -49,49 +49,43 @@ const BlobField = () => (
   </div>
 );
 
-// ── Hero — occupation video carousel ─────────────────────────────────────
-// Cycles through real footage of each speciality (staffing, healthcare,
-// construction, technology) with a crossfade, clickable tabs and a
-// progress bar — so the hero actually shows the kind of work Felipillon does.
+// ── Hero — main brand video ───────────────────────────────────────────────
 const Hero = () => {
   const { t } = useLang();
   const ref = useRef(null);
-  const [active, setActive] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  useEffect(() => {
-    const id = setInterval(() => setActive((i) => (i + 1) % HERO_VIDEOS.length), 6000);
-    return () => clearInterval(id);
-  }, []);
-
-  const current = HERO_VIDEOS[active];
+  const current = HERO_VIDEOS[0];
+  const entrance = (delay = 0) => ({
+    initial: shouldReduceMotion ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 20, filter: "blur(4px)" },
+    whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+    viewport: { once: true, amount: 0.6 },
+    transition: { duration: shouldReduceMotion ? 0 : 0.8, delay: shouldReduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] },
+  });
 
   return (
-    <section ref={ref} className="relative h-screen min-h-[100svh] flex items-end overflow-hidden">
+    <section ref={ref} className="relative min-h-[58svh] flex items-end overflow-hidden">
 
-      {/* ── Hero video — 4-clip carousel, light/white wash instead of dark tint ── */}
+      {/* ── Hero video ── */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="sync">
-          <motion.div
-            key={current.src}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <img src={current.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
-            <video autoPlay muted loop playsInline poster={current.poster} className="absolute inset-0 w-full h-full object-cover">
-              <source src={current.src} type="video/mp4" />
-            </video>
-          </motion.div>
-        </AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0"
+        >
+          <img src={current.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <video autoPlay muted loop playsInline poster={current.poster} className="absolute inset-0 w-full h-full object-cover">
+            <source src={current.src} type="video/mp4" />
+          </video>
+        </motion.div>
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black/68 via-black/32 to-black/8" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/12" />
-        <div className="absolute inset-0 bg-black/18" />
+        <div className="absolute inset-0 bg-black/46" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07070A]/82 via-[#07070A]/42 to-[#07070A]/18" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07070A]/36 via-transparent to-[#07070A]/20" />
       </div>
 
       {/* Decorative rings */}
@@ -106,70 +100,62 @@ const Hero = () => {
         transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
       />
 
-      <motion.div style={{ y, opacity }} className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full pt-40 pb-16">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 mb-9 rounded-full bg-black/28 border border-white/15 shadow-[0_12px_32px_-18px_rgba(0,0,0,0.8)]"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-          <span className="text-gold-600 text-xs font-semibold tracking-[0.22em] uppercase">
-            {t.hero?.badge || "Germany · India · Philippines · Italy"}
-          </span>
-        </motion.div>
+      <motion.div style={{ y, opacity }} className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full pt-32 pb-14 sm:pt-36 sm:pb-16">
+        <div className="max-w-4xl">
+          <motion.div
+            {...entrance(0.08)}
+            className="inline-flex items-center gap-2.5 mb-6"
+          >
+            <span className="w-9 h-px bg-gold" />
+            <span className="text-gold-300 text-[10px] font-bold tracking-[0.35em] uppercase">
+              {t.hero?.badge || "Germany · India · Philippines · Italy"}
+            </span>
+          </motion.div>
 
-        {/* Main headline */}
-        <h1
-          className="font-heading font-light leading-[0.95] tracking-[-0.05em] max-w-4xl"
-          style={{ textShadow: "0 3px 20px rgba(0,0,0,0.55)" }}
-        >
-          {[t.hero?.line1 || "The Human Side", t.hero?.line2 || "of Intelligent", t.hero?.line3 || "Business"].map((line, i) => (
-            <motion.span
-              key={i}
-              className="block overflow-hidden"
-              initial={{ y: "110%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1.05, delay: 0.15 + i * 0.13, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className={`block text-4xl sm:text-6xl lg:text-[5.4rem] xl:text-[6.2rem] ${
-                i === 1
-                  ? "bg-gradient-to-r from-gold-600 via-gold to-gold-700 bg-clip-text text-transparent"
-                  : "text-white"
-              }`} style={{ filter: "drop-shadow(0 3px 14px rgba(0,0,0,0.45))" }}>{line}</span>
-            </motion.span>
-          ))}
-        </h1>
+          <motion.h1
+            {...entrance(0.16)}
+            className="font-heading text-4xl sm:text-5xl lg:text-[4.4rem] xl:text-[5rem] font-light tracking-[-0.035em] leading-[1.03] max-w-4xl"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.78)" }}
+          >
+            {[t.hero?.line1 || "Felipillon's Mission", t.hero?.line2 || "Connecting Talent", t.hero?.line3 || "With Opportunity"].map((line, i) => (
+              <span
+                key={i}
+                className={`block ${
+                  i === 1
+                    ? "text-gold-300"
+                    : "text-white"
+                }`}
+              >
+                {line}
+              </span>
+            ))}
+          </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-7 text-lg sm:text-xl text-white/82 max-w-2xl leading-relaxed font-light"
-          style={{ textShadow: "0 2px 12px rgba(0,0,0,0.45)" }}
-        >
-          {t.hero?.sub || "Elite talent placement and AI-powered software solutions — across Healthcare, Energy, Construction and Technology."}
-        </motion.p>
+          <motion.p
+            {...entrance(0.3)}
+            className="mt-6 text-base sm:text-lg text-white/78 max-w-2xl leading-relaxed font-light"
+            style={{ textShadow: "0 2px 10px rgba(0,0,0,0.72)" }}
+          >
+            {t.hero?.sub || "We help businesses grow by placing exceptional people and building practical technology solutions across borders, industries and disciplines."}
+          </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.75 }}
-          className="mt-9 flex flex-wrap gap-4"
-        >
-          <MagneticButton to="/staffing" variant="primary" icon={ArrowRight}>
-            {t.hero?.cta1 || "Hire Top Talent"}
-          </MagneticButton>
-          <MagneticButton to="/specialities" variant="secondary">
-            {t.hero?.cta2 || "Our Specialities"}
-          </MagneticButton>
-          <MagneticButton to="/open-roles" variant="ghost">
-            {t.hero?.cta3 || "Open Roles"}
-          </MagneticButton>
-        </motion.div>
-
+          <motion.div
+            {...entrance(0.42)}
+            className="mt-8 flex flex-wrap gap-4"
+          >
+            <MagneticButton to="/staffing" variant="primary" icon={ArrowRight} className="shadow-[0_16px_34px_-14px_rgba(0,0,0,1)]">
+              {t.hero?.cta1 || "Hire Top Talent"}
+            </MagneticButton>
+            <MagneticButton to="/specialities" variant="secondary" className="bg-black/62 border-white/35 text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/72">
+              {t.hero?.cta2 || "Our Specialities"}
+            </MagneticButton>
+            <MagneticButton to="/open-roles" variant="ghost" className="bg-black/48 border-white/30 text-white/95 shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/62">
+              {t.hero?.cta3 || "Open Roles"}
+            </MagneticButton>
+          </motion.div>
+        </div>
       </motion.div>
+
     </section>
   );
 };
