@@ -40,7 +40,7 @@ export default function Locations() {
             <span className="text-gold-600 text-xs font-semibold tracking-[0.2em] uppercase">{l.eyebrow || "Locations"}</span>
           </motion.div>
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
-            {l.title || "Three countries. One borderless team."}
+            {l.title || "Four locations. One borderless team."}
           </h1>
           {l.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{l.subtitle}</p>}
         </div>

@@ -4,7 +4,7 @@ import { GlowCard } from "../components/shared/GlowCard";
 import { Reveal } from "../components/shared/Reveal";
 import { MagneticButton } from "../components/shared/MagneticButton";
 import { CursorFollower } from "../components/shared/CursorFollower";
-import { SPECIALITIES, MEDIA, VIDEO_BG } from "../data/content";
+import { SPECIALITIES, MEDIA, STAFFING_VIDEO_BG } from "../data/content";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
 
@@ -83,7 +83,7 @@ export default function Staffing() {
 
           <TiltPanel className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_-20px_rgba(61,35,20,0.35)] border border-white aspect-[4/5]">
             <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
-              <source src={VIDEO_BG} type="video/mp4" />
+              <source src={STAFFING_VIDEO_BG} type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
           </TiltPanel>

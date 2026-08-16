@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { VIDEO_BG, VIDEO_POSTER } from "../../data/content";
+import { GLOBAL_VIDEO_BG, GLOBAL_VIDEO_POSTER } from "../../data/content";
 
 // ── Global video background — persists across all pages ───────────────────
 // ── Global background — inner pages only (home has its own hero video) ────────
@@ -39,12 +39,12 @@ export const GlobalBackground = ({ hide = false }) => {
       <video
         ref={videoRef}
         autoPlay muted loop playsInline
-        poster={VIDEO_POSTER}
+        poster={GLOBAL_VIDEO_POSTER}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ filter: "brightness(0.15) saturate(0.5)" }}
         onError={(e) => { e.currentTarget.style.display = "none"; }}
       >
-        <source src={VIDEO_BG} type="video/mp4" />
+        <source src={GLOBAL_VIDEO_BG} type="video/mp4" />
       </video>
 
       {/* Dark overlay */}

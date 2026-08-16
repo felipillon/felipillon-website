@@ -9,7 +9,7 @@ import { Counter } from "../components/shared/Counter";
 import { Globe } from "../components/shared/Globe";
 import { CursorFollower } from "../components/shared/CursorFollower";
 import { useLang } from "../context/LangContext";
-import { SPECIALITIES, WHY, METRICS, TRUSTED, TESTIMONIALS, MEDIA, VIDEO_BG, VIDEO_POSTER, HERO_VIDEOS } from "../data/content";
+import { SPECIALITIES, WHY, METRICS, TRUSTED, TESTIMONIALS, MEDIA, VIDEO_BG, HERO_VIDEOS } from "../data/content";
 import { CARD_TEXT } from "../data/cardTranslations";
 
 // ── Reusable tilt wrapper — cursor-reactive 3D tilt for photo/video panels ──

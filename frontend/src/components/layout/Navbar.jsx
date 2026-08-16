@@ -182,7 +182,7 @@ export const Navbar = () => {
             src="/logo-new.png"
             alt="Felipillon"
             className={`
-              h-12
+              ${isFloating ? "h-14 sm:h-16" : "h-16 sm:h-[76px]"}
               w-auto
               object-contain
               transition-all
@@ -192,12 +192,13 @@ export const Navbar = () => {
                 useDarkForeground
                   ? `
                     brightness-0
-                    drop-shadow-[0_8px_18px_rgba(61,35,20,0.16)]
+                    drop-shadow-[0_10px_22px_rgba(61,35,20,0.2)]
                   `
                   : `
                     brightness-0
                     invert
-                    drop-shadow-[0_8px_20px_rgba(0,0,0,0.65)]
+                    drop-shadow-[0_5px_8px_rgba(0,0,0,0.72)]
+                    drop-shadow-[0_16px_28px_rgba(0,0,0,0.5)]
                   `
               }
             `}
