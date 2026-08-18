@@ -19,7 +19,7 @@ export const TRANSLATIONS = {
       line1: "Felipillon's Mission",
       line2: "Connecting Talent",
       line3: "With Opportunity",
-      sub: "We help businesses grow by placing exceptional people and building practical technology solutions across borders, industries and disciplines.",
+      sub: "We help companies find skilled talent, build reliable software and expand into new markets with confidence.",
       cta1: "Hire Top Talent",
       cta2: "Our Specialities",
       cta3: "Open Roles",

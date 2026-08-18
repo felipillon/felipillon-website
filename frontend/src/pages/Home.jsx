@@ -49,7 +49,9 @@ const BlobField = () => (
   </div>
 );
 
-// ── Hero — main brand video ───────────────────────────────────────────────
+// ── Hero — multi-video carousel with crossfade ──────────────────────────
+const SLIDE_DURATION = 7; // seconds per slide (5 × 7 = 35s total cycle)
+
 const Hero = () => {
   const { t } = useLang();
   const ref = useRef(null);
@@ -58,7 +60,61 @@ const Hero = () => {
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  const current = HERO_VIDEOS[0];
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const videoRefs = useRef([]);
+  const timerRef = useRef(null);
+  const startRef = useRef(Date.now());
+
+  const count = HERO_VIDEOS.length;
+  const current = HERO_VIDEOS[activeIdx];
+  const dur = current.maxDuration || SLIDE_DURATION;
+
+  // ── Advance to next slide ──
+  const goTo = (idx) => {
+    setActiveIdx(idx % count);
+    setProgress(0);
+    startRef.current = Date.now();
+  };
+
+  // ── Timer-driven cycling (progress + advance) ──
+  useEffect(() => {
+    const tick = () => {
+      const elapsed = (Date.now() - startRef.current) / 1000;
+      const d = HERO_VIDEOS[activeIdx].maxDuration || SLIDE_DURATION;
+      const pct = Math.min(elapsed / d, 1);
+      setProgress(pct);
+      if (pct >= 1) {
+        goTo((activeIdx + 1) % count);
+      }
+    };
+    timerRef.current = setInterval(tick, 50);
+    return () => clearInterval(timerRef.current);
+  }, [activeIdx, count]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Restart video from beginning & enforce maxDuration cap ──
+  useEffect(() => {
+    const vid = videoRefs.current[activeIdx];
+    if (vid) {
+      vid.currentTime = 0;
+      vid.play().catch(() => {});
+    }
+  }, [activeIdx]);
+
+  // ── Pause video when it hits maxDuration (prevents logo flash) ──
+  useEffect(() => {
+    const vid = videoRefs.current[activeIdx];
+    if (!vid) return;
+    const maxDur = HERO_VIDEOS[activeIdx].maxDuration || SLIDE_DURATION;
+    const onTimeUpdate = () => {
+      if (vid.currentTime >= maxDur) {
+        vid.pause();
+      }
+    };
+    vid.addEventListener("timeupdate", onTimeUpdate);
+    return () => vid.removeEventListener("timeupdate", onTimeUpdate);
+  }, [activeIdx]);
+
   const entrance = (delay = 0) => ({
     initial: shouldReduceMotion ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 20, filter: "blur(4px)" },
     whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -69,39 +125,69 @@ const Hero = () => {
   return (
     <section ref={ref} className="relative min-h-[58svh] flex items-end overflow-hidden">
 
-      {/* ── Hero video ── */}
+      {/* ── Video layers with crossfade ── */}
       <div className="absolute inset-0 z-0">
-        <motion.div
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0"
-        >
-          <img src={current.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
-          <video autoPlay muted loop playsInline poster={current.poster} className="absolute inset-0 w-full h-full object-cover">
-            <source src={current.src} type="video/mp4" />
-          </video>
-        </motion.div>
+        {HERO_VIDEOS.map((v, i) => (
+          <motion.div
+            key={v.label}
+            initial={false}
+            animate={{ opacity: i === activeIdx ? 1 : 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0"
+            style={{ zIndex: i === activeIdx ? 1 : 0 }}
+          >
+            <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <video
+              ref={(el) => { videoRefs.current[i] = el; }}
+              muted
+              playsInline
+              poster={v.poster}
+              preload={i <= 1 ? "auto" : "metadata"}
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={v.src} type="video/mp4" />
+            </video>
+          </motion.div>
+        ))}
 
-        <div className="absolute inset-0 bg-black/46" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#07070A]/82 via-[#07070A]/42 to-[#07070A]/18" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#07070A]/36 via-transparent to-[#07070A]/20" />
+        {/* ── Cinematic overlay stack ── */}
+        {/* 1. Base darkening — lets the video breathe while keeping text readable */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(135deg, rgba(7,7,10,0.72) 0%, rgba(7,7,10,0.38) 45%, rgba(7,7,10,0.22) 100%)" }} />
+
+        {/* 2. Radial vignette — cinematic depth, draws focus to center-left content */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "radial-gradient(ellipse 70% 65% at 30% 50%, transparent 0%, rgba(7,7,10,0.55) 100%)" }} />
+
+        {/* 3. Warm ambient wash — subtle amber tint matching the gold brand palette */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "radial-gradient(ellipse 80% 60% at 25% 60%, rgba(201,151,58,0.08) 0%, transparent 70%)" }} />
+
+        {/* 4. Bottom edge fade — clean blend into page content below */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(to top, rgba(7,7,10,0.65) 0%, rgba(7,7,10,0.15) 22%, transparent 40%)" }} />
+
+        {/* 5. Top edge — subtle darkening for nav contrast */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(to bottom, rgba(7,7,10,0.35) 0%, transparent 18%)" }} />
+
+        {/* 6. Film grain texture — CSS noise for cinematic warmth */}
+        <div className="absolute inset-0 z-[2] pointer-events-none hero-grain" />
       </div>
 
       {/* Decorative rings */}
       <motion.div
-        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[760px] h-[760px] rounded-full border border-[#C9973A]/[0.14] pointer-events-none z-[1]"
+        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[760px] h-[760px] rounded-full border border-[#C9973A]/[0.10] pointer-events-none z-[3]"
         animate={{ rotate: 360 }}
         transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[540px] h-[540px] rounded-full border border-[#C9973A]/[0.2] pointer-events-none z-[1]"
+        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[540px] h-[540px] rounded-full border border-[#C9973A]/[0.16] pointer-events-none z-[3]"
         animate={{ rotate: -360 }}
         transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
       />
 
       <motion.div style={{ y, opacity }} className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full pt-32 pb-14 sm:pt-36 sm:pb-16">
-        <div className="max-w-4xl">
+        <div className="relative max-w-4xl">
+          <div
+            className="absolute -inset-x-5 -inset-y-6 -z-10 rounded-[2rem] bg-gradient-to-r from-black/62 via-black/34 to-transparent blur-sm sm:-inset-x-8 sm:-inset-y-8"
+            aria-hidden
+          />
           <motion.div
             {...entrance(0.08)}
             className="inline-flex items-center gap-2.5 mb-6"
@@ -133,10 +219,10 @@ const Hero = () => {
 
           <motion.p
             {...entrance(0.3)}
-            className="mt-6 text-base sm:text-lg text-white/78 max-w-2xl leading-relaxed font-light"
-            style={{ textShadow: "0 2px 10px rgba(0,0,0,0.72)" }}
+            className="mt-6 max-w-2xl text-base sm:text-lg text-white/95 leading-relaxed font-medium"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.9)" }}
           >
-            {t.hero?.sub || "We help businesses grow by placing exceptional people and building practical technology solutions across borders, industries and disciplines."}
+            {t.hero?.sub || "We help companies find skilled talent, build reliable software and expand into new markets with confidence."}
           </motion.p>
 
           <motion.div
@@ -154,6 +240,68 @@ const Hero = () => {
             </MagneticButton>
           </motion.div>
         </div>
+
+        {/* ── Video carousel indicators ── */}
+        <motion.div
+          {...entrance(0.55)}
+          className="mt-10 flex items-center gap-2.5 px-4 py-2.5 rounded-full"
+          style={{
+            background: "rgba(7,7,10,0.35)",
+            backdropFilter: "blur(16px) saturate(140%)",
+            WebkitBackdropFilter: "blur(16px) saturate(140%)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "0 4px 24px -4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
+            width: "fit-content",
+          }}
+        >
+          {HERO_VIDEOS.map((v, i) => {
+            const isActive = i === activeIdx;
+            const isPast = i < activeIdx || (activeIdx === 0 && i === count - 1 && progress < 0.05);
+            return (
+              <button
+                key={v.label}
+                onClick={() => goTo(i)}
+                className="group relative flex items-center gap-2 focus:outline-none transition-all duration-300"
+                aria-label={`Show ${v.label} video`}
+              >
+                {/* Progress bar track */}
+                <div
+                  className="relative overflow-hidden rounded-full transition-all duration-500 ease-out"
+                  style={{
+                    width: isActive ? 56 : 16,
+                    height: isActive ? 4 : 4,
+                    background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.15)",
+                  }}
+                >
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full transition-colors duration-300"
+                    style={{
+                      width: isActive ? `${progress * 100}%` : isPast ? "100%" : "0%",
+                      background: isActive
+                        ? "linear-gradient(90deg, #C9973A, #E8C97A)"
+                        : "rgba(255,255,255,0.32)",
+                      boxShadow: isActive ? "0 0 8px rgba(201,151,58,0.4)" : "none",
+                    }}
+                  />
+                </div>
+                {/* Label (visible for active slide) */}
+                <AnimatePresence mode="wait">
+                  {isActive && (
+                    <motion.span
+                      initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                      animate={{ opacity: 1, width: "auto", marginLeft: 2 }}
+                      exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="text-[9px] font-bold tracking-[0.22em] uppercase text-white/70 whitespace-nowrap overflow-hidden"
+                    >
+                      {v.label}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            );
+          })}
+        </motion.div>
       </motion.div>
 
     </section>
