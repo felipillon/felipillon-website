@@ -115,14 +115,6 @@ export const Footer = () => {
           </Link>
         </div>
 
-        {/* Giant wordmark */}
-        <div className="overflow-hidden mb-8">
-          <p className="font-heading font-light leading-none tracking-tighter select-none pointer-events-none"
-            style={{ fontSize: "clamp(3rem, 14vw, 12rem)", color: "transparent", WebkitTextStroke: "1px rgba(255,255,255,0.04)" }}>
-            FELIPILLON
-          </p>
-        </div>
-
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
           <p>© 2026 Felipillon UG (haftungsbeschränkt). All rights reserved.</p>
           <div className="flex gap-5">
