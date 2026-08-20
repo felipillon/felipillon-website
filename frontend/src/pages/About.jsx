@@ -74,7 +74,7 @@ export default function About() {
               <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{a.subtitle}</p>
             )}
           </div>
-          <RevealPhoto src={MEDIA.about} alt="Felipillon" className="rounded-[2rem] aspect-[4/3] shadow-[0_24px_60px_-16px_rgba(61,35,20,0.25)] border border-white" />
+          <RevealPhoto src={MEDIA.aboutMission} alt="Felipillon" className="rounded-[2rem] aspect-[4/3] shadow-[0_24px_60px_-16px_rgba(61,35,20,0.25)] border border-white" />
         </div>
       </section>
 
@@ -107,7 +107,7 @@ export default function About() {
             <div className="space-y-4">
               <RevealPhoto src={MEDIA.aboutTeam} alt="Felipillon team" className="rounded-2xl aspect-video shadow-[0_20px_50px_-16px_rgba(61,35,20,0.22)]" />
               <div className="grid grid-cols-2 gap-4">
-                <RevealPhoto src={MEDIA.berlinOffice} alt="Berlin office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.1}>
+                <RevealPhoto src={MEDIA.berlin} alt="Berlin office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.1}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
                     <p className="text-xs text-gold-300 font-semibold">Germany</p>
@@ -187,10 +187,10 @@ export default function About() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { video: true, span: "lg:col-span-2 lg:row-span-2", aspect: "aspect-square lg:aspect-auto" },
-            { src: MEDIA.teamWork, span: "", aspect: "aspect-square" },
-            { src: MEDIA.aboutTeam, span: "", aspect: "aspect-square" },
             { src: MEDIA.teamMeeting, span: "", aspect: "aspect-square" },
-            { src: MEDIA.berlinOffice, span: "", aspect: "aspect-square" },
+            { src: MEDIA.staffing, span: "", aspect: "aspect-square" },
+            { src: MEDIA.software, span: "", aspect: "aspect-square" },
+            { src: MEDIA.officeWide, span: "", aspect: "aspect-square" },
           ].map((g, i) => (
             <Reveal key={i} delay={i * 0.06} className={g.span}>
               <div className={`group relative overflow-hidden rounded-2xl ${g.aspect} h-full shadow-[0_8px_24px_-12px_rgba(61,35,20,0.2)]`}>

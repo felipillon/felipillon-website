@@ -85,6 +85,7 @@ chainlit.md
 *.pack
 *.deb
 *.dylib
+*.dmg
 
 # ── Build caches ───────────────────────────────────────────────────────────────
 .cache/
