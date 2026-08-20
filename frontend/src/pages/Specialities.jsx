@@ -2,12 +2,23 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Reveal } from "../components/shared/Reveal";
 import { MagneticButton } from "../components/shared/MagneticButton";
+import { Counter } from "../components/shared/Counter";
 import { CursorFollower } from "../components/shared/CursorFollower";
 import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { ScrollProgress } from "../components/shared/ScrollProgress";
-import { SPECIALITIES, MEDIA, SPECIALITY_VIDEOS } from "../data/content";
-import { ArrowRight, Check, MapPin } from "lucide-react";
+import { SPECIALITIES, MEDIA, SPECIALITY_VIDEOS, SERVICES } from "../data/content";
+import { ArrowRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
+
+// Beyond staffing, Felipillon also builds technology and drives growth —
+// same SERVICES data the old standalone Services page used, minus "Staffing
+// & Recruitment" since this entire page already covers that in depth.
+const BUSINESS_SERVICES = SERVICES.filter((s) => s.title !== "Staffing & Recruitment");
+
+// One combined total instead of repeating a number on every card/panel —
+// summed live from each speciality's stat, so it stays correct automatically
+// if those numbers ever change.
+const TOTAL_PLACED = SPECIALITIES.reduce((sum, spec) => sum + (parseInt(spec.stat, 10) || 0), 0);
 
 export default function Specialities() {
   const { t } = useLang();
@@ -41,6 +52,15 @@ export default function Specialities() {
             {s.title || "Where we deliver results"}
           </h1>
           {s.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-2xl leading-relaxed font-light">{s.subtitle}</p>}
+
+          <Reveal delay={0.15}>
+            <div className="mt-10 inline-flex items-baseline gap-3 px-6 py-4 rounded-2xl bg-white border border-brown-500/[0.08] shadow-[0_4px_20px_-10px_rgba(61,35,20,0.15)]">
+              <span className="font-heading text-4xl sm:text-5xl font-light text-gold-600">
+                <Counter value={TOTAL_PLACED} suffix="+" />
+              </span>
+              <span className="text-sm text-brown-500/50 max-w-[10rem] leading-snug">people and projects placed across all specialities</span>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -74,8 +94,6 @@ export default function Specialities() {
                     style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
                     <spec.icon className="w-5 h-5" style={{ color: spec.color }} />
                   </div>
-                  <p className="font-heading text-lg font-light" style={{ color: spec.color }}>{spec.stat}</p>
-                  <p className="text-[10px] text-brown-500/40 mb-2">{spec.statLabel}</p>
                   <p className="text-xs font-medium text-[#231911]">{spec.name}</p>
                 </motion.div>
               </a>
@@ -121,9 +139,9 @@ export default function Specialities() {
                     </motion.div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                     <div className="absolute bottom-6 left-6">
-                      <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-white/95 backdrop-blur-md shadow-lg">
-                        <span className="font-heading text-3xl font-light" style={{ color: spec.color }}>{spec.stat}</span>
-                        <span className="text-xs text-brown-500/50">{spec.statLabel}</span>
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/95 backdrop-blur-md shadow-lg">
+                        <spec.icon className="w-4 h-4" style={{ color: spec.color }} />
+                        <span className="text-sm font-medium text-[#231911]">{spec.name}</span>
                       </div>
                     </div>
                   </div>
@@ -132,10 +150,7 @@ export default function Specialities() {
                 <div className={`${isEven ? "lg:order-2" : "lg:order-1"} py-6`}>
                   <Reveal className="max-w-lg">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center"
-                        style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
-                        <spec.icon className="w-6 h-6" style={{ color: spec.color }} />
-                      </div>
+                      <span className="w-10 h-px" style={{ background: spec.color }} />
                       <span className="text-[10px] font-bold tracking-[0.35em] uppercase" style={{ color: spec.color }}>
                         {s.eyebrow}
                       </span>
@@ -149,8 +164,7 @@ export default function Specialities() {
                       <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/35 mb-4">{s.services}</p>
                       <div className="space-y-2.5">
                         {spec.services.map((svc) => (
-                          <div key={svc} className="flex items-center gap-3 text-sm text-brown-500/60">
-                            <Check className="w-4 h-4 shrink-0" style={{ color: spec.color }} />
+                          <div key={svc} className="text-sm text-brown-500/60">
                             {svc}
                           </div>
                         ))}
@@ -161,8 +175,8 @@ export default function Specialities() {
                       <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/35 mb-4">{s.markets}</p>
                       <div className="flex gap-3">
                         {spec.markets.map((m) => (
-                          <span key={m} className="flex items-center gap-1.5 text-xs text-brown-500/45">
-                            <MapPin className="w-3 h-3" /> {m}
+                          <span key={m} className="text-xs text-brown-500/45">
+                            {m}
                           </span>
                         ))}
                       </div>
@@ -183,6 +197,44 @@ export default function Specialities() {
           </section>
         );
       })}
+
+      {/* ── Beyond staffing — Technology & Growth Services (merged in from
+           the old standalone Services page) ── */}
+      <section className="py-20 max-w-7xl mx-auto px-6 sm:px-8">
+        <Reveal className="mb-12">
+          <div className="inline-flex items-center gap-3 mb-5">
+            <span className="w-10 h-px bg-gold" />
+            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">Beyond Staffing</span>
+          </div>
+          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911] max-w-2xl">
+            Technology &amp; growth services
+          </h2>
+          <p className="text-brown-500/50 mt-3 max-w-2xl">
+            Beyond placing talent, Felipillon builds the software and drives the growth strategy behind it.
+          </p>
+        </Reveal>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {BUSINESS_SERVICES.map((svc, i) => (
+            <Reveal key={svc.title} delay={i * 0.07}>
+              <motion.div
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                className="group relative rounded-2xl overflow-hidden bg-white border border-brown-500/[0.07] hover:border-gold/30 shadow-[0_4px_18px_-8px_rgba(61,35,20,0.12)] hover:shadow-[0_16px_40px_-12px_rgba(201,151,58,0.25)] transition-shadow duration-500 h-full"
+              >
+                <div className="p-7">
+                  <div className="w-12 h-12 rounded-xl bg-gold/10 border border-gold/25 flex items-center justify-center mb-5 group-hover:bg-gold/15 transition-colors">
+                    <svc.icon className="w-6 h-6 text-gold-600" />
+                  </div>
+                  <h3 className="font-heading text-xl font-medium mb-3 text-[#231911]">{svc.title}</h3>
+                  <p className="text-sm text-brown-500/45 leading-relaxed">{svc.desc}</p>
+                </div>
+                <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 transition-all duration-500 bg-gold" />
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       {/* ── CTA ── */}
       <section className="py-6 pb-24 pt-14">

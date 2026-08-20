@@ -43,6 +43,8 @@ export const Globe = () => {
 
       {/* connection arcs */}
       <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full pointer-events-none">
+        <motion.path d="M44 36 Q48 28 52 30" fill="none" stroke="url(#g1)" strokeWidth="0.6"
+          initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, delay: 0.25, repeat: Infinity, repeatType: "reverse" }} />
         <motion.path d="M52 30 Q60 38 68 52" fill="none" stroke="url(#g1)" strokeWidth="0.6"
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }} />
         <motion.path d="M68 52 Q76 52 82 58" fill="none" stroke="url(#g1)" strokeWidth="0.6"
@@ -50,7 +52,8 @@ export const Globe = () => {
         <defs>
           <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#10B981" />
-            <stop offset="100%" stopColor="#3B82F6" />
+            <stop offset="50%" stopColor="#3B82F6" />
+            <stop offset="100%" stopColor="#EF4444" />
           </linearGradient>
         </defs>
       </svg>

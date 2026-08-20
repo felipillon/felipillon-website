@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, animate } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion, animate } from "framer-motion";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MagneticButton } from "../components/shared/MagneticButton";
@@ -9,7 +9,7 @@ import { Counter } from "../components/shared/Counter";
 import { Globe } from "../components/shared/Globe";
 import { CursorFollower } from "../components/shared/CursorFollower";
 import { useLang } from "../context/LangContext";
-import { SPECIALITIES, WHY, METRICS, TRUSTED, TESTIMONIALS, MEDIA, VIDEO_BG, VIDEO_POSTER, HERO_VIDEOS } from "../data/content";
+import { SPECIALITIES, WHY, METRICS, TRUSTED, TESTIMONIALS, MEDIA, VIDEO_BG, HERO_VIDEOS } from "../data/content";
 import { CARD_TEXT } from "../data/cardTranslations";
 
 // ── Reusable tilt wrapper — cursor-reactive 3D tilt for photo/video panels ──
@@ -49,124 +49,261 @@ const BlobField = () => (
   </div>
 );
 
-// ── Hero — occupation video carousel ─────────────────────────────────────
-// Cycles through real footage of each speciality (staffing, healthcare,
-// construction, technology) with a crossfade, clickable tabs and a
-// progress bar — so the hero actually shows the kind of work Felipillon does.
+// ── Hero — multi-video carousel with crossfade ──────────────────────────
+const SLIDE_DURATION = 7; // seconds per slide (5 × 7 = 35s total cycle)
+
 const Hero = () => {
   const { t } = useLang();
   const ref = useRef(null);
-  const [active, setActive] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  useEffect(() => {
-    const id = setInterval(() => setActive((i) => (i + 1) % HERO_VIDEOS.length), 6000);
-    return () => clearInterval(id);
-  }, []);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const videoRefs = useRef([]);
+  const timerRef = useRef(null);
+  const startRef = useRef(Date.now());
 
-  const current = HERO_VIDEOS[active];
+  const count = HERO_VIDEOS.length;
+  const current = HERO_VIDEOS[activeIdx];
+  const dur = current.maxDuration || SLIDE_DURATION;
+
+  // ── Advance to next slide ──
+  const goTo = (idx) => {
+    setActiveIdx(idx % count);
+    setProgress(0);
+    startRef.current = Date.now();
+  };
+
+  // ── Timer-driven cycling (progress + advance) ──
+  useEffect(() => {
+    const tick = () => {
+      const elapsed = (Date.now() - startRef.current) / 1000;
+      const d = HERO_VIDEOS[activeIdx].maxDuration || SLIDE_DURATION;
+      const pct = Math.min(elapsed / d, 1);
+      setProgress(pct);
+      if (pct >= 1) {
+        goTo((activeIdx + 1) % count);
+      }
+    };
+    timerRef.current = setInterval(tick, 50);
+    return () => clearInterval(timerRef.current);
+  }, [activeIdx, count]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Restart video from beginning & enforce maxDuration cap ──
+  useEffect(() => {
+    const vid = videoRefs.current[activeIdx];
+    if (vid) {
+      vid.currentTime = 0;
+      vid.play().catch(() => {});
+    }
+  }, [activeIdx]);
+
+  // ── Pause video when it hits maxDuration (prevents logo flash) ──
+  useEffect(() => {
+    const vid = videoRefs.current[activeIdx];
+    if (!vid) return;
+    const maxDur = HERO_VIDEOS[activeIdx].maxDuration || SLIDE_DURATION;
+    const onTimeUpdate = () => {
+      if (vid.currentTime >= maxDur) {
+        vid.pause();
+      }
+    };
+    vid.addEventListener("timeupdate", onTimeUpdate);
+    return () => vid.removeEventListener("timeupdate", onTimeUpdate);
+  }, [activeIdx]);
+
+  const entrance = (delay = 0) => ({
+    initial: shouldReduceMotion ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 20, filter: "blur(4px)" },
+    whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+    viewport: { once: true, amount: 0.6 },
+    transition: { duration: shouldReduceMotion ? 0 : 0.8, delay: shouldReduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] },
+  });
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-end overflow-hidden">
+    <section ref={ref} className="relative min-h-[58svh] flex items-end overflow-hidden">
 
-      {/* ── Hero video — 4-clip carousel, light/white wash instead of dark tint ── */}
+      {/* ── Video layers with crossfade ── */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="sync">
+        {HERO_VIDEOS.map((v, i) => (
           <motion.div
-            key={current.src}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            key={v.label}
+            initial={false}
+            animate={{ opacity: i === activeIdx ? 1 : 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0"
+            style={{ zIndex: i === activeIdx ? 1 : 0 }}
           >
-            <img src={current.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
-            <video autoPlay muted loop playsInline poster={current.poster} className="absolute inset-0 w-full h-full object-cover">
-              <source src={current.src} type="video/mp4" />
+            <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <video
+              ref={(el) => { videoRefs.current[i] = el; }}
+              muted
+              playsInline
+              poster={v.poster}
+              preload={i <= 1 ? "auto" : "metadata"}
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={v.src} type="video/mp4" />
             </video>
           </motion.div>
-        </AnimatePresence>
+        ))}
 
-        {/* White/cream wash — strongest where the text sits, fading elsewhere. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FBF8F3]/92 via-[#FBF8F3]/55 to-[#FBF8F3]/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FBF8F3]/80 via-transparent to-[#FBF8F3]/25" />
-        <div className="absolute bottom-0 left-0 right-0 h-72 bg-gradient-to-t from-[#FBF8F3] via-[#FBF8F3]/50 to-transparent" />
+        {/* ── Cinematic overlay stack ── */}
+        {/* 1. Base darkening — lets the video breathe while keeping text readable */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(135deg, rgba(7,7,10,0.72) 0%, rgba(7,7,10,0.38) 45%, rgba(7,7,10,0.22) 100%)" }} />
+
+        {/* 2. Radial vignette — cinematic depth, draws focus to center-left content */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "radial-gradient(ellipse 70% 65% at 30% 50%, transparent 0%, rgba(7,7,10,0.55) 100%)" }} />
+
+        {/* 3. Warm ambient wash — subtle amber tint matching the gold brand palette */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "radial-gradient(ellipse 80% 60% at 25% 60%, rgba(201,151,58,0.08) 0%, transparent 70%)" }} />
+
+        {/* 4. Bottom edge fade — clean blend into page content below */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(to top, rgba(7,7,10,0.65) 0%, rgba(7,7,10,0.15) 22%, transparent 40%)" }} />
+
+        {/* 5. Top edge — subtle darkening for nav contrast */}
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(to bottom, rgba(7,7,10,0.35) 0%, transparent 18%)" }} />
+
+        {/* 6. Film grain texture — CSS noise for cinematic warmth */}
+        <div className="absolute inset-0 z-[2] pointer-events-none hero-grain" />
       </div>
 
       {/* Decorative rings */}
       <motion.div
-        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[760px] h-[760px] rounded-full border border-[#C9973A]/[0.14] pointer-events-none z-[1]"
+        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[760px] h-[760px] rounded-full border border-[#C9973A]/[0.10] pointer-events-none z-[3]"
         animate={{ rotate: 360 }}
         transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[540px] h-[540px] rounded-full border border-[#C9973A]/[0.2] pointer-events-none z-[1]"
+        className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/3 w-[540px] h-[540px] rounded-full border border-[#C9973A]/[0.16] pointer-events-none z-[3]"
         animate={{ rotate: -360 }}
         transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
       />
 
-      <motion.div style={{ y, opacity }} className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full pt-40 pb-16">
-        {/* Badge */}
+      <motion.div style={{ y, opacity }} className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full pt-32 pb-14 sm:pt-36 sm:pb-16">
+        <div className="relative max-w-4xl">
+          <div
+            className="absolute -inset-x-5 -inset-y-6 -z-10 rounded-[2rem] bg-gradient-to-r from-black/62 via-black/34 to-transparent blur-sm sm:-inset-x-8 sm:-inset-y-8"
+            aria-hidden
+          />
+          <motion.div
+            {...entrance(0.08)}
+            className="inline-flex items-center gap-2.5 mb-6"
+          >
+            <span className="w-9 h-px bg-gold" />
+            <span className="text-gold-300 text-[10px] font-bold tracking-[0.35em] uppercase">
+              {t.hero?.badge || "Germany · India · Philippines · Italy"}
+            </span>
+          </motion.div>
+
+          <motion.h1
+            {...entrance(0.16)}
+            className="font-heading text-4xl sm:text-5xl lg:text-[4.4rem] xl:text-[5rem] font-light tracking-[-0.035em] leading-[1.03] max-w-4xl"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.78)" }}
+          >
+            {[t.hero?.line1 || "Felipillon's Mission", t.hero?.line2 || "Connecting Talent", t.hero?.line3 || "With Opportunity"].map((line, i) => (
+              <span
+                key={i}
+                className={`block ${
+                  i === 1
+                    ? "text-gold-300"
+                    : "text-white"
+                }`}
+              >
+                {line}
+              </span>
+            ))}
+          </motion.h1>
+
+          <motion.p
+            {...entrance(0.3)}
+            className="mt-6 max-w-2xl text-base sm:text-lg text-white/95 leading-relaxed font-medium"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.9)" }}
+          >
+            {t.hero?.sub || "We help companies find skilled talent, build reliable software and expand into new markets with confidence."}
+          </motion.p>
+
+          <motion.div
+            {...entrance(0.42)}
+            className="mt-8 flex flex-wrap gap-4"
+          >
+            <MagneticButton to="/staffing" variant="primary" icon={ArrowRight} className="shadow-[0_16px_34px_-14px_rgba(0,0,0,1)]">
+              {t.hero?.cta1 || "Hire Top Talent"}
+            </MagneticButton>
+            <MagneticButton to="/specialities" variant="secondary" className="bg-black/62 border-white/35 text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/72">
+              {t.hero?.cta2 || "Our Specialities"}
+            </MagneticButton>
+            <MagneticButton to="/open-roles" variant="ghost" className="bg-black/48 border-white/30 text-white/95 shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/62">
+              {t.hero?.cta3 || "Open Roles"}
+            </MagneticButton>
+          </motion.div>
+        </div>
+
+        {/* ── Video carousel indicators ── */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 mb-9 rounded-full bg-white border border-brown-500/10 shadow-[0_2px_16px_-4px_rgba(61,35,20,0.15)]"
+          {...entrance(0.55)}
+          className="mt-10 flex items-center gap-2.5 px-4 py-2.5 rounded-full"
+          style={{
+            background: "rgba(7,7,10,0.35)",
+            backdropFilter: "blur(16px) saturate(140%)",
+            WebkitBackdropFilter: "blur(16px) saturate(140%)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "0 4px 24px -4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
+            width: "fit-content",
+          }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-          <span className="text-gold-600 text-xs font-semibold tracking-[0.22em] uppercase">
-            {t.hero?.badge || "Germany · India · Philippines · Italy"}
-          </span>
+          {HERO_VIDEOS.map((v, i) => {
+            const isActive = i === activeIdx;
+            const isPast = i < activeIdx || (activeIdx === 0 && i === count - 1 && progress < 0.05);
+            return (
+              <button
+                key={v.label}
+                onClick={() => goTo(i)}
+                className="group relative flex items-center gap-2 focus:outline-none transition-all duration-300"
+                aria-label={`Show ${v.label} video`}
+              >
+                {/* Progress bar track */}
+                <div
+                  className="relative overflow-hidden rounded-full transition-all duration-500 ease-out"
+                  style={{
+                    width: isActive ? 56 : 16,
+                    height: isActive ? 4 : 4,
+                    background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.15)",
+                  }}
+                >
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full transition-colors duration-300"
+                    style={{
+                      width: isActive ? `${progress * 100}%` : isPast ? "100%" : "0%",
+                      background: isActive
+                        ? "linear-gradient(90deg, #C9973A, #E8C97A)"
+                        : "rgba(255,255,255,0.32)",
+                      boxShadow: isActive ? "0 0 8px rgba(201,151,58,0.4)" : "none",
+                    }}
+                  />
+                </div>
+                {/* Label (visible for active slide) */}
+                <AnimatePresence mode="wait">
+                  {isActive && (
+                    <motion.span
+                      initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                      animate={{ opacity: 1, width: "auto", marginLeft: 2 }}
+                      exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="text-[9px] font-bold tracking-[0.22em] uppercase text-white/70 whitespace-nowrap overflow-hidden"
+                    >
+                      {v.label}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            );
+          })}
         </motion.div>
-
-        {/* Main headline */}
-        <h1 className="font-heading font-light leading-[0.95] tracking-[-0.05em] max-w-4xl">
-          {[t.hero?.line1 || "The Human Side", t.hero?.line2 || "of Intelligent", t.hero?.line3 || "Business"].map((line, i) => (
-            <motion.span
-              key={i}
-              className="block overflow-hidden"
-              initial={{ y: "110%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1.05, delay: 0.15 + i * 0.13, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className={`block text-4xl sm:text-6xl lg:text-[5.4rem] xl:text-[6.2rem] ${
-                i === 1
-                  ? "bg-gradient-to-r from-gold-600 via-gold to-gold-700 bg-clip-text text-transparent"
-                  : "text-[#231911]"
-              }`}>{line}</span>
-            </motion.span>
-          ))}
-        </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-7 text-lg sm:text-xl text-brown-500/60 max-w-2xl leading-relaxed font-light"
-        >
-          {t.hero?.sub || "Elite talent placement and AI-powered software solutions — across Healthcare, Energy, Construction and Technology."}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.75 }}
-          className="mt-9 flex flex-wrap gap-4"
-        >
-          <MagneticButton to="/staffing" variant="lightPrimary" icon={ArrowRight}>
-            {t.hero?.cta1 || "Hire Top Talent"}
-          </MagneticButton>
-          <MagneticButton to="/specialities" variant="lightSecondary">
-            {t.hero?.cta2 || "Our Specialities"}
-          </MagneticButton>
-          <MagneticButton to="/open-roles" variant="lightGhost">
-            {t.hero?.cta3 || "Open Roles"}
-          </MagneticButton>
-        </motion.div>
-
       </motion.div>
+
     </section>
   );
 };
@@ -285,14 +422,7 @@ const OrbitCard = ({ item, index, count, rotation, radius, cardW, cardH, onOpen,
       <img src={item.img} alt={name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/30 to-black/5" />
 
-      <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
-        <div
-          className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center"
-          style={{ background: `${item.color}30`, border: `1px solid ${item.color}60` }}
-        >
-          <item.icon className="w-5 h-5" style={{ color: item.color }} />
-        </div>
-
+      <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
         <div>
           <div className="mb-2">
             <span className="text-xl sm:text-2xl font-heading font-light text-gold-300">{item.stat}</span>

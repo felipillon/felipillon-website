@@ -50,9 +50,9 @@ export const MEDIA = {
   berlinOffice: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
   india: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1400&q=85",
   philippines: "https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=1400&q=85",
-  indiaLandmark: "https://images.unsplash.com/photo-1523428461295-92770e70d7ae?auto=format&fit=crop&w=1400&q=85",
-  philippinesLandmark: "https://images.unsplash.com/photo-1546068996-8da61faeceaa?auto=format&fit=crop&w=1400&q=85",
-  italy: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1400&q=85",
+  indiaLandmark: "/indialocation.jpg",
+  philippinesLandmark: "/phillipines.jpg",
+  italy: "/italy.jpg",
   office: "https://images.pexels.com/photos/13219418/pexels-photo-13219418.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&dpr=2",
   officeWide: "https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1920&q=85",
 
@@ -73,36 +73,41 @@ export const VIDEO_BG_2 = "/hero-bg.mp4";
 export const VIDEO_BG_FALLBACK = "/hero-bg.mp4";
 // Poster image — shows instantly before video loads (prevents blank screen)
 export const VIDEO_POSTER = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80";
+export const GLOBAL_VIDEO_BG = "https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4";
+export const GLOBAL_VIDEO_POSTER = "https://images.pexels.com/videos/3129957/free-video-3129957.jpg?auto=compress&cs=tinysrgb&w=1920";
+export const ABOUT_VIDEO_BG = "https://videos.pexels.com/video-files/3255275/3255275-uhd_2560_1440_25fps.mp4";
+export const STAFFING_VIDEO_BG = "https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4";
 
-// ── Occupation-specific hero clips — cycled in the homepage hero, one per
-// speciality, so the video actually shows the kind of work Felipillon staffs
-// for (rather than one generic loop). ──────────────────────────────────────
-// ── Home hero video — single clip, naturally lit, loops continuously ───────
+// ── Home hero video — Felipillon brand video, loops continuously ───────────
 export const HERO_VIDEO = {
-  src: "https://videos.pexels.com/video-files/6773475/6773475-uhd_2560_1440_30fps.mp4",
-  poster: "https://images.pexels.com/videos/6773475/pexels-photo-6773475.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  src: "/felipillon-linkedin-hero.mp4",
+  poster: "/felipillon-linkedin-hero-poster.jpg",
 };
 
 export const HERO_VIDEOS = [
   {
-    label: "Staffing & Recruitment",
-    src: "https://videos.pexels.com/video-files/6773475/6773475-uhd_2560_1440_30fps.mp4",
-    poster: "https://images.pexels.com/videos/6773475/pexels-photo-6773475.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    label: "Healthcare",
-    src: "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
-    poster: "https://images.pexels.com/videos/5722215/pexels-photo-5722215.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    label: "Felipillon",
+    src: HERO_VIDEO.src,
+    poster: HERO_VIDEO.poster,
+    maxDuration: 7, // stop before logo appears at bottom
   },
   {
     label: "Construction",
     src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
     poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
+    maxDuration: 7,
+  },
+  {
+    label: "Renewable Energy",
+    src: "https://videos.pexels.com/video-files/9789926/9789926-uhd_2560_1440_30fps.mp4",
+    poster: "https://images.pexels.com/videos/9789926/4-k-aerial-shot-battery-bird-eye-view-9789926.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    maxDuration: 7,
   },
   {
     label: "Technology",
     src: "https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4",
     poster: "https://images.pexels.com/videos/6804109/pexels-photo-6804109.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    maxDuration: 7,
   },
 ];
 
@@ -236,7 +241,7 @@ export const INDUSTRIES = SPECIALITIES;
 
 // ── Why Felipillon ──────────────────────────────────────────────────────────
 export const WHY = [
-  { icon: Globe2, title: "Global Reach", desc: "Talent networks across Europe and Asia-Pacific from three country offices in Germany, India and the Philippines." },
+  { icon: Globe2, title: "Global Reach", desc: "Talent networks across Europe and Asia-Pacific from four locations in Germany, India, the Philippines and Italy." },
   { icon: Bot, title: "People Match AI", desc: "Proprietary AI engine scanning 50+ platforms: LinkedIn, SEEK, Indeed, Naukri, XING, HireEZ and more." },
   { icon: Rocket, title: "Speed to Hire", desc: "Shortlists in days. We move faster than any competitor without cutting corners on quality." },
   { icon: Zap, title: "Affordable Quality", desc: "Enterprise-grade talent and software without the enterprise price tag. Long-term value, not short-term fees." },
@@ -247,7 +252,7 @@ export const WHY = [
 export const METRICS = [
   { value: 500, suffix: "+", label: "placements" },
   { value: 50, suffix: "+", label: "projects" },
-  { value: 3, suffix: "", label: "offices" },
+  { value: 4, suffix: "", label: "offices" },
   { value: 95, suffix: "%", label: "satisfaction" },
 ];
 
@@ -273,38 +278,38 @@ export const LEADERSHIP = [
 export const TEAMS = [
   {
     dept: "Business Development",
-    count: 4,
+    count: 2,
     color: "#C9973A",
     icon: TrendingUp,
-    members: ["Anna Angold", "Abdulsalam Abdulraheem", "Harrison Coviello", "Maria Treiger"],
+    members: ["Anna Angold", "Naresh Malake"],
   },
   {
     dept: "Talent Acquisition",
-    count: 5,
+    count: 8,
     color: "#3B82F6",
     icon: Search,
-    members: ["Srijani Chowdhury", "Savani Redkar", "Vidhi Patel", "Elene Seperteladze", "Saurabh Gaikwad"],
+    members: ["Harrison Coviello", "Krupashree Kannan", "Niharika Singh", "Priyanka Das", "Razan Anwar", "Saurabh Gaikwad", "Savani Redkar", "Yaren Akin"],
   },
   {
     dept: "HR Operations",
-    count: 2,
+    count: 3,
     color: "#EC4899",
     icon: Users,
-    members: ["Öykü Usumu", "Yaren Akin"],
+    members: ["Meltem Özer", "Neslihan Ünlükurt", "Öykü Usumu"],
   },
   {
     dept: "Marketing",
-    count: 3,
+    count: 1,
     color: "#F59E0B",
     icon: Megaphone,
-    members: ["Beyza Tuna", "Nicoli Schwaab", "Zehra Sahin"],
+    members: ["Ketaki Malwade"],
   },
   {
     dept: "IT & Administration",
-    count: 2,
+    count: 4,
     color: "#8B5CF6",
     icon: Code2,
-    members: ["Kojo Quansah", "Prince Goti"],
+    members: ["Kojo Quansah", "Prince Goti", "Muzaffar Mirzaliev", "Dereck Boateng"],
   },
 ];
 
@@ -398,6 +403,12 @@ export const LOCATIONS = [
     entity: "Felipillon OPC",
     tz: "PHT", addr: "3rd Floor, Salcedo One Center, 170 Salcedo Street, Makati City",
     lat: 14.55, lng: 121.02, flag: "🇵🇭", img: MEDIA.philippinesLandmark,
+  },
+  {
+    city: "Italy", country: "Italy", role: "European Operations",
+    entity: "New Office",
+    tz: "CET", addr: "Italy office details coming soon",
+    lat: 41.9, lng: 12.5, flag: "🇮🇹", img: MEDIA.italy,
   },
 ];
 

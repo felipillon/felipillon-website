@@ -27,6 +27,7 @@ from models.lead import Lead
 # Import routes
 from routes.contact import router as contact_router
 from routes.jobs import router as jobs_router
+from routes.chat import router as chat_router
 
 
 # ── Startup / Shutdown ────────────────────────────────────────────────────────
@@ -70,6 +71,7 @@ app.add_middleware(
 # ── Routes ────────────────────────────────────────────────────────────────────
 app.include_router(contact_router)
 app.include_router(jobs_router)
+app.include_router(chat_router)
 
 
 @app.get("/api")

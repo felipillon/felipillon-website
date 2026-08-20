@@ -7,7 +7,7 @@ import { MagneticButton } from "../components/shared/MagneticButton";
 import { CursorFollower } from "../components/shared/CursorFollower";
 import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { ScrollProgress } from "../components/shared/ScrollProgress";
-import { VALUES, TIMELINE, MEDIA, WHY_WIN, VIDEO_BG } from "../data/content";
+import { VALUES, TIMELINE, MEDIA, WHY_WIN, ABOUT_VIDEO_BG } from "../data/content";
 import { ArrowRight, Check } from "lucide-react";
 import { useLang } from "../context/LangContext";
 
@@ -196,7 +196,7 @@ export default function About() {
               <div className={`group relative overflow-hidden rounded-2xl ${g.aspect} h-full shadow-[0_8px_24px_-12px_rgba(61,35,20,0.2)]`}>
                 {g.video ? (
                   <video autoPlay muted loop playsInline className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <source src={VIDEO_BG} type="video/mp4" />
+                    <source src={ABOUT_VIDEO_BG} type="video/mp4" />
                   </video>
                 ) : (
                   <img

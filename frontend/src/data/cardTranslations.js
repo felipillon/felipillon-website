@@ -57,12 +57,12 @@ export const CARD_TEXT = {
       },
     },
     why: [
-      { title: "Globale Reichweite", desc: "Talentnetzwerke in Europa und im asiatisch-pazifischen Raum von drei Landesbüros in Deutschland, Indien und den Philippinen aus." },
+      { title: "Globale Reichweite", desc: "Talentnetzwerke in Europa und im asiatisch-pazifischen Raum von vier Standorten in Deutschland, Indien, den Philippinen und Italien aus." },
       { title: "People Match AI", desc: "Firmeneigene KI-Engine, die 50+ Plattformen durchsucht: LinkedIn, SEEK, Indeed, Naukri, XING, HireEZ und mehr." },
       { title: "Schnelle Besetzung", desc: "Shortlists innerhalb weniger Tage. Wir sind schneller als jeder Wettbewerber — ohne Abstriche bei der Qualität." },
       { title: "Erschwingliche Qualität", desc: "Talente und Software auf Enterprise-Niveau ohne Enterprise-Preisschild. Langfristiger Wert statt kurzfristiger Gebühren." },
       { title: "95% Verbleibquote", desc: "Unsere Vermittlungen bleiben. Strenges Kultur- und Kompetenz-Screening bedeutet die richtige Person, nicht nur die verfügbare." },
-      { title: "24/7-Betrieb", desc: "Follow-the-Sun über Deutschland (MEZ), Indien (IST) und die Philippinen (PHT). Es ist immer jemand erreichbar." },
+      { title: "24/7-Betrieb", desc: "Follow-the-Sun über Deutschland, Indien, die Philippinen und Italien. Es ist immer jemand erreichbar." },
     ],
     testimonials: [
       { quote: "Felipillon hat in einem einzigen Quartal drei Chirurgen vermittelt — und jeder von ihnen ist geblieben. Ihr Screening ist auf einem anderen Level.", title: "Ärztliche Direktorin, NordHealth" },
@@ -170,12 +170,12 @@ export const CARD_TEXT = {
       },
     },
     why: [
-      { title: "Portata Globale", desc: "Reti di talenti in Europa e Asia-Pacifico da tre sedi nazionali in Germania, India e Filippine." },
+      { title: "Portata Globale", desc: "Reti di talenti in Europa e Asia-Pacifico da quattro sedi in Germania, India, Filippine e Italia." },
       { title: "People Match AI", desc: "Motore AI proprietario che scansiona oltre 50 piattaforme: LinkedIn, SEEK, Indeed, Naukri, XING, HireEZ e altre." },
       { title: "Velocità di Assunzione", desc: "Shortlist in pochi giorni. Siamo più veloci di qualsiasi concorrente senza compromettere la qualità." },
       { title: "Qualità Accessibile", desc: "Talento e software di livello enterprise senza il prezzo enterprise. Valore a lungo termine, non costi a breve termine." },
       { title: "95% di Retention", desc: "I nostri inserimenti restano. Una selezione rigorosa su cultura e competenze significa la persona giusta, non solo quella disponibile." },
-      { title: "Operatività 24/7", desc: "Follow-the-sun tra Germania (CET), India (IST) e Filippine (PHT). C'è sempre qualcuno operativo." },
+      { title: "Operatività 24/7", desc: "Follow-the-sun tra Germania, India, Filippine e Italia. C'è sempre qualcuno operativo." },
     ],
     testimonials: [
       { quote: "Felipillon ha inserito tre chirurghi in un solo trimestre — e sono rimasti tutti. Il loro processo di selezione è di un altro livello.", title: "Direttore Sanitario, NordHealth" },
@@ -283,7 +283,7 @@ export const CARD_TEXT = {
       },
     },
     why: [
-      { title: "Глобальный Охват", desc: "Сети талантов в Европе и Азиатско-Тихоокеанском регионе из трёх национальных офисов в Германии, Индии и на Филиппинах." },
+      { title: "Глобальный Охват", desc: "Сети талантов в Европе и Азиатско-Тихоокеанском регионе из четырёх локаций в Германии, Индии, на Филиппинах и в Италии." },
       { title: "People Match AI", desc: "Собственный ИИ-движок, сканирующий более 50 платформ: LinkedIn, SEEK, Indeed, Naukri, XING, HireEZ и другие." },
       { title: "Скорость Найма", desc: "Шортлисты за считанные дни. Мы работаем быстрее любого конкурента, не жертвуя качеством." },
       { title: "Доступное Качество", desc: "Таланты и ПО корпоративного уровня без корпоративного ценника. Долгосрочная ценность, а не краткосрочные сборы." },
@@ -396,12 +396,12 @@ export const CARD_TEXT = {
       },
     },
     why: [
-      { title: "Küresel Erişim", desc: "Almanya, Hindistan ve Filipinler'deki üç ülke ofisinden Avrupa ve Asya-Pasifik genelinde yetenek ağları." },
+      { title: "Küresel Erişim", desc: "Almanya, Hindistan, Filipinler ve İtalya'daki dört lokasyondan Avrupa ve Asya-Pasifik genelinde yetenek ağları." },
       { title: "People Match AI", desc: "LinkedIn, SEEK, Indeed, Naukri, XING, HireEZ ve daha fazlasını içeren 50'den fazla platformu tarayan özel yapay zeka motoru." },
       { title: "Hızlı İşe Alım", desc: "Günler içinde ön eleme listeleri. Kaliteden ödün vermeden herhangi bir rakipten daha hızlı hareket ediyoruz." },
       { title: "Uygun Fiyatlı Kalite", desc: "Kurumsal fiyat etiketi olmadan kurumsal düzeyde yetenek ve yazılım. Kısa vadeli ücretler değil, uzun vadeli değer." },
       { title: "%95 Elde Tutma", desc: "Yerleştirmelerimiz kalıcı olur. Titiz kültürel ve beceri değerlendirmesi, sadece uygun kişiyi değil doğru kişiyi bulmak anlamına gelir." },
-      { title: "7/24 Operasyon", desc: "Almanya (CET), Hindistan (IST) ve Filipinler (PHT) arasında güneşi takip eden model. Her zaman biri aktif." },
+      { title: "7/24 Operasyon", desc: "Almanya, Hindistan, Filipinler ve İtalya arasında güneşi takip eden model. Her zaman biri aktif." },
     ],
     testimonials: [
       { quote: "Felipillon tek bir çeyrekte üç cerrah yerleştirdi — ve hepsi kaldı. Değerlendirme süreçleri bambaşka bir seviyede.", title: "Baş Hekim, NordHealth" },

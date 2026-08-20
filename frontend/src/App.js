@@ -6,13 +6,13 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { LangProvider } from "@/context/LangContext";
 import { Layout } from "@/components/layout/Layout";
 import { Toaster } from "@/components/ui/sonner";
+import { ChatSupportWidget } from "@/components/chat/ChatSupportWidget";
 
 // 👇 ADDED: Import the new background component
 import { GlobalBackground } from "@/components/layout/GlobalBackground";
 
 import Home from "@/pages/Home";
 import About from "@/pages/About";
-import Services from "@/pages/Services";
 import Specialities from "@/pages/Specialities";
 import Staffing from "@/pages/Staffing";
 import Team from "@/pages/Team";
@@ -33,7 +33,6 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
         <Route path="/specialities" element={<Specialities />} />
         <Route path="/staffing" element={<Staffing />} />
         <Route path="/team" element={<Team />} />
@@ -46,9 +45,10 @@ const AnimatedRoutes = () => {
         <Route path="/impressum" element={<Impressum />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
-        {/* Redirect old routes */}
+        {/* Redirect old/merged routes */}
         <Route path="/industries" element={<Specialities />} />
-        <Route path="/innovation" element={<Services />} />
+        <Route path="/innovation" element={<Specialities />} />
+        <Route path="/services" element={<Specialities />} />
       </Routes>
     </AnimatePresence>
   );
@@ -64,6 +64,7 @@ function App() {
             <Layout>
               <AnimatedRoutes />
             </Layout>
+            <ChatSupportWidget />
             <Toaster position="bottom-right" richColors />
           </GlobalBackground>
         </BrowserRouter>
