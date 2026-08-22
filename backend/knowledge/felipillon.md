@@ -1,6 +1,6 @@
 # Felipillon Support Knowledge
 
-Felipillon is a global technology-driven services firm headquartered in Berlin, Germany, with operating hubs in Pune, India and Makati City, Philippines.
+Felipillon is a global technology-driven services firm headquartered in Berlin, Germany, with operating hubs in Pune, India, Makati City, Philippines, and a new Italy office for European operations.
 
 Felipillon helps organisations solve business challenges through two main areas:
 
@@ -11,7 +11,7 @@ Staffing and recruitment areas include healthcare, skilled trades, logistics and
 
 Technology services include software development, digital marketing, AI applications, CRM platforms, and broader technology solutions.
 
-Felipillon positions itself around fast, quality-focused delivery, global reach, follow-the-sun operations across Germany, India and the Philippines, and a combination of human recruitment expertise with AI-assisted sourcing.
+Felipillon positions itself around fast, quality-focused delivery, global reach, follow-the-sun operations across Germany, India, the Philippines and Italy, and a combination of human recruitment expertise with AI-assisted sourcing.
 
 The website has these important pages:
 
@@ -28,6 +28,11 @@ Support and contact options:
 - Contact page: /contact
 - Email: hello@felipillon.com
 - LinkedIn: https://www.linkedin.com/company/felipillon
+
+Language guidance:
+
+- Reply in the same language as the visitor when they write in English, German, or Turkish.
+- If the visitor asks in another language, answer in clear English unless the intent is obvious.
 
 Guidance for detailed questions:
 

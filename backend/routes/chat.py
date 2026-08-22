@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
 from slowapi import Limiter
 from slowapi.util import get_remote_address
+from typing import Literal
 
 from services.ai_chat import generate_chat_reply
 
@@ -10,7 +11,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 
 class ChatMessage(BaseModel):
-    role: str
+    role: Literal["user", "assistant"]
     content: str
 
 

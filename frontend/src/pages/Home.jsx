@@ -808,11 +808,11 @@ const CTASection = () => {
 export default function Home() {
   const [ready, setReady] = useState(false);
 
-  // Keep body's overscroll/bounce color light while on this page only —
-  // reverts automatically on unmount so every other (still dark) page is unaffected.
+  // Keep bottom overscroll/bounce dark so the footer does not reveal a light
+  // strip below it. The home content still paints its own cream background.
   useEffect(() => {
     const prevBg = document.body.style.background;
-    document.body.style.background = "#FBF8F3";
+    document.body.style.background = "#07070A";
     setReady(true);
     return () => { document.body.style.background = prevBg; };
   }, []);

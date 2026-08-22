@@ -16,14 +16,14 @@ export const GlobalBackground = ({ hide = false }) => {
     }
   }, []);
 
-  // On the (new, light) home page, render an opaque cream/white base that
-  // fully covers the dark app-level background — the page's own sections
-  // paint over this. Every other page keeps the original dark ambience below.
+  // On the light home page, keep the app-level background dark so bottom
+  // overscroll below the footer does not expose the cream page background.
+  // Home's own sections still paint their cream surfaces explicitly.
   if (hide) {
     return (
-      <div className="fixed inset-0 z-0 pointer-events-none bg-[#FBF8F3]">
+      <div className="fixed inset-0 z-0 pointer-events-none bg-[#07070A]">
         <div
-          className="absolute inset-0 opacity-[0.35]"
+          className="absolute inset-0 opacity-[0.16]"
           style={{
             backgroundImage: "radial-gradient(circle, rgba(201,151,58,0.16) 1px, transparent 1px)",
             backgroundSize: "52px 52px",
