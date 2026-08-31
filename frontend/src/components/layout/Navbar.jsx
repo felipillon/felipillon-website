@@ -182,7 +182,7 @@ export const Navbar = () => {
             src="/logo-new.png"
             alt="Felipillon"
             className={`
-              ${isFloating ? "h-14 sm:h-16" : "h-16 sm:h-[76px]"}
+              ${isFloating ? "h-16 sm:h-[72px]" : "h-[72px] sm:h-24"}
               w-auto
               object-contain
               transition-all

@@ -14,11 +14,10 @@ const COLS = [
     ],
   },
   {
-    title: "Services",
+    title: "Specialities",
     links: [
+      { label: "Specialities & Services", path: "/specialities" },
       { label: "Staffing & Recruitment", path: "/staffing" },
-      { label: "Technology Solutions", path: "/services" },
-      { label: "Specialities", path: "/specialities" },
       { label: "Case Studies", path: "/case-studies" },
       { label: "Open Roles", path: "/open-roles" },
     ],
@@ -48,8 +47,8 @@ export const Footer = () => {
                 src="/logo-new.png"
                 alt="Felipillon"
                 className="
-                  h-16
-                  sm:h-[76px]
+                  h-[72px]
+                  sm:h-24
                   w-auto
                   object-contain
                   brightness-0

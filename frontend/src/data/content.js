@@ -61,6 +61,9 @@ export const MEDIA = {
   blog2: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=85",
   blog3: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=85",
   blog4: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=85",
+  rag: "/rag.jpg",
+  llms: "/LLMS.jpg",
+  shippingScale: "/ShippingScale.jpg",
 };
 
 // ── Video background (hero) ─────────────────────────────────────────────────
@@ -144,7 +147,6 @@ export const SPECIALITY_VIDEOS = {
 export const NAV_LINKS = [
   { label: "home", path: "/" },
   { label: "about", path: "/about" },
-  { label: "services", path: "/services" },
   { label: "specialities", path: "/specialities" },
   { label: "staffing", path: "/staffing" },
   { label: "team", path: "/team" },
@@ -417,12 +419,12 @@ export const TRUSTED = ["NORDHEALTH", "SOLARIS ENERGY", "HELIX CLOUD", "BUILDWOR
 export const BLOG_CATEGORIES = ["All", "AI", "Recruitment", "Healthcare", "Renewable Energy", "Software Engineering"];
 
 export const BLOG = [
-  { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.blog1 },
+  { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.rag },
   { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI — they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
   { id: 3, category: "Healthcare", title: "Closing the Clinical Talent Gap in Europe", excerpt: "Cross-border clinician mobility, credentialing and retention strategies that work.", date: "May 28, 2026", read: "6 min", img: MEDIA.blog3 },
   { id: 4, category: "Renewable Energy", title: "Hiring for the Battery Storage Boom", excerpt: "PV and BESS specialists are the new bottleneck. How to build the team.", date: "May 19, 2026", read: "4 min", img: MEDIA.blog4 },
-  { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.blog1 },
-  { id: 6, category: "AI", title: "Evaluating LLMs Beyond the Leaderboard", excerpt: "Task-specific evals that actually predict production quality.", date: "Apr 30, 2026", read: "6 min", img: MEDIA.ai },
+  { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.shippingScale },
+  { id: 6, category: "AI", title: "Evaluating LLMs Beyond the Leaderboard", excerpt: "Task-specific evals that actually predict production quality.", date: "Apr 30, 2026", read: "6 min", img: MEDIA.llms },
 ];
 
 // ── Values (from PDF) ───────────────────────────────────────────────────────

@@ -14,6 +14,7 @@ import { useLang } from "../context/LangContext";
 // same SERVICES data the old standalone Services page used, minus "Staffing
 // & Recruitment" since this entire page already covers that in depth.
 const BUSINESS_SERVICES = SERVICES.filter((s) => s.title !== "Staffing & Recruitment");
+const TECH_STACK = ["React", "TypeScript", "Next.js", "Python", "FastAPI", "PostgreSQL", "AWS", "GCP", "Kubernetes", "LangChain", "TailwindCSS", "Node.js"];
 
 // One combined total instead of repeating a number on every card/panel —
 // summed live from each speciality's stat, so it stays correct automatically
@@ -76,6 +77,12 @@ export default function Specialities() {
               {spec.name}
             </a>
           ))}
+          <a
+            href="#technology-growth-services"
+            className="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
+          >
+            Technology & Growth Services
+          </a>
         </div>
       </div>
 
@@ -200,7 +207,7 @@ export default function Specialities() {
 
       {/* ── Beyond staffing — Technology & Growth Services (merged in from
            the old standalone Services page) ── */}
-      <section className="py-20 max-w-7xl mx-auto px-6 sm:px-8">
+      <section id="technology-growth-services" className="py-20 max-w-7xl mx-auto px-6 sm:px-8 scroll-mt-24">
         <Reveal className="mb-12">
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
@@ -222,10 +229,14 @@ export default function Specialities() {
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 className="group relative rounded-2xl overflow-hidden bg-white border border-brown-500/[0.07] hover:border-gold/30 shadow-[0_4px_18px_-8px_rgba(61,35,20,0.12)] hover:shadow-[0_16px_40px_-12px_rgba(201,151,58,0.25)] transition-shadow duration-500 h-full"
               >
-                <div className="p-7">
-                  <div className="w-12 h-12 rounded-xl bg-gold/10 border border-gold/25 flex items-center justify-center mb-5 group-hover:bg-gold/15 transition-colors">
-                    <svc.icon className="w-6 h-6 text-gold-600" />
+                <div className="relative h-40 overflow-hidden">
+                  <img src={svc.img} alt={svc.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                  <div className="absolute bottom-4 left-4 w-11 h-11 rounded-xl bg-white/92 backdrop-blur-sm border border-white/70 flex items-center justify-center shadow-lg">
+                    <svc.icon className="w-5 h-5 text-gold-600" />
                   </div>
+                </div>
+                <div className="p-7">
                   <h3 className="font-heading text-xl font-medium mb-3 text-[#231911]">{svc.title}</h3>
                   <p className="text-sm text-brown-500/45 leading-relaxed">{svc.desc}</p>
                 </div>
@@ -234,6 +245,29 @@ export default function Specialities() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-14">
+          <div className="rounded-2xl bg-white border border-brown-500/[0.07] p-7 sm:p-8 shadow-[0_4px_18px_-10px_rgba(61,35,20,0.15)]">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-7">
+              <div className="max-w-md">
+                <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600 mb-3">Tech Stack</p>
+                <h3 className="font-heading text-2xl sm:text-3xl font-light tracking-[-0.03em] text-[#231911]">
+                  Modern by default
+                </h3>
+                <p className="mt-3 text-sm text-brown-500/50 leading-relaxed">
+                  Production-grade platforms built for scale, security and maintainable delivery.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2.5 lg:max-w-2xl">
+                {TECH_STACK.map((tech) => (
+                  <span key={tech} className="px-4 py-2 rounded-full bg-[#FBF8F3] border border-brown-500/[0.08] text-xs font-medium text-brown-500/62">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       {/* ── CTA ── */}
