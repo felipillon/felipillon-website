@@ -12,7 +12,7 @@ const PER_PAGE = 6;
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
 
 // ── Dynamic field renderer — one job's form can differ completely from
-// another's, so every field is rendered generically off its `kind`. ────────
+// another's, so every field is rendered generically off its `kind`.
 const DynamicField = ({ field, value, onChange }) => {
   const labelCls = "text-xs uppercase tracking-wide text-white/35";
   const inputCls = "w-full mt-2 px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-[#C9973A]/60 outline-none transition-colors text-white placeholder:text-white/20 text-sm";

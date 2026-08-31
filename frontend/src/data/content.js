@@ -50,9 +50,9 @@ export const MEDIA = {
   berlinOffice: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
   india: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1400&q=85",
   philippines: "https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=1400&q=85",
-  indiaLandmark: "/indialocation.jpg",
-  philippinesLandmark: "/phillipines.jpg",
-  italy: "/italy.jpg",
+  indiaLandmark: "https://images.unsplash.com/photo-1710582308582-55cc0c461c4e?auto=format&fit=crop&w=1600&q=85",
+  philippinesLandmark: "https://images.unsplash.com/photo-1526731955462-f6085f39e742?auto=format&fit=crop&w=1600&q=85",
+  italy: "https://images.unsplash.com/photo-1742148186848-8b257455009b?auto=format&fit=crop&w=1600&q=85",
   office: "https://images.pexels.com/photos/13219418/pexels-photo-13219418.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&dpr=2",
   officeWide: "https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1920&q=85",
 
@@ -61,6 +61,8 @@ export const MEDIA = {
   blog2: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=85",
   blog3: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=85",
   blog4: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=85",
+  blog5: "https://images.unsplash.com/photo-1619410283995-43d9134e7656?auto=format&fit=crop&w=800&q=85",
+  blog6: "https://images.unsplash.com/photo-1644088379091-d574269d422f?auto=format&fit=crop&w=800&q=85",
 };
 
 // ── Video background (hero) ─────────────────────────────────────────────────
@@ -144,7 +146,6 @@ export const SPECIALITY_VIDEOS = {
 export const NAV_LINKS = [
   { label: "home", path: "/" },
   { label: "about", path: "/about" },
-  { label: "services", path: "/services" },
   { label: "specialities", path: "/specialities" },
   { label: "staffing", path: "/staffing" },
   { label: "team", path: "/team" },
@@ -421,8 +422,8 @@ export const BLOG = [
   { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI — they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
   { id: 3, category: "Healthcare", title: "Closing the Clinical Talent Gap in Europe", excerpt: "Cross-border clinician mobility, credentialing and retention strategies that work.", date: "May 28, 2026", read: "6 min", img: MEDIA.blog3 },
   { id: 4, category: "Renewable Energy", title: "Hiring for the Battery Storage Boom", excerpt: "PV and BESS specialists are the new bottleneck. How to build the team.", date: "May 19, 2026", read: "4 min", img: MEDIA.blog4 },
-  { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.blog1 },
-  { id: 6, category: "AI", title: "Evaluating LLMs Beyond the Leaderboard", excerpt: "Task-specific evals that actually predict production quality.", date: "Apr 30, 2026", read: "6 min", img: MEDIA.ai },
+  { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.blog5 },
+  { id: 6, category: "AI", title: "Evaluating LLMs Beyond the Leaderboard", excerpt: "Task-specific evals that actually predict production quality.", date: "Apr 30, 2026", read: "6 min", img: MEDIA.blog6 },
 ];
 
 // ── Values (from PDF) ───────────────────────────────────────────────────────

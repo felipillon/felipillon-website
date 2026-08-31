@@ -17,7 +17,6 @@ const COLS = [
     title: "Services",
     links: [
       { label: "Staffing & Recruitment", path: "/staffing" },
-      { label: "Technology Solutions", path: "/services" },
       { label: "Specialities", path: "/specialities" },
       { label: "Case Studies", path: "/case-studies" },
       { label: "Open Roles", path: "/open-roles" },
