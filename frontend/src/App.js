@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -46,9 +46,9 @@ const AnimatedRoutes = () => {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         {/* Redirect old/merged routes */}
-        <Route path="/industries" element={<Specialities />} />
-        <Route path="/innovation" element={<Specialities />} />
-        <Route path="/services" element={<Specialities />} />
+        <Route path="/industries" element={<Navigate to="/specialities" replace />} />
+        <Route path="/innovation" element={<Navigate to="/specialities" replace />} />
+        <Route path="/services" element={<Navigate to="/specialities" replace />} />
       </Routes>
     </AnimatePresence>
   );
