@@ -15,7 +15,8 @@ export default function Testimonials() {
   const tm = t.testimonials || {};
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState(null);
-  const activeItem = active !== null ? TESTIMONIALS[active] : null;
+  const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(tm.items?.[i] || {}) }));
+  const activeItem = active !== null ? testimonialItems[active] : null;
 
   useEffect(() => {
     const prevBg = document.body.style.background;
@@ -50,7 +51,7 @@ export default function Testimonials() {
       {/* ── Quote grid — click any card to zoom ── */}
       <section className="py-16 max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid sm:grid-cols-2 gap-5">
-          {TESTIMONIALS.map((item, i) => (
+          {testimonialItems.map((item, i) => (
             <Reveal key={i} delay={i * 0.08}>
               <motion.div
                 layoutId={`testimonial-page-${i}`}

@@ -181,26 +181,17 @@ export const Navbar = () => {
           <img
             src="/logo-new.png"
             alt="Felipillon"
+            style={{
+              filter: useDarkForeground
+                ? "brightness(0) drop-shadow(0 10px 22px rgba(61,35,20,0.2))"
+                : "brightness(0) saturate(100%) invert(63%) sepia(37%) saturate(830%) hue-rotate(4deg) brightness(91%) contrast(88%) drop-shadow(0 5px 8px rgba(0,0,0,0.72)) drop-shadow(0 16px 28px rgba(0,0,0,0.5))",
+            }}
             className={`
-              ${isFloating ? "h-16 sm:h-[72px]" : "h-[72px] sm:h-24"}
+              ${isFloating ? "h-14 sm:h-16" : "h-16 sm:h-20"}
               w-auto
               object-contain
               transition-all
               duration-500
-
-              ${
-                useDarkForeground
-                  ? `
-                    brightness-0
-                    drop-shadow-[0_10px_22px_rgba(61,35,20,0.2)]
-                  `
-                  : `
-                    brightness-0
-                    invert
-                    drop-shadow-[0_5px_8px_rgba(0,0,0,0.72)]
-                    drop-shadow-[0_16px_28px_rgba(0,0,0,0.5)]
-                  `
-              }
             `}
           />
         </Link>

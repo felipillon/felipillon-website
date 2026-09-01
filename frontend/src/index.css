@@ -217,35 +217,3 @@
 /* Hide scrollbar for horizontally-scrolling pill navs */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-.cursor-spotlight {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3;
-  transition: opacity 0.4s ease;
-}
-
-/* Custom cursor — only enabled on fine-pointer desktop devices via JS toggle */
-.felipillon-light-page.cursor-enabled { cursor: none; }
-.felipillon-light-page.cursor-enabled a,
-.felipillon-light-page.cursor-enabled button {
-  cursor: none;
-}
-
-.felipillon-light-page.cursor-enabled .chat-support-widget,
-.felipillon-light-page.cursor-enabled .chat-support-widget *,
-.felipillon-light-page.cursor-enabled .chat-support-widget a,
-.felipillon-light-page.cursor-enabled .chat-support-widget button,
-.felipillon-light-page.cursor-enabled .chat-support-widget textarea {
-  cursor: auto;
-}
-
-.felipillon-light-page.cursor-enabled .team-member-modal,
-.felipillon-light-page.cursor-enabled .team-member-modal * {
-  cursor: auto;
-}
-
-.felipillon-light-page.cursor-enabled .team-member-modal button,
-.felipillon-light-page.cursor-enabled .team-member-modal a {
-  cursor: pointer;
-}

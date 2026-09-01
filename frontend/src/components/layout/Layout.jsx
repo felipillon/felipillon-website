@@ -130,6 +130,7 @@ export const PageHero = ({ eyebrow, title, subtitle, children, img, tall = false
       >
         <span className="w-10 h-px bg-[#C9973A]" />
         <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9973A]">{eyebrow}</span>
+        <span className="w-10 h-px bg-[#C9973A]" />
       </motion.div>
 
       <motion.h1

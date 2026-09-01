@@ -5,34 +5,37 @@ import { MEDIA } from "../../data/content";
 
 const COLS = [
   {
-    title: "Company",
+    titleKey: "company",
     links: [
-      { label: "About", path: "/about" },
-      { label: "Team", path: "/team" },
-      { label: "Locations", path: "/locations" },
-      { label: "Blog", path: "/blog" },
+      { labelKey: "about", path: "/about" },
+      { labelKey: "team", path: "/team" },
+      { labelKey: "locations", path: "/locations" },
+      { labelKey: "blog", path: "/blog" },
     ],
   },
   {
-    title: "Specialities",
+    titleKey: "specialities",
     links: [
-      { label: "Specialities & Services", path: "/specialities" },
-      { label: "Staffing & Recruitment", path: "/staffing" },
-      { label: "Case Studies", path: "/case-studies" },
-      { label: "Open Roles", path: "/open-roles" },
+      { labelKey: "specialitiesServices", path: "/specialities" },
+      { labelKey: "staffingRecruitment", path: "/staffing" },
+      { labelKey: "caseStudies", path: "/case-studies" },
+      { labelKey: "openRoles", path: "/open-roles" },
     ],
   },
   {
-    title: "Legal",
+    titleKey: "legal",
     links: [
-      { label: "Impressum", path: "/impressum" },
-      { label: "Privacy Policy", path: "/privacy-policy" },
-      { label: "Terms of Service", path: "/terms" },
+      { labelKey: "impressum", path: "/impressum" },
+      { labelKey: "privacy", path: "/privacy-policy" },
+      { labelKey: "terms", path: "/terms" },
     ],
   },
 ];
 
 export const Footer = () => {
+  const { t } = useLang();
+  const f = t.footer || {};
+
   return (
     <footer className="relative border-t border-white/[0.06] mt-20 overflow-hidden" data-testid="footer">
       <div className="absolute inset-0 pointer-events-none">
@@ -59,7 +62,7 @@ export const Footer = () => {
               />
             </Link>
             <p className="text-sm text-white/68 leading-relaxed max-w-xs mb-6">
-              A global technology-driven services firm that builds software and deploys top talent to solve complex business challenges fast.
+              {f.description || "A global technology-driven services firm that builds software and deploys top talent to solve complex business challenges fast."}
             </p>
             <div className="space-y-2 mb-6">
               {[
@@ -86,13 +89,13 @@ export const Footer = () => {
             </div>
           </div>
           {COLS.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/52 mb-5">{col.title}</h4>
+            <div key={col.titleKey}>
+              <h4 className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/52 mb-5">{f[col.titleKey] || col.titleKey}</h4>
               <ul className="space-y-3">
-                {col.links.map(({label, path }) => (
+                {col.links.map(({labelKey, path }) => (
                   <li key={path}>
                     <Link to={path} className="group inline-flex items-center gap-1 text-sm text-white/68 hover:text-white transition-colors">
-                      {label}
+                      {f[labelKey] || labelKey}
                       <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     </Link>
                   </li>
@@ -110,16 +113,16 @@ export const Footer = () => {
             <Phone className="w-3.5 h-3.5" /> +49 30 000 0000
           </a>
           <Link to="/contact" className="flex items-center gap-2 text-xs text-white/62 hover:text-[#C9973A] transition-colors">
-            <MapPin className="w-3.5 h-3.5" /> Contact us
+            <MapPin className="w-3.5 h-3.5" /> {f.contactUs || "Contact us"}
           </Link>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>© 2026 Felipillon UG (haftungsbeschränkt). All rights reserved.</p>
+          <p>{f.copyright || "© 2026 Felipillon UG (haftungsbeschränkt). All rights reserved."}</p>
           <div className="flex gap-5">
             <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">{f.privacyShort || "Privacy"}</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">{f.termsShort || "Terms"}</Link>
           </div>
         </div>
       </div>

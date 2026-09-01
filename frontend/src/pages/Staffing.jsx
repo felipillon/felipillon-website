@@ -113,6 +113,7 @@ export default function Staffing() {
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{s.sectorsEyebrow}</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911]">{s.sectorsTitle}</h2>
           <p className="text-brown-500/50 mt-3 max-w-2xl">{s.sectorsSubtitle}</p>
@@ -181,6 +182,7 @@ export default function Staffing() {
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="w-10 h-px bg-gold" />
               <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{s.whyEyebrow}</span>
+              <span className="w-10 h-px bg-gold" />
             </div>
             <h2 className="font-heading text-4xl font-light tracking-[-0.04em] leading-[1.08] mb-6 text-[#231911]">{s.whyTitle}</h2>
             <div className="space-y-3 mb-10">

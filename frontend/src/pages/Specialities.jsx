@@ -161,6 +161,7 @@ export default function Specialities() {
                       <span className="text-[10px] font-bold tracking-[0.35em] uppercase" style={{ color: spec.color }}>
                         {s.eyebrow}
                       </span>
+                      <span className="w-10 h-px" style={{ background: spec.color }} />
                     </div>
                     <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911] mb-5">
                       {spec.name}
@@ -212,6 +213,7 @@ export default function Specialities() {
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">Beyond Staffing</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911] max-w-2xl">
             Technology &amp; growth services

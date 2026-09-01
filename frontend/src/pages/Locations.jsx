@@ -79,6 +79,7 @@ export default function Locations() {
                     <div className="inline-flex items-center gap-3 mb-6">
                       <span className="w-8 h-px bg-gold" />
                       <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{loc.role}</span>
+                      <span className="w-8 h-px bg-gold" />
                     </div>
                     <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911] mb-2">{loc.country}</h2>
                     <p className="text-gold-600 text-sm mb-8">{loc.entity}</p>
@@ -123,6 +124,7 @@ export default function Locations() {
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="w-10 h-px bg-gold" />
               <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{l.globalNetworkEyebrow}</span>
+              <span className="w-10 h-px bg-gold" />
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] mb-5 text-[#231911]">{l.globalNetworkTitle}</h2>
             <p className="text-brown-500/50 leading-relaxed mb-8">{l.globalNetworkDesc}</p>
