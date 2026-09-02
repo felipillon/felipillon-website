@@ -17,7 +17,7 @@ export const MEDIA = {
   aboutMission: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=85",
 
   // Staffing — human capital
-  staffing: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1400&q=85",
+  staffing: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=85",
   interview: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=85",
   handshake: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=85",
 
@@ -33,7 +33,7 @@ export const MEDIA = {
   trades: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1400&q=85",
 
   // Services / Technology
-  software: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1400&q=85",
+  software: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1400&q=85",
   ai: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1400&q=85",
   servers: "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?auto=format&fit=crop&w=1400&q=85",
   marketing: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1400&q=85",
@@ -50,9 +50,9 @@ export const MEDIA = {
   berlinOffice: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
   india: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1400&q=85",
   philippines: "https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=1400&q=85",
-  indiaLandmark: "https://images.unsplash.com/photo-1710582308582-55cc0c461c4e?auto=format&fit=crop&w=1600&q=85",
-  philippinesLandmark: "https://images.unsplash.com/photo-1526731955462-f6085f39e742?auto=format&fit=crop&w=1600&q=85",
-  italy: "https://images.unsplash.com/photo-1742148186848-8b257455009b?auto=format&fit=crop&w=1600&q=85",
+  indiaLandmark: "/indialocation.jpg",
+  philippinesLandmark: "/phillipines.jpg",
+  italy: "/italy.jpg",
   office: "https://images.pexels.com/photos/13219418/pexels-photo-13219418.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&dpr=2",
   officeWide: "https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1920&q=85",
 
@@ -61,8 +61,9 @@ export const MEDIA = {
   blog2: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=85",
   blog3: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=85",
   blog4: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=85",
-  blog5: "https://images.unsplash.com/photo-1619410283995-43d9134e7656?auto=format&fit=crop&w=800&q=85",
-  blog6: "https://images.unsplash.com/photo-1644088379091-d574269d422f?auto=format&fit=crop&w=800&q=85",
+  rag: "/rag.jpg",
+  llms: "/LLMS.jpg",
+  shippingScale: "/ShippingScale.jpg",
 };
 
 // ── Video background (hero) ─────────────────────────────────────────────────
@@ -88,15 +89,9 @@ export const HERO_VIDEO = {
 
 export const HERO_VIDEOS = [
   {
-    label: "Felipillon",
-    src: HERO_VIDEO.src,
-    poster: HERO_VIDEO.poster,
-    maxDuration: 7, // stop before logo appears at bottom
-  },
-  {
     label: "Construction",
-    src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
-    poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
+    src: "https://videos.pexels.com/video-files/3252575/3252575-hd_1920_1080_25fps.mp4",
+    poster: "https://images.pexels.com/videos/3252575/free-video-3252575.jpg?auto=compress&cs=tinysrgb&w=1920",
     maxDuration: 7,
   },
   {
@@ -167,7 +162,7 @@ export const SPECIALITIES = [
     color: "#C9973A",
     desc: "Surgeons, specialists and clinical professionals placed across leading hospital networks — permanent, locum and executive roles.",
     services: ["Surgical Teams", "ICU & Critical Care", "Medical Directors", "Allied Health", "Pharmacy & Lab"],
-    markets: ["Germany", "India", "Philippines"],
+    markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "120+",
     statLabel: "Clinicians placed",
   },
@@ -180,7 +175,7 @@ export const SPECIALITIES = [
     color: "#F59E0B",
     desc: "Certified tradespeople and technical specialists placed across manufacturing, maintenance and industrial sectors.",
     services: ["Electricians", "Welders", "HVAC Technicians", "Mechanics", "Industrial Operators"],
-    markets: ["Germany", "India", "Philippines"],
+    markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "200+",
     statLabel: "Tradespeople placed",
   },
@@ -193,7 +188,7 @@ export const SPECIALITIES = [
     color: "#10B981",
     desc: "Supply chain professionals and logistics coordinators driving operational efficiency at scale.",
     services: ["Supply Chain Managers", "Warehouse Supervisors", "Logistics Coordinators", "Fleet Managers", "Procurement"],
-    markets: ["Germany", "India", "Philippines"],
+    markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "80+",
     statLabel: "Operations roles filled",
   },
@@ -206,7 +201,7 @@ export const SPECIALITIES = [
     color: "#EF4444",
     desc: "Project leaders, site managers and skilled trades for large-scale infrastructure and commercial construction.",
     services: ["Project Directors", "Site Managers", "Civil Engineers", "Quantity Surveyors", "HSE Specialists"],
-    markets: ["Germany", "India", "Philippines"],
+    markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "60+",
     statLabel: "Projects staffed",
   },
@@ -219,7 +214,7 @@ export const SPECIALITIES = [
     color: "#3B82F6",
     desc: "PV, BESS and grid engineers powering the global energy transition. Roles from field technician to project director.",
     services: ["Solar PV Engineers", "Battery Storage", "Grid Engineers", "Wind Technicians", "Energy PMs"],
-    markets: ["Germany", "India", "Philippines"],
+    markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "45+",
     statLabel: "Energy engineers placed",
   },
@@ -232,7 +227,7 @@ export const SPECIALITIES = [
     color: "#8B5CF6",
     desc: "Software development, digital marketing, AI applications and CRM platforms — elite technical talent and custom-built solutions.",
     services: ["Software Development", "Digital Marketing", "AI Applications", "CRM Platforms", "IT Administration"],
-    markets: ["Germany", "India", "Philippines"],
+    markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "50+",
     statLabel: "Tech projects delivered",
   },
@@ -403,7 +398,7 @@ export const LOCATIONS = [
     city: "Makati City", country: "Philippines", role: "Asia-Pacific Operations",
     entity: "Felipillon OPC",
     tz: "PHT", addr: "3rd Floor, Salcedo One Center, 170 Salcedo Street, Makati City",
-    lat: 14.55, lng: 121.02, flag: "🇵🇭", img: MEDIA.philippinesLandmark,
+    lat: 14.55, lng: 121.02, flag: "PH", img: MEDIA.philippinesLandmark,
   },
   {
     city: "Italy", country: "Italy", role: "European Operations",
@@ -418,12 +413,12 @@ export const TRUSTED = ["NORDHEALTH", "SOLARIS ENERGY", "HELIX CLOUD", "BUILDWOR
 export const BLOG_CATEGORIES = ["All", "AI", "Recruitment", "Healthcare", "Renewable Energy", "Software Engineering"];
 
 export const BLOG = [
-  { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.blog1 },
+  { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.rag },
   { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI — they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
   { id: 3, category: "Healthcare", title: "Closing the Clinical Talent Gap in Europe", excerpt: "Cross-border clinician mobility, credentialing and retention strategies that work.", date: "May 28, 2026", read: "6 min", img: MEDIA.blog3 },
   { id: 4, category: "Renewable Energy", title: "Hiring for the Battery Storage Boom", excerpt: "PV and BESS specialists are the new bottleneck. How to build the team.", date: "May 19, 2026", read: "4 min", img: MEDIA.blog4 },
-  { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.blog5 },
-  { id: 6, category: "AI", title: "Evaluating LLMs Beyond the Leaderboard", excerpt: "Task-specific evals that actually predict production quality.", date: "Apr 30, 2026", read: "6 min", img: MEDIA.blog6 },
+  { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.shippingScale },
+  { id: 6, category: "AI", title: "Evaluating LLMs Beyond the Leaderboard", excerpt: "Task-specific evals that actually predict production quality.", date: "Apr 30, 2026", read: "6 min", img: MEDIA.llms },
 ];
 
 // ── Values (from PDF) ───────────────────────────────────────────────────────
@@ -435,7 +430,7 @@ export const VALUES = [
 ];
 
 export const TIMELINE = [
-  { year: "2019", title: "Founded in Germany", desc: "Felipillon launches as a specialist healthcare recruitment firm in Berlin." },
+  { year: "Founded", title: "Founded in Germany", desc: "Felipillon launches as a specialist healthcare recruitment firm in Berlin, Germany." },
   { year: "2021", title: "Technology Division", desc: "Software development, digital marketing and AI practice established." },
   { year: "2023", title: "India Hub Opens", desc: "Felipillon Innovation Pvt. Ltd. opens in Pune — engineering and delivery centre." },
   { year: "2024", title: "Philippines Expansion", desc: "Felipillon OPC opens in Makati City — Asia-Pacific operations hub." },

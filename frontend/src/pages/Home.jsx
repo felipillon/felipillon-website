@@ -141,8 +141,9 @@ const Hero = () => {
               ref={(el) => { videoRefs.current[i] = el; }}
               muted
               playsInline
+              autoPlay
+              preload={i === 0 ? "auto" : "metadata"}
               poster={v.poster}
-              preload={i <= 1 ? "auto" : "metadata"}
               className="absolute inset-0 w-full h-full object-cover"
             >
               <source src={v.src} type="video/mp4" />
@@ -192,7 +193,6 @@ const Hero = () => {
             {...entrance(0.08)}
             className="inline-flex items-center gap-2.5 mb-6"
           >
-            <span className="w-9 h-px bg-gold" />
             <span className="text-gold-300 text-[10px] font-bold tracking-[0.35em] uppercase">
               {t.hero?.badge || "Germany · India · Philippines · Italy"}
             </span>
@@ -370,6 +370,7 @@ const WhoWeAre = () => {
           <div className="inline-flex items-center gap-3 mb-6">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{w.eyebrow}</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.06] mb-6 text-[#231911]">
             {w.title}
@@ -420,19 +421,20 @@ const OrbitCard = ({ item, index, count, rotation, radius, cardW, cardH, onOpen,
       }}
     >
       <img src={item.img} alt={name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/30 to-black/5" />
+      {/* Stronger gradient for guaranteed readability on any image */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
 
       <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
         <div>
           <div className="mb-2">
-            <span className="text-xl sm:text-2xl font-heading font-light text-gold-300">{item.stat}</span>
-            <span className="text-xs sm:text-sm text-white/50 ml-1.5">{statLabel}</span>
+            <span className="text-xl sm:text-2xl font-heading font-medium text-gold-200 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">{item.stat}</span>
+            <span className="text-xs sm:text-sm font-semibold text-[#FFF7E6] ml-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{statLabel}</span>
           </div>
-          <h4 className="font-heading text-white text-base sm:text-lg font-medium mb-1.5">{name}</h4>
-          <p className="text-white/55 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-2 hidden sm:block">{desc}</p>
+          <h4 className="font-heading text-white text-base sm:text-lg font-semibold mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">{name}</h4>
+          <p className="text-[#FFF7E6] text-xs sm:text-sm font-medium leading-relaxed line-clamp-2 mb-2 hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{desc}</p>
           <div
-            className="flex items-center gap-1.5 text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ color: item.color }}
+            className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#FFE29A] opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]"
           >
             Explore <ArrowUpRight className="w-3.5 h-3.5" />
           </div>
@@ -449,7 +451,29 @@ const SpecialitiesSection = () => {
   const navigate = useNavigate();
   const rotation = useMotionValue(0);
   const controlsRef = useRef(null);
+  const stageRef = useRef(null);
+  const wheelResumeRef = useRef(null);
+  const isCarouselHoveredRef = useRef(false);
   const [radius, setRadius] = useState(210);
+
+  const startAutoRotation = () => {
+    controlsRef.current?.stop();
+    controlsRef.current = animate(rotation, rotation.get() - 360, { duration: 46, repeat: Infinity, ease: "linear" });
+  };
+
+  const rotateFromWheel = (e) => {
+    const rawDelta = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (rawDelta === 0) return;
+
+    controlsRef.current?.stop();
+    rotation.set(rotation.get() - rawDelta * 0.28);
+
+    if (wheelResumeRef.current) {
+      window.clearTimeout(wheelResumeRef.current);
+    }
+
+    wheelResumeRef.current = window.setTimeout(startAutoRotation, 900);
+  };
 
   useEffect(() => {
     const setR = () => {
@@ -462,8 +486,27 @@ const SpecialitiesSection = () => {
   }, []);
 
   useEffect(() => {
-    controlsRef.current = animate(rotation, rotation.get() - 360, { duration: 46, repeat: Infinity, ease: "linear" });
-    return () => controlsRef.current?.stop();
+    startAutoRotation();
+    return () => {
+      controlsRef.current?.stop();
+      if (wheelResumeRef.current) {
+        window.clearTimeout(wheelResumeRef.current);
+      }
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const onWheel = (e) => {
+      if (!isCarouselHoveredRef.current) return;
+      e.preventDefault();
+      rotateFromWheel(e);
+    };
+
+    stage.addEventListener("wheel", onWheel, { passive: false });
+    return () => stage.removeEventListener("wheel", onWheel);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const cardW = radius < 220 ? 165 : radius < 290 ? 205 : radius < 360 ? 250 : 295;
@@ -479,6 +522,7 @@ const SpecialitiesSection = () => {
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">
               {t.specialities?.eyebrow || "Specialities"}
             </span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.03em] max-w-3xl leading-[1.06] text-[#231911]">
             {t.specialities?.title || "Where we deliver results"}
@@ -487,10 +531,17 @@ const SpecialitiesSection = () => {
       </div>
 
       <div
+        ref={stageRef}
         className="relative isolate mx-auto flex items-center justify-center select-none"
         style={{ height: stageSize, maxWidth: stageSize }}
-        onMouseEnter={() => controlsRef.current?.pause()}
-        onMouseLeave={() => controlsRef.current?.play()}
+        onMouseEnter={() => {
+          isCarouselHoveredRef.current = true;
+          controlsRef.current?.pause();
+        }}
+        onMouseLeave={() => {
+          isCarouselHoveredRef.current = false;
+          controlsRef.current?.play();
+        }}
       >
         {SPECIALITIES.map((item, i) => (
           <OrbitCard
@@ -508,36 +559,77 @@ const SpecialitiesSection = () => {
         ))}
       </div>
 
-      <p className="text-center text-xs text-brown-500/35 mt-8 tracking-wide">Hover to pause · click a card to explore</p>
+      {/* ── Prev / Next navigation buttons ── */}
+      <div className="flex items-center justify-center gap-4 mt-6">
+        <button
+          onClick={() => {
+            controlsRef.current?.stop();
+            rotation.set(rotation.get() + (360 / SPECIALITIES.length));
+            setTimeout(startAutoRotation, 1200);
+          }}
+          className="w-11 h-11 rounded-full border border-brown-500/20 bg-white shadow-sm flex items-center justify-center text-brown-500/60 hover:text-[#231911] hover:border-gold/50 hover:shadow-[0_4px_16px_-4px_rgba(201,151,58,0.35)] transition-all duration-200"
+          aria-label="Previous speciality"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        <button
+          onClick={() => navigate("/specialities")}
+          className="px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
+        >
+          {t.specialities?.explore || "Explore All"}
+        </button>
+
+        <button
+          onClick={() => {
+            controlsRef.current?.stop();
+            rotation.set(rotation.get() - (360 / SPECIALITIES.length));
+            setTimeout(startAutoRotation, 1200);
+          }}
+          className="w-11 h-11 rounded-full border border-brown-500/20 bg-white shadow-sm flex items-center justify-center text-brown-500/60 hover:text-[#231911] hover:border-gold/50 hover:shadow-[0_4px_16px_-4px_rgba(201,151,58,0.35)] transition-all duration-200"
+          aria-label="Next speciality"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+
     </section>
   );
 };
 
 // ── Quote break ───────────────────────────────────────────────────────────
-const PhotoBreak = () => (
-  <div className="max-w-7xl mx-auto px-6 sm:px-8">
-    <div className="relative h-[46vh] min-h-[340px] overflow-hidden rounded-[2.5rem] shadow-[0_30px_70px_-20px_rgba(61,35,20,0.3)]">
-      <img src={MEDIA.officeWide} alt="Felipillon office" className="w-full h-full object-cover" loading="lazy" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <Reveal>
-          <blockquote className="text-center max-w-3xl px-8">
-            <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-relaxed tracking-[-0.02em]">
-              "We focus on real business problems, not just services. Long-term value over short-term fees."
-            </p>
-            <cite className="block mt-6 text-gold-300 text-sm tracking-widest not-italic">
-              — Ketan Bhanudas Barve, CEO
-            </cite>
-          </blockquote>
-        </Reveal>
+const PhotoBreak = () => {
+  const { t } = useLang();
+  return (
+    <div className="max-w-7xl mx-auto px-6 sm:px-8">
+      <div className="relative h-[46vh] min-h-[340px] overflow-hidden rounded-[2.5rem] shadow-[0_30px_70px_-20px_rgba(61,35,20,0.3)]">
+        <img src={MEDIA.officeWide} alt="Felipillon office" className="w-full h-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Reveal>
+            <blockquote className="text-center max-w-3xl px-8">
+              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-relaxed tracking-[-0.02em]">
+                "{t.quoteBreak?.quote || "We focus on real business problems, not just services. Long-term value over short-term fees."}"
+              </p>
+              <cite className="block mt-6 text-gold-300 text-sm tracking-widest not-italic">
+                {t.quoteBreak?.cite || "— Ketan Bhanudas Barve, CEO"}
+              </cite>
+            </blockquote>
+          </Reveal>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ── Why section ───────────────────────────────────────────────────────────
 const WhySection = () => {
   const { t } = useLang();
+  const whyCards = t.why?.cards || [];
   return (
     <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8">
       <Reveal className="mb-14">
@@ -546,6 +638,7 @@ const WhySection = () => {
           <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">
             {t.why?.eyebrow || "Why Felipillon"}
           </span>
+          <span className="w-10 h-px bg-gold" />
         </div>
         <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.03em] max-w-2xl leading-[1.06] text-[#231911]">
           {t.why?.title || "Built for enterprises that can't afford to compromise"}
@@ -553,17 +646,19 @@ const WhySection = () => {
       </Reveal>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {WHY.map((w, i) => (
+        {WHY.map((w, i) => {
+          const translated = whyCards[i] || {};
+          return (
           <Reveal key={w.title} delay={i * 0.07}>
             <GlowCard variant="light" className="p-7 h-full group">
               <div className="w-11 h-11 rounded-xl bg-gold/10 border border-gold/25 flex items-center justify-center mb-5 group-hover:bg-gold/15 transition-colors">
                 <w.icon className="w-5 h-5 text-gold-600" />
               </div>
-              <h4 className="font-heading text-lg font-medium mb-2 text-[#231911]">{w.title}</h4>
-              <p className="text-sm text-brown-500/50 leading-relaxed">{w.desc}</p>
+              <h4 className="font-heading text-lg font-medium mb-2 text-[#231911]">{translated.title || w.title}</h4>
+              <p className="text-sm text-brown-500/50 leading-relaxed">{translated.desc || w.desc}</p>
             </GlowCard>
           </Reveal>
-        ))}
+        )})}
       </div>
     </section>
   );
@@ -605,7 +700,8 @@ const MetricsSection = () => {
 const TestimonialsSection = () => {
   const { t } = useLang();
   const [active, setActive] = useState(null);
-  const activeItem = active !== null ? TESTIMONIALS[active] : null;
+  const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(t.testimonials?.items?.[i] || {}) }));
+  const activeItem = active !== null ? testimonialItems[active] : null;
 
   return (
     <section className="py-24 sm:py-32 max-w-7xl mx-auto px-6 sm:px-8">
@@ -615,6 +711,7 @@ const TestimonialsSection = () => {
           <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">
             {t.testimonials?.eyebrow || "Testimonials"}
           </span>
+          <span className="w-10 h-px bg-gold" />
         </div>
         <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.06] text-[#231911]">
           {t.testimonials?.title || "Trusted by the people we serve"}
@@ -622,7 +719,7 @@ const TestimonialsSection = () => {
       </Reveal>
 
       <div className="grid md:grid-cols-2 gap-5">
-        {TESTIMONIALS.map((tm, i) => (
+        {testimonialItems.map((tm, i) => (
           <Reveal key={i} delay={i * 0.1}>
             <motion.div
               layoutId={`testimonial-${i}`}
@@ -729,6 +826,7 @@ const FootprintSection = () => {
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">
               {t.footprint?.eyebrow || "Global Footprint"}
             </span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.06] mb-5 text-[#231911]">
             {t.footprint?.title || "Four countries. One seamless network."}
@@ -738,10 +836,10 @@ const FootprintSection = () => {
           </p>
 
           {[
-            { flag: "🇩🇪", country: "Germany", entity: "Felipillon UG", role: "Global Headquarters", img: MEDIA.berlin },
-            { flag: "🇮🇳", country: "India", entity: "Felipillon Innovation Pvt. Ltd.", role: "Technology Hub", img: MEDIA.india },
-            { flag: "🇵🇭", country: "Philippines", entity: "Felipillon OPC", role: "Asia-Pacific Operations", img: MEDIA.philippines },
-            { flag: "🇮🇹", country: "Italy", entity: "New Office", role: "European Operations", img: MEDIA.italy },
+            { code: "DE", country: t.footprint?.germany || "Germany", entity: "Felipillon UG", role: t.footprint?.globalHeadquarters || "Global Headquarters", img: MEDIA.berlin },
+            { code: "IN", country: t.footprint?.india || "India", entity: "Felipillon Innovation Pvt. Ltd.", role: t.footprint?.techHub || "Technology Hub", img: MEDIA.india },
+            { code: "PH", country: t.footprint?.philippines || "Philippines", entity: "Felipillon OPC", role: t.footprint?.apacOperations || "Asia-Pacific Operations", img: MEDIA.philippinesLandmark },
+            { code: "IT", country: t.footprint?.italy || "Italy", entity: t.footprint?.newOffice || "New Office", role: t.footprint?.europeanOperations || "European Operations", img: MEDIA.italy },
           ].map((loc, i) => (
             <Reveal key={loc.country} delay={i * 0.1}>
               <div className="flex items-center gap-4 p-4 mb-3 rounded-2xl bg-white border border-brown-500/[0.06] shadow-[0_4px_18px_-8px_rgba(61,35,20,0.15)] hover:border-gold/30 hover:shadow-[0_10px_30px_-8px_rgba(201,151,58,0.25)] transition-all duration-300 group">
@@ -750,7 +848,7 @@ const FootprintSection = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">{loc.flag}</span>
+                    <span className="inline-flex items-center justify-center w-6 h-4 text-[9px] font-bold tracking-wider bg-brown-500/8 rounded text-brown-500/60">{loc.code}</span>
                     <span className="font-medium text-[#231911] text-sm">{loc.country}</span>
                     <span className="text-xs text-gold-600">· {loc.role}</span>
                   </div>
@@ -780,20 +878,33 @@ const CTASection = () => {
         <video autoPlay muted loop playsInline poster={MEDIA.aboutTeam} className="absolute inset-0 w-full h-full object-cover">
           <source src={VIDEO_BG} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#150D07]/92 via-[#150D07]/75 to-[#150D07]/30" />
+
+        {/* Layer 1 — base dark wash so no video frame ever shows white */}
+        <div className="absolute inset-0 bg-[#0D0A07]/55" />
+        {/* Layer 2 — strong left-to-right directional gradient for the text area */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(13,8,4,0.96) 0%, rgba(13,8,4,0.82) 45%, rgba(13,8,4,0.45) 75%, rgba(13,8,4,0.22) 100%)" }} />
+        {/* Layer 3 — bottom fade for clean blend into footer */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,8,4,0.5) 0%, transparent 35%)" }} />
+
         <div className="relative px-10 sm:px-16 py-20 max-w-2xl">
           <Reveal>
-            <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.06] mb-5 text-white">
+            <h2
+              className="font-heading text-4xl sm:text-5xl font-medium tracking-[-0.02em] leading-[1.06] mb-5 text-white"
+              style={{ textShadow: "0 2px 18px rgba(0,0,0,0.95), 0 1px 6px rgba(0,0,0,0.9)" }}
+            >
               {t.cta?.title || "Let's build your competitive advantage"}
             </h2>
-            <p className="text-white/55 mb-8 leading-relaxed">
+            <p
+              className="text-white/95 font-medium mb-8 leading-relaxed"
+              style={{ textShadow: "0 1px 12px rgba(0,0,0,0.9)" }}
+            >
               {t.cta?.sub || "Whether you need elite talent or transformative software, our teams are ready."}
             </p>
             <div className="flex flex-wrap gap-4">
               <MagneticButton to="/contact" variant="primary" icon={ArrowRight}>
                 {t.cta?.btn1 || "Send Inquiry"}
               </MagneticButton>
-              <MagneticButton to="/open-roles" variant="secondary">
+              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08] border-white/35 font-semibold text-white backdrop-blur-none hover:bg-[#231911]">
                 {t.cta?.btn2 || "View Open Roles"}
               </MagneticButton>
             </div>

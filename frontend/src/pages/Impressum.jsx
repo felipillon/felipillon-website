@@ -6,6 +6,21 @@ import { CursorFollower } from "../components/shared/CursorFollower";
 import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { ScrollProgress } from "../components/shared/ScrollProgress";
 import { useLang } from "../context/LangContext";
+import { Mail } from "lucide-react";
+
+// ── Social icon — SVG inline so we can use exact brand logos ────────────────
+const SocialLink = ({ href, label, children }) => (
+  <a
+    href={href}
+    target={href.startsWith("mailto") ? undefined : "_blank"}
+    rel="noopener noreferrer"
+    aria-label={label}
+    className="w-11 h-11 rounded-full border border-brown-500/15 flex items-center justify-center text-brown-500/50 hover:text-[#231911] hover:border-gold/50 hover:bg-gold/5 transition-all duration-200"
+    style={{ cursor: "pointer" }}
+  >
+    {children}
+  </a>
+);
 
 const Field = ({ label, value, placeholder }) => (
   <div className="mb-2 last:mb-0">
@@ -79,7 +94,7 @@ export default function Impressum() {
         {/* ── Sticky table of contents ── */}
         <div className="hidden lg:block">
           <div className="lg:sticky lg:top-28 space-y-1">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/30 mb-3">On this page</p>
+            <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/30 mb-3">{t.impressum?.onThisPage || "On this page"}</p>
             {SECTIONS.map((s) => (
               <a key={s.id} href={`#${s.id}`}
                 className="block px-3 py-2 rounded-lg text-sm text-brown-500/50 hover:text-[#231911] hover:bg-white transition-colors">
@@ -150,6 +165,56 @@ export default function Impressum() {
 
             <div className="mt-10 pt-6 border-t border-brown-500/[0.08] text-xs text-brown-500/35 space-y-1">
               <p>{t.impressum?.warn1 || "Fields highlighted in gold are placeholders and must be completed."}</p>
+            </div>
+
+            {/* ── Social Media ── */}
+            <div className="mt-8 pt-6 border-t border-brown-500/[0.08]">
+              <p className="text-xs text-brown-500/40 uppercase tracking-wide mb-4">{t.impressum?.followUs || "Follow Us"}</p>
+              <div className="flex flex-wrap gap-3">
+                {/* LinkedIn */}
+                <SocialLink href="https://www.linkedin.com/company/felipillon" label="LinkedIn">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </SocialLink>
+                {/* X (formerly Twitter) */}
+                <SocialLink href="https://x.com/felipillon" label="X (Twitter)">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </SocialLink>
+                {/* Email */}
+                <SocialLink href="mailto:hello@felipillon.com" label="Email">
+                  <Mail className="w-4 h-4" />
+                </SocialLink>
+                {/* Instagram */}
+                <SocialLink href="https://www.instagram.com/felipillon" label="Instagram">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                  </svg>
+                </SocialLink>
+                {/* Facebook */}
+                <SocialLink href="https://www.facebook.com/felipillon" label="Facebook">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                  </svg>
+                </SocialLink>
+                {/* Indeed */}
+                <SocialLink href="https://www.indeed.com/cmp/felipillon" label="Indeed">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 4a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM9 8v12H7V8h2zm4-4h2v16h-2V4z"/>
+                  </svg>
+                </SocialLink>
+                {/* Glassdoor */}
+                <SocialLink href="https://www.glassdoor.com/Overview/Working-at-felipillon" label="Glassdoor">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V8h2v9zm4 0h-2V8h2v9z"/>
+                  </svg>
+                </SocialLink>
+              </div>
             </div>
 
           </GlowCard>

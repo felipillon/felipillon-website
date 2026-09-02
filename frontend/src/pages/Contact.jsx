@@ -17,6 +17,7 @@ const SERVICES_OPTIONS = [
   "Digital Marketing",
   "AI Applications",
   "CRM Platforms",
+  "Looking for a Job",
   "Other",
 ];
 

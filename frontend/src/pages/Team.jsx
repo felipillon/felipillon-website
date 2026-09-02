@@ -145,6 +145,7 @@ export default function Team() {
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{tm.leadershipEyebrow}</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{tm.leadershipTitle}</h2>
         </Reveal>
@@ -196,7 +197,7 @@ export default function Team() {
             {[
               { val: 30, suffix: "+", label: tm.teamMembers || "Employees" },
               { val: 5,  suffix: "",  label: tm.departments },
-              { val: 3,  suffix: "",  label: tm.countries },
+              { val: 4,  suffix: "",  label: tm.countries },
             ].map((m) => (
               <Reveal key={m.label}>
                 <div className="font-heading text-5xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent">
@@ -215,6 +216,7 @@ export default function Team() {
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{tm.deptsEyebrow}</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{tm.deptsTitle}</h2>
         </Reveal>

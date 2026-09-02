@@ -7,6 +7,7 @@ export const SectionHeading = ({ eyebrow, title, subtitle, center = false, class
         <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.25em] uppercase text-emerald-500 mb-4">
           <span className="w-6 h-px bg-emerald-500" />
           {eyebrow}
+          <span className="w-6 h-px bg-emerald-500" />
         </span>
       </Reveal>
     )}

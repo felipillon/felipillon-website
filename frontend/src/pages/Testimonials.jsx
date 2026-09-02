@@ -15,7 +15,8 @@ export default function Testimonials() {
   const tm = t.testimonials || {};
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState(null);
-  const activeItem = active !== null ? TESTIMONIALS[active] : null;
+  const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(tm.items?.[i] || {}) }));
+  const activeItem = active !== null ? testimonialItems[active] : null;
 
   useEffect(() => {
     const prevBg = document.body.style.background;
@@ -50,7 +51,7 @@ export default function Testimonials() {
       {/* ── Quote grid — click any card to zoom ── */}
       <section className="py-16 max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid sm:grid-cols-2 gap-5">
-          {TESTIMONIALS.map((item, i) => (
+          {testimonialItems.map((item, i) => (
             <Reveal key={i} delay={i * 0.08}>
               <motion.div
                 layoutId={`testimonial-page-${i}`}
@@ -93,9 +94,15 @@ export default function Testimonials() {
               layoutId={`testimonial-page-${active}`}
               onClick={(e) => e.stopPropagation()}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full p-9 sm:p-12"
+              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full p-9 sm:p-12 cursor-auto"
+              style={{ cursor: "auto" }}
             >
-              <button onClick={() => setActive(null)} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors" aria-label="Close">
+              <button
+                onClick={() => setActive(null)}
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
+                style={{ cursor: "pointer" }}
+                aria-label="Close"
+              >
                 <X className="w-4 h-4" />
               </button>
               <p className="text-gold text-xl mb-6">★★★★★</p>

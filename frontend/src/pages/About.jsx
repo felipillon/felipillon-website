@@ -85,6 +85,7 @@ export default function About() {
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="w-10 h-px bg-gold" />
               <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{a.missionEyebrow}</span>
+              <span className="w-10 h-px bg-gold" />
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] mb-6 text-[#231911]">
               {a.missionTitle}
@@ -137,7 +138,7 @@ export default function About() {
             {[
               { val: 500, suf: "+", label: t.metrics?.placementsMade },
               { val: 50,  suf: "+", label: t.metrics?.projectsDelivered },
-              { val: 3,   suf: "",  label: t.metrics?.countryOffices },
+              { val: 4,   suf: "",  label: t.metrics?.countryOffices },
               { val: 95,  suf: "%", label: t.metrics?.clientSatisfaction },
             ].map((m, i) => (
               <Reveal key={i} delay={i * 0.1}>
@@ -159,6 +160,7 @@ export default function About() {
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{a.valuesEyebrow}</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{a.valuesTitle}</h2>
         </Reveal>
@@ -181,6 +183,7 @@ export default function About() {
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
             <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">Culture</span>
+            <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">Life at Felipillon</h2>
         </Reveal>
@@ -221,6 +224,7 @@ export default function About() {
               <div className="inline-flex items-center gap-3 mb-5">
                 <span className="w-10 h-px bg-gold" />
                 <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{a.journeyEyebrow}</span>
+                <span className="w-10 h-px bg-gold" />
               </div>
               <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{a.journeyTitle}</h2>
             </Reveal>
