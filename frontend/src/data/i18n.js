@@ -105,7 +105,11 @@ export const TRANSLATIONS = {
       startConversation: "Start a Conversation",
       viewCaseStudies: "View Case Studies",
       items: [
+<<<<<<< HEAD
         { quote: "Felipillon placed three surgeons in a single quarter, and every one of them stayed. Their screening is on another level.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+=======
+        { quote: "Felipillon placed three surgeons in a single quarter — and every one of them stayed. Their screening is on another level.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "The AI assistant Felipillon built cut our support resolution time by more than half. Flawless delivery, on time and on budget.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone we've worked with.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "They don't feel like a vendor. They feel like part of our team. Exceptional people, exceptional work.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -120,7 +124,11 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "About Felipillon",
       title: "Connecting people with opportunity across borders, industries and disciplines",
+<<<<<<< HEAD
       subtitle: "Felipillon has grown from a Berlin recruitment specialist into a global force in talent and technology solutions.",
+=======
+      subtitle: "Since 2019, Felipillon has grown from a Berlin recruitment specialist into a global force in talent and technology solutions.",
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Our Mission",
       missionTitle: "To become the most trusted global partner for talent",
       missionBody1: "We bring together people, process and technology to help businesses grow faster and work smarter. Not by selling services, by solving real business problems.",
@@ -433,7 +441,11 @@ export const TRANSLATIONS = {
       startConversation: "Gespräch beginnen",
       viewCaseStudies: "Fallstudien ansehen",
       items: [
+<<<<<<< HEAD
         { quote: "Felipillon hat drei Chirurgen in einem einzigen Quartal vermittelt, und alle sind geblieben. Das Screening ist auf einem anderen Niveau.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+=======
+        { quote: "Felipillon hat drei Chirurgen in einem einzigen Quartal vermittelt — und alle sind geblieben. Das Screening ist auf einem anderen Niveau.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "Der von Felipillon entwickelte KI-Assistent hat unsere Support-Lösungszeit mehr als halbiert. Fehlerfreie Lieferung, pünktlich und im Budget.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "Vom Briefing zur Shortlist in 4 Tagen. Felipillon versteht Enterprise-Hiring besser als jeder andere Partner, mit dem wir gearbeitet haben.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Sie fühlen sich nicht wie ein Dienstleister an. Sie fühlen sich wie Teil unseres Teams an. Außergewöhnliche Menschen, außergewöhnliche Arbeit.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -448,7 +460,11 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "Über Felipillon",
       title: "Menschen mit Chancen über Grenzen, Branchen und Disziplinen hinweg verbinden",
+<<<<<<< HEAD
       subtitle: "Felipillon hat sich vom Berliner Recruitingspezialisten zu einer globalen Kraft in Talent- und Technologielösungen entwickelt.",
+=======
+      subtitle: "Seit 2019 hat sich Felipillon vom Berliner Recruitingspezialisten zu einer globalen Kraft in Talent- und Technologielösungen entwickelt.",
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Unsere Mission",
       missionTitle: "Der vertrauenswürdigste globale Partner für Talente zu werden",
       missionBody1: "Wir bringen Menschen, Prozesse und Technologie zusammen, um Unternehmen schneller wachsen und klüger arbeiten zu lassen. Nicht durch den Verkauf von Dienstleistungen, sondern durch das Lösen echter Geschäftsprobleme.",
@@ -761,7 +777,11 @@ export const TRANSLATIONS = {
       startConversation: "Inizia una conversazione",
       viewCaseStudies: "Vedi casi studio",
       items: [
+<<<<<<< HEAD
         { quote: "Felipillon ha inserito tre chirurghi in un solo trimestre, e tutti sono rimasti. Il loro screening è di un altro livello.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+=======
+        { quote: "Felipillon ha inserito tre chirurghi in un solo trimestre — e tutti sono rimasti. Il loro screening è di un altro livello.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "L'assistente IA costruito da Felipillon ha più che dimezzato i nostri tempi di risoluzione del supporto. Consegna impeccabile, nei tempi e nel budget.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "Dal brief alla shortlist in 4 giorni. Felipillon capisce l'hiring enterprise meglio di qualsiasi partner con cui abbiamo lavorato.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Non sembrano un fornitore. Sembrano parte del nostro team. Persone eccezionali, lavoro eccezionale.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -776,7 +796,11 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "Chi è Felipillon",
       title: "Connettere persone con opportunità oltre confini, settori e discipline",
+<<<<<<< HEAD
       subtitle: "Felipillon è cresciuta da specialista di recruiting a Berlino a forza globale nelle soluzioni di talento e tecnologia.",
+=======
+      subtitle: "Dal 2019, Felipillon è cresciuta da specialista di recruiting a Berlino a forza globale nelle soluzioni di talento e tecnologia.",
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "La nostra missione",
       missionTitle: "Diventare il partner globale più affidabile per i talenti",
       missionBody1: "Uniamo persone, processi e tecnologia per aiutare le aziende a crescere più velocemente e lavorare in modo più intelligente.",
@@ -1089,7 +1113,11 @@ export const TRANSLATIONS = {
       startConversation: "Начать разговор",
       viewCaseStudies: "Смотреть кейсы",
       items: [
+<<<<<<< HEAD
         { quote: "Felipillon разместил трёх хирургов за один квартал, и каждый из них остался. Их проверка кандидатов на совершенно другом уровне.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+=======
+        { quote: "Felipillon разместил трёх хирургов за один квартал — и каждый из них остался. Их проверка кандидатов на совершенно другом уровне.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "ИИ-ассистент, созданный Felipillon, сократил время решения обращений поддержки более чем вдвое. Безупречная поставка, вовремя и в рамках бюджета.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "От брифа до шортлиста за 4 дня. Felipillon понимает enterprise-найм лучше всех, с кем мы работали.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Они не ощущаются как подрядчик. Они ощущаются как часть нашей команды. Исключительные люди, исключительная работа.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -1104,7 +1132,11 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "О Felipillon",
       title: "Соединяем людей с возможностями через границы, отрасли и дисциплины",
+<<<<<<< HEAD
       subtitle: "Felipillon выросла от берлинского специалиста по рекрутингу до глобальной силы в решениях для талантов и технологий.",
+=======
+      subtitle: "С 2019 года Felipillon выросла от берлинского специалиста по рекрутингу до глобальной силы в решениях для талантов и технологий.",
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Наша миссия",
       missionTitle: "Стать самым надёжным глобальным партнёром по талантам",
       missionBody1: "Мы объединяем людей, процессы и технологии, чтобы помочь бизнесу расти быстрее и работать умнее. Не продавая услуги, а решая реальные бизнес-задачи.",
@@ -1417,7 +1449,11 @@ export const TRANSLATIONS = {
       startConversation: "Görüşmeye Başlayın",
       viewCaseStudies: "Vaka Analizlerini Görüntüle",
       items: [
+<<<<<<< HEAD
         { quote: "Felipillon tek bir çeyrekte üç cerrah yerleştirdi, ve hepsi kaldı. Tarama süreçleri bambaşka bir seviyede.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+=======
+        { quote: "Felipillon tek bir çeyrekte üç cerrah yerleştirdi — ve hepsi kaldı. Tarama süreçleri bambaşka bir seviyede.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "Felipillon'un geliştirdiği yapay zeka asistanı destek çözüm süremizi yarıdan fazla azalttı. Kusursuz teslimat, zamanında ve bütçeye uygun.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "Brief'ten kısa listeye 4 günde ulaştık. Felipillon kurumsal işe alımı çalıştığımız herkesten daha iyi anlıyor.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Bir tedarikçi gibi hissettirmiyorlar. Ekibimizin bir parçası gibiler. Olağanüstü insanlar, olağanüstü iş.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -1432,7 +1468,11 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "Felipillon Hakkında",
       title: "İnsanları sınırlar, sektörler ve disiplinler arasında fırsatlarla buluşturuyoruz",
+<<<<<<< HEAD
       subtitle: "Felipillon, Berlin merkezli bir işe alım uzmanından yetenek ve teknoloji çözümlerinde küresel bir güce dönüştü.",
+=======
+      subtitle: "2019'dan bu yana Felipillon, Berlin merkezli bir işe alım uzmanından yetenek ve teknoloji çözümlerinde küresel bir güce dönüştü.",
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Misyonumuz",
       missionTitle: "Yetenek alanında en güvenilir küresel ortak olmak",
       missionBody1: "İşletmelerin daha hızlı büyümesine ve daha akıllıca çalışmasına yardımcı olmak için insanları, süreçleri ve teknolojiyi bir araya getiriyoruz. Hizmet satarak değil, gerçek iş problemlerini çözerek.",

@@ -559,6 +559,7 @@ const SpecialitiesSection = () => {
         ))}
       </div>
 
+<<<<<<< HEAD
       {/* ── Prev / Next navigation buttons ── */}
       <div className="flex items-center justify-center gap-4 mt-6">
         <button
@@ -597,6 +598,8 @@ const SpecialitiesSection = () => {
         </button>
       </div>
 
+=======
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
     </section>
   );
 };
@@ -836,10 +839,17 @@ const FootprintSection = () => {
           </p>
 
           {[
+<<<<<<< HEAD
             { code: "DE", country: t.footprint?.germany || "Germany", entity: "Felipillon UG", role: t.footprint?.globalHeadquarters || "Global Headquarters", img: MEDIA.berlin },
             { code: "IN", country: t.footprint?.india || "India", entity: "Felipillon Innovation Pvt. Ltd.", role: t.footprint?.techHub || "Technology Hub", img: MEDIA.india },
             { code: "PH", country: t.footprint?.philippines || "Philippines", entity: "Felipillon OPC", role: t.footprint?.apacOperations || "Asia-Pacific Operations", img: MEDIA.philippinesLandmark },
             { code: "IT", country: t.footprint?.italy || "Italy", entity: t.footprint?.newOffice || "New Office", role: t.footprint?.europeanOperations || "European Operations", img: MEDIA.italy },
+=======
+            { flag: "🇩🇪", country: t.footprint?.germany || "Germany", entity: "Felipillon UG", role: t.footprint?.globalHeadquarters || "Global Headquarters", img: MEDIA.berlin },
+            { flag: "🇮🇳", country: t.footprint?.india || "India", entity: "Felipillon Innovation Pvt. Ltd.", role: t.footprint?.techHub || "Technology Hub", img: MEDIA.india },
+            { flag: "🇵🇭", country: t.footprint?.philippines || "Philippines", entity: "Felipillon OPC", role: t.footprint?.apacOperations || "Asia-Pacific Operations", img: MEDIA.philippinesLandmark },
+            { flag: "🇮🇹", country: t.footprint?.italy || "Italy", entity: t.footprint?.newOffice || "New Office", role: t.footprint?.europeanOperations || "European Operations", img: MEDIA.italy },
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
           ].map((loc, i) => (
             <Reveal key={loc.country} delay={i * 0.1}>
               <div className="flex items-center gap-4 p-4 mb-3 rounded-2xl bg-white border border-brown-500/[0.06] shadow-[0_4px_18px_-8px_rgba(61,35,20,0.15)] hover:border-gold/30 hover:shadow-[0_10px_30px_-8px_rgba(201,151,58,0.25)] transition-all duration-300 group">
@@ -848,7 +858,10 @@ const FootprintSection = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
+<<<<<<< HEAD
                     <span className="inline-flex items-center justify-center w-6 h-4 text-[9px] font-bold tracking-wider bg-brown-500/8 rounded text-brown-500/60">{loc.code}</span>
+=======
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
                     <span className="font-medium text-[#231911] text-sm">{loc.country}</span>
                     <span className="text-xs text-gold-600">· {loc.role}</span>
                   </div>
@@ -888,6 +901,7 @@ const CTASection = () => {
 
         <div className="relative px-10 sm:px-16 py-20 max-w-2xl">
           <Reveal>
+<<<<<<< HEAD
             <h2
               className="font-heading text-4xl sm:text-5xl font-medium tracking-[-0.02em] leading-[1.06] mb-5 text-white"
               style={{ textShadow: "0 2px 18px rgba(0,0,0,0.95), 0 1px 6px rgba(0,0,0,0.9)" }}
@@ -898,6 +912,12 @@ const CTASection = () => {
               className="text-white/95 font-medium mb-8 leading-relaxed"
               style={{ textShadow: "0 1px 12px rgba(0,0,0,0.9)" }}
             >
+=======
+            <h2 className="font-heading text-4xl sm:text-5xl font-medium tracking-[-0.02em] leading-[1.06] mb-5 text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.85)]">
+              {t.cta?.title || "Let's build your competitive advantage"}
+            </h2>
+            <p className="text-white/90 font-medium mb-8 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+>>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
               {t.cta?.sub || "Whether you need elite talent or transformative software, our teams are ready."}
             </p>
             <div className="flex flex-wrap gap-4">
