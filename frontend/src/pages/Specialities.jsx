@@ -7,6 +7,7 @@ import { CursorFollower } from "../components/shared/CursorFollower";
 import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { ScrollProgress } from "../components/shared/ScrollProgress";
 import { SPECIALITIES, MEDIA, SPECIALITY_VIDEOS, SERVICES } from "../data/content";
+import { CARD_TEXT } from "../data/cardTranslations";
 import { ArrowRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
 
@@ -20,8 +21,9 @@ const TECH_STACK = ["React", "TypeScript", "Next.js", "Python", "FastAPI", "Post
 const TOTAL_PLACED = 200;
 
 export default function Specialities() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const s = t.specialities || {};
+  const ct = CARD_TEXT[lang]?.specialities || {};
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function Specialities() {
               <span className="font-heading text-4xl sm:text-5xl font-light text-gold-600">
                 <Counter value={TOTAL_PLACED} suffix="+" />
               </span>
-              <span className="text-sm text-brown-500/50 max-w-[10rem] leading-snug">people and projects placed across all specialities</span>
+              <span className="text-sm text-brown-500/50 max-w-[10rem] leading-snug">{s.placedLabel || "people and projects placed across all specialities"}</span>
             </div>
           </Reveal>
         </div>
@@ -66,20 +68,23 @@ export default function Specialities() {
       {/* ── Quick jump ── */}
       <div className="sticky top-[68px] z-30 bg-[#FBF8F3]/90 backdrop-blur-md border-y border-brown-500/[0.07]">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-3 flex items-center gap-2 overflow-x-auto no-scrollbar">
-          {SPECIALITIES.map((spec) => (
-            <a
-              key={spec.id}
-              href={`#${spec.id}`}
-              className="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
-            >
-              {spec.name}
-            </a>
-          ))}
+          {SPECIALITIES.map((spec) => {
+            const trName = ct[spec.id]?.name || spec.name;
+            return (
+              <a
+                key={spec.id}
+                href={`#${spec.id}`}
+                className="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
+              >
+                {trName}
+              </a>
+            );
+          })}
           <a
             href="#technology-growth-services"
             className="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
           >
-            Technology & Growth Services
+            {s.techGrowthLabel || "Technology & Growth Services"}
           </a>
         </div>
       </div>
@@ -87,7 +92,9 @@ export default function Specialities() {
       {/* ── At a glance — comparison grid ── */}
       <section className="py-16 max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {SPECIALITIES.map((spec, i) => (
+          {SPECIALITIES.map((spec, i) => {
+            const trName = ct[spec.id]?.name || spec.name;
+            return (
             <Reveal key={spec.id} delay={i * 0.05}>
               <a href={`#${spec.id}`} className="group block">
                 <motion.div
@@ -99,17 +106,22 @@ export default function Specialities() {
                     style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
                     <spec.icon className="w-5 h-5" style={{ color: spec.color }} />
                   </div>
-                  <p className="text-xs font-medium text-[#231911]">{spec.name}</p>
+                  <p className="text-xs font-medium text-[#231911]">{trName}</p>
                 </motion.div>
               </a>
             </Reveal>
-          ))}
+          );})}
         </div>
       </section>
 
       {/* ── Per-speciality — sticky image, scrolling detail panel ── */}
       {SPECIALITIES.map((spec, i) => {
         const isEven = i % 2 === 0;
+        const tr = ct[spec.id] || {};
+        const trName = tr.name || spec.name;
+        const trDesc = tr.desc || spec.desc;
+        const trServices = tr.services || spec.services;
+        const trMarkets = tr.markets || spec.markets;
         return (
           <section key={spec.id} id={spec.id} className="relative py-10 scroll-mt-24" data-testid={`speciality-${spec.id}`}>
             <div className="max-w-7xl mx-auto px-6 sm:px-8">
@@ -138,7 +150,7 @@ export default function Specialities() {
                             <source src={SPECIALITY_VIDEOS[spec.id].src} type="video/mp4" />
                           </video>
                         ) : (
-                          <img src={spec.imgWide || spec.img} alt={spec.name} className="w-full h-full object-cover" loading="lazy" />
+                          <img src={spec.imgWide || spec.img} alt={trName} className="w-full h-full object-cover" loading="lazy" />
                         )}
                       </motion.div>
                     </motion.div>
@@ -146,7 +158,7 @@ export default function Specialities() {
                     <div className="absolute bottom-6 left-6">
                       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/95 backdrop-blur-md shadow-lg">
                         <spec.icon className="w-4 h-4" style={{ color: spec.color }} />
-                        <span className="text-sm font-medium text-[#231911]">{spec.name}</span>
+                        <span className="text-sm font-medium text-[#231911]">{trName}</span>
                       </div>
                     </div>
                   </div>
@@ -162,14 +174,14 @@ export default function Specialities() {
                       <span className="w-10 h-px" style={{ background: spec.color }} />
                     </div>
                     <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911] mb-5">
-                      {spec.name}
+                      {trName}
                     </h2>
-                    <p className="text-brown-500/55 leading-relaxed mb-8">{spec.desc}</p>
+                    <p className="text-brown-500/55 leading-relaxed mb-8">{trDesc}</p>
 
                     <div className="mb-8">
                       <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/35 mb-4">{s.services}</p>
                       <div className="space-y-2.5">
-                        {spec.services.map((svc) => (
+                        {trServices.map((svc) => (
                           <div key={svc} className="text-sm text-brown-500/60">
                             {svc}
                           </div>
@@ -180,7 +192,7 @@ export default function Specialities() {
                     <div className="mb-8">
                       <p className="text-[10px] tracking-[0.25em] uppercase text-brown-500/35 mb-4">{s.markets}</p>
                       <div className="flex gap-3">
-                        {spec.markets.map((m) => (
+                        {trMarkets.map((m) => (
                           <span key={m} className="text-xs text-brown-500/45">
                             {m}
                           </span>
@@ -204,25 +216,28 @@ export default function Specialities() {
         );
       })}
 
-      {/* ── Beyond staffing — Technology & Growth Services (merged in from
-           the old standalone Services page) ── */}
+      {/* ── Beyond staffing — Technology & Growth Services ── */}
       <section id="technology-growth-services" className="py-20 max-w-7xl mx-auto px-6 sm:px-8 scroll-mt-24">
         <Reveal className="mb-12">
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
-            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">Beyond Staffing</span>
+            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{s.beyondEyebrow || "Beyond Staffing"}</span>
             <span className="w-10 h-px bg-gold" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] leading-[1.06] text-[#231911] max-w-2xl">
-            Technology &amp; growth services
+            {s.beyondTitle || "Technology & growth services"}
           </h2>
           <p className="text-brown-500/50 mt-3 max-w-2xl">
-            Beyond placing talent, Felipillon builds the software and drives the growth strategy behind it.
+            {s.beyondDesc || "Beyond placing talent, Felipillon builds the software and drives the growth strategy behind it."}
           </p>
         </Reveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {BUSINESS_SERVICES.map((svc, i) => (
+          {BUSINESS_SERVICES.map((svc, i) => {
+            const trSvc = (CARD_TEXT[lang]?.services || [])[i + 1] || {};
+            const svcTitle = trSvc.title || svc.title;
+            const svcDesc = trSvc.desc || svc.desc;
+            return (
             <Reveal key={svc.title} delay={i * 0.07}>
               <motion.div
                 whileHover={{ y: -6 }}
@@ -230,32 +245,32 @@ export default function Specialities() {
                 className="group relative rounded-2xl overflow-hidden bg-white border border-brown-500/[0.07] hover:border-gold/30 shadow-[0_4px_18px_-8px_rgba(61,35,20,0.12)] hover:shadow-[0_16px_40px_-12px_rgba(201,151,58,0.25)] transition-shadow duration-500 h-full"
               >
                 <div className="relative h-40 overflow-hidden">
-                  <img src={svc.img} alt={svc.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  <img src={svc.img} alt={svcTitle} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
                   <div className="absolute bottom-4 left-4 w-11 h-11 rounded-xl bg-white/92 backdrop-blur-sm border border-white/70 flex items-center justify-center shadow-lg">
                     <svc.icon className="w-5 h-5 text-gold-600" />
                   </div>
                 </div>
                 <div className="p-7">
-                  <h3 className="font-heading text-xl font-medium mb-3 text-[#231911]">{svc.title}</h3>
-                  <p className="text-sm text-brown-500/45 leading-relaxed">{svc.desc}</p>
+                  <h3 className="font-heading text-xl font-medium mb-3 text-[#231911]">{svcTitle}</h3>
+                  <p className="text-sm text-brown-500/45 leading-relaxed">{svcDesc}</p>
                 </div>
                 <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 transition-all duration-500 bg-gold" />
               </motion.div>
             </Reveal>
-          ))}
+          );})}
         </div>
 
         <Reveal className="mt-14">
           <div className="rounded-2xl bg-white border border-brown-500/[0.07] p-7 sm:p-8 shadow-[0_4px_18px_-10px_rgba(61,35,20,0.15)]">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-7">
               <div className="max-w-md">
-                <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600 mb-3">Tech Stack</p>
+                <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600 mb-3">{s.techStackLabel || "Tech Stack"}</p>
                 <h3 className="font-heading text-2xl sm:text-3xl font-light tracking-[-0.03em] text-[#231911]">
-                  Modern by default
+                  {s.techStackTitle || "Modern by default"}
                 </h3>
                 <p className="mt-3 text-sm text-brown-500/50 leading-relaxed">
-                  Production-grade platforms built for scale, security and maintainable delivery.
+                  {s.techStackDesc || "Production-grade platforms built for scale, security and maintainable delivery."}
                 </p>
               </div>
               <div className="flex flex-wrap gap-2.5 lg:max-w-2xl">

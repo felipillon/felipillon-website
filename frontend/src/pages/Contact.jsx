@@ -11,7 +11,7 @@ import { Send, MapPin, Mail, Phone, User, Building2, MessageSquare, CheckCircle2
 import { toast } from "sonner";
 import { useLang } from "../context/LangContext";
 
-const SERVICES_OPTIONS = [
+const SERVICES_VALUES = [
   "Staffing & Recruitment",
   "Software Development",
   "Digital Marketing",
@@ -21,7 +21,7 @@ const SERVICES_OPTIONS = [
   "Other",
 ];
 
-const EMPTY = { name: "", email: "", company: "", service: SERVICES_OPTIONS[0], message: "" };
+const EMPTY = { name: "", email: "", company: "", service: SERVICES_VALUES[0], message: "" };
 
 export default function Contact() {
   const { t } = useLang();
@@ -199,7 +199,11 @@ export default function Contact() {
                       <label className="text-[10px] uppercase tracking-[0.2em] text-brown-500/40 block mb-2">{c.service}</label>
                       <select value={form.service} onChange={set("service")} data-testid="contact-service"
                         className="w-full px-4 py-3.5 rounded-xl bg-cream-100/60 border border-brown-500/[0.1] focus:border-gold/60 outline-none transition-colors text-[#231911] text-sm">
-                        {SERVICES_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
+                        {SERVICES_VALUES.map((val, i) => (
+                          <option key={val} value={val}>
+                            {(c.serviceOptions && c.serviceOptions[i]) || val}
+                          </option>
+                        ))}
                       </select>
                     </div>
 

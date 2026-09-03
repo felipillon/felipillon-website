@@ -7,6 +7,7 @@ import { CursorFollower } from "../components/shared/CursorFollower";
 import { SPECIALITIES, MEDIA, STAFFING_VIDEO_BG } from "../data/content";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
+import { CARD_TEXT } from "../data/cardTranslations";
 
 const STAFFING_SECTORS = SPECIALITIES.filter(s => s.id !== "technology");
 
@@ -33,10 +34,11 @@ const TiltPanel = ({ children, className = "", strength = 6 }) => {
 };
 
 export default function Staffing() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const s = t.staffing || {};
   const p = s.process || {};
   const stats = s.stats || {};
+  const ct = CARD_TEXT[lang]?.specialities || {};
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -119,7 +121,12 @@ export default function Staffing() {
           <p className="text-brown-500/50 mt-3 max-w-2xl">{s.sectorsSubtitle}</p>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {STAFFING_SECTORS.map((spec, i) => (
+          {STAFFING_SECTORS.map((spec, i) => {
+            const tr = ct[spec.id] || {};
+            const name = tr.name || spec.name;
+            const desc = tr.desc || spec.desc;
+            const services = tr.services || spec.services;
+            return (
             <Reveal key={spec.id} delay={i * 0.07}>
               <motion.div
                 whileHover={{ y: -4 }}
@@ -130,10 +137,10 @@ export default function Staffing() {
                 <div className="relative">
                   <div className="flex-1">
                     <div className="mb-4 h-1 w-12 rounded-full" style={{ background: spec.color }} />
-                    <h3 className="font-heading text-xl font-medium text-[#231911] mb-2">{spec.name}</h3>
-                    <p className="text-sm text-brown-500/50 leading-relaxed mb-4">{spec.desc}</p>
+                    <h3 className="font-heading text-xl font-medium text-[#231911] mb-2">{name}</h3>
+                    <p className="text-sm text-brown-500/50 leading-relaxed mb-4">{desc}</p>
                     <div className="flex flex-wrap gap-1.5">
-                      {spec.services.map(sv => (
+                      {services.map(sv => (
                         <span key={sv} className="px-2.5 py-1 rounded-full border border-brown-500/[0.1] text-[10px] text-brown-500/45">
                           {sv}
                         </span>
@@ -145,7 +152,7 @@ export default function Staffing() {
                   style={{ background: spec.color }} />
               </motion.div>
             </Reveal>
-          ))}
+          );})}
         </div>
       </section>
 
@@ -186,13 +193,13 @@ export default function Staffing() {
             </div>
             <h2 className="font-heading text-4xl font-light tracking-[-0.04em] leading-[1.08] mb-6 text-[#231911]">{s.whyTitle}</h2>
             <div className="space-y-3 mb-10">
-              {[
+              {(s.whyBullets || [
                 "People Match AI scans 50+ global platforms for the best fit",
                 "Specialist recruiters with lived sector experience",
                 "Shortlists delivered in days, not weeks",
-                "Follow-the-sun coverage across Germany, India and Philippines",
-              ].map((text) => (
-                <div key={text} className="flex items-start gap-3">
+                "Follow-the-sun coverage across Germany, India, Philippines and Italy",
+              ]).map((text, i) => (
+                <div key={i} className="flex items-start gap-3">
                   <span className="mt-2 h-px w-8 shrink-0 bg-gold" />
                   <p className="text-brown-500/60 text-sm leading-relaxed">{text}</p>
                 </div>
@@ -206,8 +213,8 @@ export default function Staffing() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-white/95 backdrop-blur-md rounded-xl p-5 shadow-lg">
-                  <p className="text-sm text-brown-500/70 italic">"From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone."</p>
-                  <p className="text-xs text-gold-600 mt-3 font-medium">— Priya Nair, Head of Talent, Solaris Energy</p>
+                  <p className="text-sm text-brown-500/70 italic">"{s.testimonialQuote || "From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone."}"</p>
+                  <p className="text-xs text-gold-600 mt-3 font-medium">— {s.testimonialAuthor || "Priya Nair, Head of Talent, Solaris Energy"}</p>
                 </div>
               </div>
             </TiltPanel>

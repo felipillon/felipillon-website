@@ -216,8 +216,5 @@
 
 /* Hide scrollbar for horizontally-scrolling pill navs */
 .no-scrollbar::-webkit-scrollbar { display: none; }
-<<<<<<< HEAD
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-=======
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222

@@ -46,6 +46,14 @@ export const TRANSLATIONS = {
       dontSeeDesc: "We're expanding into new industries regularly. Contact us to discuss your specific requirements.",
       discussNeeds: "Discuss Your Needs",
       viewStaffing: "View Staffing Services",
+      placedLabel: "people and projects placed across all specialities",
+      techGrowthLabel: "Technology & Growth Services",
+      beyondEyebrow: "Beyond Staffing",
+      beyondTitle: "Technology & growth services",
+      beyondDesc: "Beyond placing talent, Felipillon builds the software and drives the growth strategy behind it.",
+      techStackLabel: "Tech Stack",
+      techStackTitle: "Modern by default",
+      techStackDesc: "Production-grade platforms built for scale, security and maintainable delivery.",
     },
     why: {
       eyebrow: "Why Felipillon",
@@ -105,11 +113,7 @@ export const TRANSLATIONS = {
       startConversation: "Start a Conversation",
       viewCaseStudies: "View Case Studies",
       items: [
-<<<<<<< HEAD
         { quote: "Felipillon placed three surgeons in a single quarter, and every one of them stayed. Their screening is on another level.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
-=======
-        { quote: "Felipillon placed three surgeons in a single quarter — and every one of them stayed. Their screening is on another level.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "The AI assistant Felipillon built cut our support resolution time by more than half. Flawless delivery, on time and on budget.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone we've worked with.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "They don't feel like a vendor. They feel like part of our team. Exceptional people, exceptional work.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -124,11 +128,7 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "About Felipillon",
       title: "Connecting people with opportunity across borders, industries and disciplines",
-<<<<<<< HEAD
       subtitle: "Felipillon has grown from a Berlin recruitment specialist into a global force in talent and technology solutions.",
-=======
-      subtitle: "Since 2019, Felipillon has grown from a Berlin recruitment specialist into a global force in talent and technology solutions.",
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Our Mission",
       missionTitle: "To become the most trusted global partner for talent",
       missionBody1: "We bring together people, process and technology to help businesses grow faster and work smarter. Not by selling services, by solving real business problems.",
@@ -166,6 +166,14 @@ export const TRANSLATIONS = {
       processTitle: "From brief to offer in days, not months",
       whyEyebrow: "Why Felipillon",
       whyTitle: "Built for enterprises that can't afford to compromise",
+      whyBullets: [
+        "People Match AI scans 50+ global platforms for the best fit",
+        "Specialist recruiters with lived sector experience",
+        "Shortlists delivered in days, not weeks",
+        "Follow-the-sun coverage across Germany, India, Philippines and Italy",
+      ],
+      testimonialQuote: "From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone.",
+      testimonialAuthor: "Priya Nair, Head of Talent, Solaris Energy",
       startConversation: "Start a Conversation",
       stats: {
         placements: "Placements Made",
@@ -279,6 +287,7 @@ export const TRANSLATIONS = {
       service: "Service",
       message: "Message",
       messagePlaceholder: "Tell us how we can help...",
+      serviceOptions: ["Staffing & Recruitment", "Software Development", "Digital Marketing", "AI Applications", "CRM Platforms", "Looking for a Job / Career Opportunities", "Other"],
       sendInquiry: "Send Inquiry",
       sending: "Sending...",
       successTitle: "Message received",
@@ -382,6 +391,14 @@ export const TRANSLATIONS = {
       dontSeeDesc: "Wir expandieren regelmäßig in neue Branchen. Kontaktieren Sie uns, um Ihre spezifischen Anforderungen zu besprechen.",
       discussNeeds: "Bedürfnisse besprechen",
       viewStaffing: "Personalleistungen ansehen",
+      placedLabel: "Menschen und Projekte in allen Fachbereichen vermittelt",
+      techGrowthLabel: "Technologie & Wachstumsservices",
+      beyondEyebrow: "Über Personalvermittlung hinaus",
+      beyondTitle: "Technologie- und Wachstumsservices",
+      beyondDesc: "Über die Vermittlung von Talenten hinaus entwickelt Felipillon Software und treibt die dahinterstehende Wachstumsstrategie voran.",
+      techStackLabel: "Tech Stack",
+      techStackTitle: "Modern als Standard",
+      techStackDesc: "Produktionsreife Plattformen, entwickelt für Skalierbarkeit, Sicherheit und wartbare Lieferung.",
     },
     why: {
       eyebrow: "Warum Felipillon",
@@ -441,11 +458,7 @@ export const TRANSLATIONS = {
       startConversation: "Gespräch beginnen",
       viewCaseStudies: "Fallstudien ansehen",
       items: [
-<<<<<<< HEAD
         { quote: "Felipillon hat drei Chirurgen in einem einzigen Quartal vermittelt, und alle sind geblieben. Das Screening ist auf einem anderen Niveau.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
-=======
-        { quote: "Felipillon hat drei Chirurgen in einem einzigen Quartal vermittelt — und alle sind geblieben. Das Screening ist auf einem anderen Niveau.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "Der von Felipillon entwickelte KI-Assistent hat unsere Support-Lösungszeit mehr als halbiert. Fehlerfreie Lieferung, pünktlich und im Budget.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "Vom Briefing zur Shortlist in 4 Tagen. Felipillon versteht Enterprise-Hiring besser als jeder andere Partner, mit dem wir gearbeitet haben.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Sie fühlen sich nicht wie ein Dienstleister an. Sie fühlen sich wie Teil unseres Teams an. Außergewöhnliche Menschen, außergewöhnliche Arbeit.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -460,11 +473,7 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "Über Felipillon",
       title: "Menschen mit Chancen über Grenzen, Branchen und Disziplinen hinweg verbinden",
-<<<<<<< HEAD
       subtitle: "Felipillon hat sich vom Berliner Recruitingspezialisten zu einer globalen Kraft in Talent- und Technologielösungen entwickelt.",
-=======
-      subtitle: "Seit 2019 hat sich Felipillon vom Berliner Recruitingspezialisten zu einer globalen Kraft in Talent- und Technologielösungen entwickelt.",
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Unsere Mission",
       missionTitle: "Der vertrauenswürdigste globale Partner für Talente zu werden",
       missionBody1: "Wir bringen Menschen, Prozesse und Technologie zusammen, um Unternehmen schneller wachsen und klüger arbeiten zu lassen. Nicht durch den Verkauf von Dienstleistungen, sondern durch das Lösen echter Geschäftsprobleme.",
@@ -502,6 +511,14 @@ export const TRANSLATIONS = {
       processTitle: "Vom Briefing zum Angebot in Tagen, nicht Monaten",
       whyEyebrow: "Warum Felipillon",
       whyTitle: "Für Unternehmen, die keine Kompromisse eingehen können",
+      whyBullets: [
+        "People Match AI durchsucht über 50 globale Plattformen nach dem besten Match",
+        "Spezialisierte Recruiter mit gelebter Branchenerfahrung",
+        "Shortlists in Tagen, nicht Wochen",
+        "Follow-the-Sun-Abdeckung in Deutschland, Indien, Philippinen und Italien",
+      ],
+      testimonialQuote: "Vom Briefing zur Shortlist in 4 Tagen. Felipillon versteht Enterprise-Hiring besser als alle anderen.",
+      testimonialAuthor: "Priya Nair, Head of Talent, Solaris Energy",
       startConversation: "Gespräch beginnen",
       stats: {
         placements: "Durchgeführte Vermittlungen",
@@ -615,6 +632,7 @@ export const TRANSLATIONS = {
       service: "Leistung",
       message: "Nachricht",
       messagePlaceholder: "Wie können wir helfen?",
+      serviceOptions: ["Personalvermittlung & Recruiting", "Softwareentwicklung", "Digitales Marketing", "KI-Anwendungen", "CRM-Plattformen", "Jobsuche / Karrieremöglichkeiten", "Sonstiges"],
       sendInquiry: "Anfrage senden",
       sending: "Wird gesendet...",
       successTitle: "Nachricht erhalten",
@@ -718,6 +736,14 @@ export const TRANSLATIONS = {
       dontSeeDesc: "Stiamo espandendoci in nuovi settori regolarmente. Contattaci per discutere i tuoi requisiti specifici.",
       discussNeeds: "Discuti le tue esigenze",
       viewStaffing: "Vedi servizi di personale",
+      placedLabel: "persone e progetti collocati in tutte le specialità",
+      techGrowthLabel: "Tecnologia e Servizi di Crescita",
+      beyondEyebrow: "Oltre il Personale",
+      beyondTitle: "Servizi tecnologici e di crescita",
+      beyondDesc: "Oltre a collocare talenti, Felipillon costruisce il software e guida la strategia di crescita.",
+      techStackLabel: "Stack Tecnologico",
+      techStackTitle: "Moderno per default",
+      techStackDesc: "Piattaforme di livello produttivo costruite per scalabilità, sicurezza e consegna manutenibile.",
     },
     why: {
       eyebrow: "Perché Felipillon",
@@ -777,11 +803,7 @@ export const TRANSLATIONS = {
       startConversation: "Inizia una conversazione",
       viewCaseStudies: "Vedi casi studio",
       items: [
-<<<<<<< HEAD
         { quote: "Felipillon ha inserito tre chirurghi in un solo trimestre, e tutti sono rimasti. Il loro screening è di un altro livello.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
-=======
-        { quote: "Felipillon ha inserito tre chirurghi in un solo trimestre — e tutti sono rimasti. Il loro screening è di un altro livello.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "L'assistente IA costruito da Felipillon ha più che dimezzato i nostri tempi di risoluzione del supporto. Consegna impeccabile, nei tempi e nel budget.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "Dal brief alla shortlist in 4 giorni. Felipillon capisce l'hiring enterprise meglio di qualsiasi partner con cui abbiamo lavorato.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Non sembrano un fornitore. Sembrano parte del nostro team. Persone eccezionali, lavoro eccezionale.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -796,11 +818,7 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "Chi è Felipillon",
       title: "Connettere persone con opportunità oltre confini, settori e discipline",
-<<<<<<< HEAD
       subtitle: "Felipillon è cresciuta da specialista di recruiting a Berlino a forza globale nelle soluzioni di talento e tecnologia.",
-=======
-      subtitle: "Dal 2019, Felipillon è cresciuta da specialista di recruiting a Berlino a forza globale nelle soluzioni di talento e tecnologia.",
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "La nostra missione",
       missionTitle: "Diventare il partner globale più affidabile per i talenti",
       missionBody1: "Uniamo persone, processi e tecnologia per aiutare le aziende a crescere più velocemente e lavorare in modo più intelligente.",
@@ -838,6 +856,14 @@ export const TRANSLATIONS = {
       processTitle: "Dal briefing all'offerta in giorni, non mesi",
       whyEyebrow: "Perché Felipillon",
       whyTitle: "Costruito per aziende che non possono permettersi compromessi",
+      whyBullets: [
+        "People Match AI esplora oltre 50 piattaforme globali per trovare il profilo migliore",
+        "Recruiter specializzati con esperienza diretta nel settore",
+        "Shortlist consegnate in giorni, non settimane",
+        "Copertura follow-the-sun in Germania, India, Filippine e Italia",
+      ],
+      testimonialQuote: "Dal brief alla shortlist in 4 giorni. Felipillon capisce l'hiring enterprise meglio di chiunque altro.",
+      testimonialAuthor: "Priya Nair, Head of Talent, Solaris Energy",
       startConversation: "Inizia una conversazione",
       stats: {
         placements: "Collocamenti effettuati",
@@ -951,6 +977,7 @@ export const TRANSLATIONS = {
       service: "Servizio",
       message: "Messaggio",
       messagePlaceholder: "Come possiamo aiutarti?",
+      serviceOptions: ["Selezione del Personale", "Sviluppo Software", "Marketing Digitale", "Applicazioni AI", "Piattaforme CRM", "Cerca Lavoro / Opportunità di Carriera", "Altro"],
       sendInquiry: "Invia richiesta",
       sending: "Invio in corso...",
       successTitle: "Messaggio ricevuto",
@@ -1054,6 +1081,14 @@ export const TRANSLATIONS = {
       dontSeeDesc: "Мы регулярно расширяемся в новые отрасли. Свяжитесь с нами, чтобы обсудить ваши конкретные требования.",
       discussNeeds: "Обсудить потребности",
       viewStaffing: "Услуги по подбору персонала",
+      placedLabel: "людей и проектов трудоустроено по всем направлениям",
+      techGrowthLabel: "Технологии и рост",
+      beyondEyebrow: "Больше чем рекрутинг",
+      beyondTitle: "Технологические и бизнес-услуги",
+      beyondDesc: "Помимо подбора персонала, Felipillon разрабатывает программное обеспечение и реализует стратегию роста.",
+      techStackLabel: "Технологический стек",
+      techStackTitle: "Современный по умолчанию",
+      techStackDesc: "Производственные платформы, созданные для масштабирования, безопасности и удобного сопровождения.",
     },
     why: {
       eyebrow: "Почему Felipillon",
@@ -1113,11 +1148,7 @@ export const TRANSLATIONS = {
       startConversation: "Начать разговор",
       viewCaseStudies: "Смотреть кейсы",
       items: [
-<<<<<<< HEAD
         { quote: "Felipillon разместил трёх хирургов за один квартал, и каждый из них остался. Их проверка кандидатов на совершенно другом уровне.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
-=======
-        { quote: "Felipillon разместил трёх хирургов за один квартал — и каждый из них остался. Их проверка кандидатов на совершенно другом уровне.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "ИИ-ассистент, созданный Felipillon, сократил время решения обращений поддержки более чем вдвое. Безупречная поставка, вовремя и в рамках бюджета.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "От брифа до шортлиста за 4 дня. Felipillon понимает enterprise-найм лучше всех, с кем мы работали.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Они не ощущаются как подрядчик. Они ощущаются как часть нашей команды. Исключительные люди, исключительная работа.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -1132,11 +1163,7 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "О Felipillon",
       title: "Соединяем людей с возможностями через границы, отрасли и дисциплины",
-<<<<<<< HEAD
       subtitle: "Felipillon выросла от берлинского специалиста по рекрутингу до глобальной силы в решениях для талантов и технологий.",
-=======
-      subtitle: "С 2019 года Felipillon выросла от берлинского специалиста по рекрутингу до глобальной силы в решениях для талантов и технологий.",
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Наша миссия",
       missionTitle: "Стать самым надёжным глобальным партнёром по талантам",
       missionBody1: "Мы объединяем людей, процессы и технологии, чтобы помочь бизнесу расти быстрее и работать умнее. Не продавая услуги, а решая реальные бизнес-задачи.",
@@ -1174,6 +1201,14 @@ export const TRANSLATIONS = {
       processTitle: "От брифинга до предложения за дни, а не месяцы",
       whyEyebrow: "Почему Felipillon",
       whyTitle: "Создано для компаний, которые не идут на компромисс",
+      whyBullets: [
+        "People Match AI сканирует более 50 глобальных платформ для поиска лучшего кандидата",
+        "Специализированные рекрутеры с реальным отраслевым опытом",
+        "Шортлисты за дни, а не недели",
+        "Follow-the-sun покрытие в Германии, Индии, Филиппинах и Италии",
+      ],
+      testimonialQuote: "От брифа до шортлиста за 4 дня. Felipillon понимает корпоративный найм лучше всех.",
+      testimonialAuthor: "Priya Nair, Head of Talent, Solaris Energy",
       startConversation: "Начать разговор",
       stats: {
         placements: "Выполнено размещений",
@@ -1287,6 +1322,7 @@ export const TRANSLATIONS = {
       service: "Услуга",
       message: "Сообщение",
       messagePlaceholder: "Как мы можем помочь?",
+      serviceOptions: ["Подбор персонала", "Разработка ПО", "Цифровой маркетинг", "ИИ-приложения", "CRM-платформы", "Поиск работы / Карьерные возможности", "Другое"],
       sendInquiry: "Отправить запрос",
       sending: "Отправка...",
       successTitle: "Сообщение получено",
@@ -1390,6 +1426,14 @@ export const TRANSLATIONS = {
       dontSeeDesc: "Düzenli olarak yeni sektörlere açılıyoruz. Özel ihtiyaçlarınızı görüşmek için bizimle iletişime geçin.",
       discussNeeds: "İhtiyaçlarınızı Görüşün",
       viewStaffing: "İşe Alım Hizmetlerini Görüntüle",
+      placedLabel: "tüm uzmanlık alanlarında yerleştirilen kişi ve proje",
+      techGrowthLabel: "Teknoloji ve Büyüme Hizmetleri",
+      beyondEyebrow: "Personel Teminin Ötesinde",
+      beyondTitle: "Teknoloji ve büyüme hizmetleri",
+      beyondDesc: "Felipillon, yetenek yerleştirmenin ötesinde yazılım geliştiriyor ve arkasındaki büyüme stratejisini yönetiyor.",
+      techStackLabel: "Teknoloji Yığını",
+      techStackTitle: "Varsayılan olarak modern",
+      techStackDesc: "Ölçek, güvenlik ve sürdürülebilir teslimat için inşa edilmiş üretim kalitesinde platformlar.",
     },
     why: {
       eyebrow: "Neden Felipillon",
@@ -1449,11 +1493,7 @@ export const TRANSLATIONS = {
       startConversation: "Görüşmeye Başlayın",
       viewCaseStudies: "Vaka Analizlerini Görüntüle",
       items: [
-<<<<<<< HEAD
         { quote: "Felipillon tek bir çeyrekte üç cerrah yerleştirdi, ve hepsi kaldı. Tarama süreçleri bambaşka bir seviyede.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
-=======
-        { quote: "Felipillon tek bir çeyrekte üç cerrah yerleştirdi — ve hepsi kaldı. Tarama süreçleri bambaşka bir seviyede.", name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth" },
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
         { quote: "Felipillon'un geliştirdiği yapay zeka asistanı destek çözüm süremizi yarıdan fazla azalttı. Kusursuz teslimat, zamanında ve bütçeye uygun.", name: "Marcus Lin", title: "VP Operations, Helix Cloud" },
         { quote: "Brief'ten kısa listeye 4 günde ulaştık. Felipillon kurumsal işe alımı çalıştığımız herkesten daha iyi anlıyor.", name: "Priya Nair", title: "Head of Talent, Solaris Energy" },
         { quote: "Bir tedarikçi gibi hissettirmiyorlar. Ekibimizin bir parçası gibiler. Olağanüstü insanlar, olağanüstü iş.", name: "Tomas Reyes", title: "CTO, BuildWorks" },
@@ -1468,11 +1508,7 @@ export const TRANSLATIONS = {
     about: {
       eyebrow: "Felipillon Hakkında",
       title: "İnsanları sınırlar, sektörler ve disiplinler arasında fırsatlarla buluşturuyoruz",
-<<<<<<< HEAD
       subtitle: "Felipillon, Berlin merkezli bir işe alım uzmanından yetenek ve teknoloji çözümlerinde küresel bir güce dönüştü.",
-=======
-      subtitle: "2019'dan bu yana Felipillon, Berlin merkezli bir işe alım uzmanından yetenek ve teknoloji çözümlerinde küresel bir güce dönüştü.",
->>>>>>> 88541b2950b92d8f01e0898dd58ec97d02d1c222
       missionEyebrow: "Misyonumuz",
       missionTitle: "Yetenek alanında en güvenilir küresel ortak olmak",
       missionBody1: "İşletmelerin daha hızlı büyümesine ve daha akıllıca çalışmasına yardımcı olmak için insanları, süreçleri ve teknolojiyi bir araya getiriyoruz. Hizmet satarak değil, gerçek iş problemlerini çözerek.",
@@ -1510,6 +1546,14 @@ export const TRANSLATIONS = {
       processTitle: "Brief'ten teklife günler içinde, aylar değil",
       whyEyebrow: "Neden Felipillon",
       whyTitle: "Ödün vermeyi göze alamayan kurumlar için tasarlandı",
+      whyBullets: [
+        "People Match AI en iyi adayı bulmak için 50'den fazla küresel platformu tarar",
+        "Sektör deneyimine sahip uzman işe alım danışmanları",
+        "Ön eleme listeleri haftalar değil günler içinde",
+        "Almanya, Hindistan, Filipinler ve İtalya'da güneşi takip eden kapsam",
+      ],
+      testimonialQuote: "Brief'ten kısa listeye 4 günde ulaştık. Felipillon kurumsal işe alımı çalıştığımız herkesten daha iyi anlıyor.",
+      testimonialAuthor: "Priya Nair, Head of Talent, Solaris Energy",
       startConversation: "Görüşmeye Başlayın",
       stats: {
         placements: "Yapılan Yerleştirmeler",
@@ -1623,6 +1667,7 @@ export const TRANSLATIONS = {
       service: "Hizmet",
       message: "Mesaj",
       messagePlaceholder: "Size nasıl yardımcı olabileceğimizi anlatın...",
+      serviceOptions: ["İşe Alım ve Personel Temini", "Yazılım Geliştirme", "Dijital Pazarlama", "Yapay Zeka Uygulamaları", "CRM Platformları", "İş Arıyorum / Kariyer Fırsatları", "Diğer"],
       sendInquiry: "Talep Gönder",
       sending: "Gönderiliyor...",
       successTitle: "Mesaj alındı",
