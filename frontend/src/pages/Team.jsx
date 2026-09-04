@@ -10,6 +10,7 @@ import { ScrollProgress } from "../components/shared/ScrollProgress";
 import { TEAMS, LEADERSHIP, MEDIA } from "../data/content";
 import { ArrowRight, Linkedin, X } from "lucide-react";
 import { useLang } from "../context/LangContext";
+import { CARD_TEXT } from "../data/cardTranslations";
 import annaImg from "../Team/anna.png";
 import dereckImg from "../Team/Dereck.png";
 import gotiImg from "../Team/Goti.png";
@@ -82,8 +83,9 @@ const leaderRoleFor = (name) => LEADERSHIP.find((leader) => leader.name === name
 const roleFor = (name, fallback) => MEMBER_ROLES[name] || MEMBER_ROLES[name.split(" ")[0]] || leaderRoleFor(name) || fallback;
 
 export default function Team() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const tm = t.team || {};
+  const teamLabels = CARD_TEXT[lang]?.teams || {};
   const [ready, setReady] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const PERMANENT_LEADERSHIP = LEADERSHIP.filter(
@@ -230,7 +232,7 @@ export default function Team() {
                 >
                   <team.icon className="w-6 h-6" style={{ color: team.color }} />
                 </div>
-                <p className="font-heading text-lg font-medium text-[#231911]">{team.dept}</p>
+                <p className="font-heading text-lg font-medium text-[#231911]">{teamLabels[team.dept] || team.dept}</p>
               </GlowCard>
             </Reveal>
           ))}
@@ -293,7 +295,9 @@ export default function Team() {
                   {initialsFor(selectedMember.name)}
                 </div>
               )}
-              <p className="mt-6 text-[10px] font-bold tracking-[0.3em] uppercase text-gold-600">{selectedMember.group.dept}</p>
+              <p className="mt-6 text-[10px] font-bold tracking-[0.3em] uppercase text-gold-600">
+                {teamLabels[selectedMember.group.dept] || (selectedMember.group.dept === "Leadership" ? tm.leadershipEyebrow : selectedMember.group.dept)}
+              </p>
               <h4 className="mt-2 font-heading text-3xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">
                 {selectedMember.name}
               </h4>
@@ -303,7 +307,7 @@ export default function Team() {
             </div>
 
             <div className="mt-8 border-t border-brown-500/10 pt-6">
-              <p className="text-center text-[10px] font-bold tracking-[0.24em] uppercase text-brown-500/45">Team Members</p>
+              <p className="text-center text-[10px] font-bold tracking-[0.24em] uppercase text-brown-500/45">{tm.teamMembers || "Team Members"}</p>
               <div className="mt-5 flex flex-wrap justify-center gap-4">
                 {selectedMember.group.members
                   .filter((member) => member !== selectedMember.name)

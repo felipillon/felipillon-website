@@ -879,24 +879,24 @@ const CTASection = () => {
           <source src={VIDEO_BG} type="video/mp4" />
         </video>
 
-        {/* Layer 1 — base dark wash so no video frame ever shows white */}
-        <div className="absolute inset-0 bg-[#0D0A07]/55" />
-        {/* Layer 2 — strong left-to-right directional gradient for the text area */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(13,8,4,0.96) 0%, rgba(13,8,4,0.82) 45%, rgba(13,8,4,0.45) 75%, rgba(13,8,4,0.22) 100%)" }} />
+        {/* Layer 1 — light dark wash for video readability */}
+        <div className="absolute inset-0 bg-[#0D0A07]/32" />
+        {/* Layer 2 — directional gradient behind the text area */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(13,8,4,0.82) 0%, rgba(13,8,4,0.62) 45%, rgba(13,8,4,0.26) 75%, rgba(13,8,4,0.08) 100%)" }} />
         {/* Layer 3 — bottom fade for clean blend into footer */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,8,4,0.5) 0%, transparent 35%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,8,4,0.28) 0%, transparent 35%)" }} />
 
         <div className="relative px-10 sm:px-16 py-20 max-w-2xl">
           <Reveal>
             <h2
-              className="font-heading text-4xl sm:text-5xl font-medium tracking-[-0.02em] leading-[1.06] mb-5 text-white"
-              style={{ textShadow: "0 2px 18px rgba(0,0,0,0.95), 0 1px 6px rgba(0,0,0,0.9)" }}
+              className="font-heading text-4xl sm:text-5xl font-semibold tracking-[-0.01em] leading-[1.06] mb-5 text-white"
+              style={{ textShadow: "0 3px 18px rgba(0,0,0,0.98), 0 1px 6px rgba(0,0,0,0.95)" }}
             >
               {t.cta?.title || "Let's build your competitive advantage"}
             </h2>
             <p
-              className="text-white/95 font-medium mb-8 leading-relaxed"
-              style={{ textShadow: "0 1px 12px rgba(0,0,0,0.9)" }}
+              className="text-white font-semibold mb-8 leading-relaxed"
+              style={{ textShadow: "0 2px 10px rgba(0,0,0,0.95)" }}
             >
               {t.cta?.sub || "Whether you need elite talent or transformative software, our teams are ready."}
             </p>
@@ -904,7 +904,7 @@ const CTASection = () => {
               <MagneticButton to="/contact" variant="primary" icon={ArrowRight}>
                 {t.cta?.btn1 || "Send Inquiry"}
               </MagneticButton>
-              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08] border-white/35 font-semibold text-white backdrop-blur-none hover:bg-[#231911]">
+              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08]/95 border-white/45 font-semibold text-white backdrop-blur-none shadow-[0_10px_24px_-14px_rgba(0,0,0,0.9)] hover:bg-[#231911]">
                 {t.cta?.btn2 || "View Open Roles"}
               </MagneticButton>
             </div>

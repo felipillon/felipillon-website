@@ -5,18 +5,18 @@ import {
   TrendingUp, Megaphone, Database, Shield,
 } from "lucide-react";
 
-// ── Rich imagery — every page has its own authentic photo ──────────────────
+// ── Rich imagery, every page has its own authentic photo ──────────────────
 export const MEDIA = {
-  // Hero — cinematic team / city
+  // Hero, cinematic team / city
   hero: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=85",
   heroAlt: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=85",
 
-  // About — real office feel
+  // About, real office feel
   about: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
   aboutTeam: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=85",
   aboutMission: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=85",
 
-  // Staffing — human capital
+  // Staffing, human capital
   staffing: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=85",
   interview: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=85",
   handshake: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=85",
@@ -74,14 +74,14 @@ export const MEDIA = {
 export const VIDEO_BG = "/hero-bg.mp4";
 export const VIDEO_BG_2 = "/hero-bg.mp4";
 export const VIDEO_BG_FALLBACK = "/hero-bg.mp4";
-// Poster image — shows instantly before video loads (prevents blank screen)
+// Poster image, shows instantly before video loads (prevents blank screen)
 export const VIDEO_POSTER = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80";
 export const GLOBAL_VIDEO_BG = "https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4";
 export const GLOBAL_VIDEO_POSTER = "https://images.pexels.com/videos/3129957/free-video-3129957.jpg?auto=compress&cs=tinysrgb&w=1920";
 export const ABOUT_VIDEO_BG = "https://videos.pexels.com/video-files/3255275/3255275-uhd_2560_1440_25fps.mp4";
 export const STAFFING_VIDEO_BG = "https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4";
 
-// ── Home hero video — Felipillon brand video, loops continuously ───────────
+// ── Home hero video, Felipillon brand video, loops continuously ───────────
 export const HERO_VIDEO = {
   src: "/felipillon-linkedin-hero.mp4",
   poster: "/felipillon-linkedin-hero-poster.jpg",
@@ -108,7 +108,7 @@ export const HERO_VIDEOS = [
   },
 ];
 
-// ── Per-speciality videos (used on the Specialities page — one clip per
+// ── Per-speciality videos (used on the Specialities page, one clip per
 // card, matched to that speciality's line of work). ────────────────────────
 export const SPECIALITY_VIDEOS = {
   "healthcare": {
@@ -145,10 +145,8 @@ export const NAV_LINKS = [
   { label: "staffing", path: "/staffing" },
   { label: "team", path: "/team" },
   { label: "openRoles", path: "/open-roles" },
-  { label: "caseStudies", path: "/case-studies" },
   { label: "testimonials", path: "/testimonials" },
   { label: "locations", path: "/locations" },
-  { label: "blog", path: "/blog" },
 ];
 
 // ── Specialities (6 sectors from PDF) ──────────────────────────────────────
@@ -160,7 +158,7 @@ export const SPECIALITIES = [
     img: MEDIA.healthcare,
     imgWide: MEDIA.healthcareWide,
     color: "#C9973A",
-    desc: "Surgeons, specialists and clinical professionals placed across leading hospital networks — permanent, locum and executive roles.",
+    desc: "Surgeons, specialists and clinical professionals placed across leading hospital networks, permanent, locum and executive roles.",
     services: ["Surgical Teams", "ICU & Critical Care", "Medical Directors", "Allied Health", "Pharmacy & Lab"],
     markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "120+",
@@ -225,7 +223,7 @@ export const SPECIALITIES = [
     img: MEDIA.technology,
     imgWide: MEDIA.servers,
     color: "#8B5CF6",
-    desc: "Software development, digital marketing, AI applications and CRM platforms — elite technical talent and custom-built solutions.",
+    desc: "Software development, digital marketing, AI applications and CRM platforms, elite technical talent and custom-built solutions.",
     services: ["Software Development", "Digital Marketing", "AI Applications", "CRM Platforms", "IT Administration"],
     markets: ["Germany", "India", "Philippines", "Italy"],
     stat: "50+",
@@ -258,7 +256,7 @@ export const SERVICES = [
   { icon: Code2, title: "Software Development", desc: "Bespoke web and mobile platforms built on modern, maintainable stacks.", img: MEDIA.software },
   { icon: Megaphone, title: "Digital Marketing", desc: "Performance marketing, SEO, content and brand strategy to grow your business.", img: MEDIA.marketing },
   { icon: Bot, title: "AI Applications", desc: "LLM apps, RAG pipelines, computer vision and ML model deployment.", img: MEDIA.ai },
-  { icon: Database, title: "CRM Platforms", desc: "Custom CRM and ATS builds — or we configure Manatal, Zoho and Salesforce for you.", img: MEDIA.crm },
+  { icon: Database, title: "CRM Platforms", desc: "Custom CRM and ATS builds, or we configure Manatal, Zoho and Salesforce for you.", img: MEDIA.crm },
   { icon: TrendingUp, title: "Business Development", desc: "Market entry, partner sourcing and growth strategy for new geographies.", img: MEDIA.teamMeeting },
 ];
 
@@ -356,14 +354,14 @@ export const CASE_STUDIES = [
     title: "End-to-end onboarding automation saves 1,200 hours per quarter",
     metric: "1,200", metricLabel: "Hours saved", sub: "per quarter",
     color: "#F59E0B", img: MEDIA.software,
-    desc: "A fast-growing staffing firm's manual onboarding process was collapsing under volume. Felipillon Innovation automated the entire workflow — from offer letter to Clockify setup — eliminating manual steps for the HR team.",
+    desc: "A fast-growing staffing firm's manual onboarding process was collapsing under volume. Felipillon Innovation automated the entire workflow, from offer letter to Clockify setup, eliminating manual steps for the HR team.",
   },
 ];
 
 // ── Testimonials ────────────────────────────────────────────────────────────
 export const TESTIMONIALS = [
   {
-    quote: "Felipillon placed three surgeons in a single quarter — and every one of them stayed. Their screening is on another level.",
+    quote: "Felipillon placed three surgeons in a single quarter, and every one of them stayed. Their screening is on another level.",
     name: "Dr. Elena Vogt", title: "Chief Medical Officer, NordHealth", img: null,
   },
   {
@@ -414,7 +412,7 @@ export const BLOG_CATEGORIES = ["All", "AI", "Recruitment", "Healthcare", "Renew
 
 export const BLOG = [
   { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.rag },
-  { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI — they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
+  { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI, they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
   { id: 3, category: "Healthcare", title: "Closing the Clinical Talent Gap in Europe", excerpt: "Cross-border clinician mobility, credentialing and retention strategies that work.", date: "May 28, 2026", read: "6 min", img: MEDIA.blog3 },
   { id: 4, category: "Renewable Energy", title: "Hiring for the Battery Storage Boom", excerpt: "PV and BESS specialists are the new bottleneck. How to build the team.", date: "May 19, 2026", read: "4 min", img: MEDIA.blog4 },
   { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.shippingScale },
@@ -432,17 +430,17 @@ export const VALUES = [
 export const TIMELINE = [
   { year: "Founded", title: "Founded in Germany", desc: "Felipillon launches as a specialist healthcare recruitment firm in Berlin, Germany." },
   { year: "2021", title: "Technology Division", desc: "Software development, digital marketing and AI practice established." },
-  { year: "2023", title: "India Hub Opens", desc: "Felipillon Innovation Pvt. Ltd. opens in Pune — engineering and delivery centre." },
-  { year: "2024", title: "Philippines Expansion", desc: "Felipillon OPC opens in Makati City — Asia-Pacific operations hub." },
+  { year: "2023", title: "India Hub Opens", desc: "Felipillon Innovation Pvt. Ltd. opens in Pune, engineering and delivery centre." },
+  { year: "2024", title: "Philippines Expansion", desc: "Felipillon OPC opens in Makati City, Asia-Pacific operations hub." },
   { year: "2026", title: "People Match AI", desc: "Proprietary AI recruitment platform deployed across 50+ global job platforms." },
 ];
 
 export const WHY_WIN = [
   "We focus on real business problems, not just services",
-  "Solution and business oriented — focused on long-term value, not just fees",
+  "Solution and business oriented, focused on long-term value, not just fees",
   "Affordable services without compromising quality",
   "The quickest and most reliable service possible",
   "Prompt, active and supportive with our employees",
   "Diverse and multicultural environment",
-  "Flexible — we take care of our people like a team",
+  "Flexible, we take care of our people like a team",
 ];

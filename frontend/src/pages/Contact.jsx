@@ -26,6 +26,7 @@ const EMPTY = { name: "", email: "", company: "", service: SERVICES_VALUES[0], m
 export default function Contact() {
   const { t } = useLang();
   const c = t.contact || {};
+  const f = t.footprint || {};
   const [ready, setReady] = useState(false);
 
   const [form, setForm] = useState(EMPTY);
@@ -47,17 +48,17 @@ export default function Contact() {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim()) e.name = c.fullName + " is required.";
-    if (!form.email.trim()) e.email = c.emailAddress + " is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Please enter a valid email.";
-    if (!form.message.trim()) e.message = c.message + " is required.";
+    if (!form.name.trim()) e.name = `${c.fullName || "Full Name"} ${c.required || "is required."}`;
+    if (!form.email.trim()) e.email = `${c.emailAddress || "Email Address"} ${c.required || "is required."}`;
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = c.validEmail || "Please enter a valid email.";
+    if (!form.message.trim()) e.message = `${c.message || "Message"} ${c.required || "is required."}`;
     return e;
   };
 
   const submit = async (e) => {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); toast.error("Please fix the errors below."); return; }
+    if (Object.keys(errs).length > 0) { setErrors(errs); toast.error(c.fixErrors || "Please fix the errors below."); return; }
     setSubmitting(true);
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact`, {
@@ -80,7 +81,7 @@ export default function Contact() {
         description: `${c.successDesc1 || "Thank you,"} ${form.name}`,
       });
     } catch (err) {
-      toast.error(err.message || "Something went wrong. Please try again.");
+      toast.error(err.message || c.genericError || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -253,14 +254,20 @@ export default function Contact() {
 
         {/* Office cards */}
         <div className="space-y-4">
-          {LOCATIONS.map((loc, i) => (
+          {LOCATIONS.map((loc, i) => {
+            const locText = {
+              Germany: { country: f.germany, role: f.globalHeadquarters },
+              India: { country: f.india, role: f.techHub },
+              Philippines: { country: f.philippines, role: f.apacOperations },
+              Italy: { country: f.italy, role: f.europeanOperations },
+            }[loc.country] || {};
+            return (
             <Reveal key={loc.country} delay={i * 0.1}>
               <GlowCard variant="light" className="p-6" data-testid={`contact-office-${loc.country.toLowerCase()}`}>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xl">{loc.flag}</span>
                   <div>
-                    <h3 className="font-medium text-[#231911] text-sm">{loc.country}</h3>
-                    <p className="text-[10px] text-gold-600">{loc.role}</p>
+                    <h3 className="font-medium text-[#231911] text-sm">{locText.country || loc.country}</h3>
+                    <p className="text-[10px] text-gold-600">{locText.role || loc.role}</p>
                   </div>
                 </div>
                 <p className="text-xs text-brown-500/45 leading-relaxed flex items-start gap-2">
@@ -269,7 +276,7 @@ export default function Contact() {
                 <p className="text-[10px] text-brown-500/30 mt-2">{loc.entity}</p>
               </GlowCard>
             </Reveal>
-          ))}
+          );})}
           <Reveal delay={0.35}>
             <GlowCard variant="light" className="p-6 space-y-3">
               <a href="mailto:hello@felipillon.com" className="flex items-center gap-3 text-sm text-brown-500/55 hover:text-gold-600 transition-colors">

@@ -9,15 +9,15 @@ const STARTER_MESSAGES = [
   {
     role: "assistant",
     content:
-      "Hi. I can answer quick questions about Felipillon. For detailed requests, I can point you to support.",
+      "Hi. Ask me about Felipillon's services, locations, hiring support, open roles, or how to contact the team.",
   },
 ];
 
 const QUICK_TOPICS = [
-  "What does Felipillon do?",
-  "Where are you located?",
-  "What services do you offer?",
-  "How can I contact support?",
+  "I need hiring support",
+  "I'm looking for a job",
+  "Which countries do you cover?",
+  "What technology services do you offer?",
 ];
 
 const normalize = (value) => value.toLowerCase().replace(/[^\p{L}0-9\s]/gu, " ").trim();
@@ -29,6 +29,12 @@ const getLanguage = (text) => {
   }
   if (/[äöüß]/i.test(text) || /\b(hallo|deutsch|standort|büro|buero|jobs|stellen|bewerben|kontakt|unterstützung|unterstuetzung)\b/.test(q)) {
     return "de";
+  }
+  if (/[а-яё]/i.test(text) || /\b(привет|работа|вакансия|офис|услуги|контакт|поддержка)\b/.test(q)) {
+    return "ru";
+  }
+  if (/\b(ciao|lavoro|posizione|sede|servizi|contatto|supporto|assunzione|recruiting)\b/.test(q)) {
+    return "it";
   }
   return "en";
 };
@@ -55,6 +61,28 @@ const copy = {
     contact: "Für Support können Sie Ihre Daten hier im Chat hinterlassen, die Kontaktseite nutzen, hello@felipillon.com schreiben oder Felipillon auf LinkedIn kontaktieren.",
     fallback: "Ich kann kurze Fragen zu Services, Standorten, Recruiting, Jobs und Kontaktdaten beantworten. Für spezifische Anliegen hilft der Support direkt.",
     noJobs: "Ich konnte aktuelle Rollen gerade nicht laden, aber Sie können weiterhin die Open-Roles-Seite besuchen.",
+  },
+  it: {
+    detailed: "Per questa richiesta serve un confronto diretto con il team, così possiamo darti una risposta accurata. Lascia i tuoi dati qui e Felipillon ti ricontatterà.",
+    company: "Felipillon è una società globale di servizi professionali e tecnologia. Opera in staffing, recruiting, sviluppo software, applicazioni AI, piattaforme CRM e soluzioni digitali.",
+    services: "Felipillon offre staffing e recruiting, sviluppo software, marketing digitale, applicazioni AI, piattaforme CRM e soluzioni tecnologiche più ampie.",
+    staffing: "Felipillon aiuta le aziende a trovare talenti in sanità, mestieri specializzati, logistica, edilizia, energie rinnovabili e tecnologia.",
+    locations: "Felipillon ha sede a Berlino, con hub a Pune in India, Makati City nelle Filippine e una nuova sede in Italia per le operazioni europee.",
+    jobs: "Puoi vedere le opportunità attuali nella pagina Posizioni aperte. Se il feed è disponibile, posso anche mostrarti alcuni ruoli qui.",
+    contact: "Per supporto puoi lasciare i tuoi dati in questa chat, usare la pagina contatti, scrivere a hello@felipillon.com o contattare Felipillon su LinkedIn.",
+    fallback: "Posso aiutarti con domande rapide su servizi, sedi, recruiting, lavoro e contatti. Per richieste specifiche, il supporto può aiutarti direttamente.",
+    noJobs: "Non riesco a caricare i ruoli attuali in questo momento, ma puoi comunque visitare la pagina Posizioni aperte.",
+  },
+  ru: {
+    detailed: "Для этого вопроса лучше подключить команду поддержки, чтобы дать точный ответ. Оставьте свои данные здесь, и Felipillon свяжется с вами напрямую.",
+    company: "Felipillon, глобальная компания в сфере профессиональных услуг и технологий. Компания работает в подборе персонала, рекрутинге, разработке ПО, AI-приложениях, CRM-платформах и цифровых решениях.",
+    services: "Felipillon предлагает подбор персонала и рекрутинг, разработку ПО, цифровой маркетинг, AI-приложения, CRM-платформы и другие технологические решения.",
+    staffing: "Felipillon помогает компаниям находить специалистов в здравоохранении, квалифицированных рабочих профессиях, логистике, строительстве, возобновляемой энергетике и технологиях.",
+    locations: "Главный офис Felipillon находится в Берлине, также есть хабы в Пуне, Индия, Макати-Сити на Филиппинах и новый офис в Италии для европейских операций.",
+    jobs: "Актуальные возможности доступны на странице вакансий. Если лента вакансий доступна, я также могу показать несколько ролей здесь.",
+    contact: "Для поддержки оставьте данные в этом чате, используйте страницу контактов, напишите на hello@felipillon.com или свяжитесь с Felipillon в LinkedIn.",
+    fallback: "Я могу ответить на короткие вопросы об услугах, офисах, рекрутинге, вакансиях и контактах. По конкретным запросам команда поддержки поможет напрямую.",
+    noJobs: "Сейчас не удалось загрузить актуальные роли, но вы можете перейти на страницу вакансий.",
   },
   tr: {
     detailed: "Bu konu için ekibin doğru yanıt verebilmesi adına destek görüşmesi gerekir. Bilgilerinizi burada bırakın, Felipillon sizinle doğrudan iletişime geçebilir.",

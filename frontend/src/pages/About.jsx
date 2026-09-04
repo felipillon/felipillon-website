@@ -8,6 +8,7 @@ import { CursorFollower } from "../components/shared/CursorFollower";
 import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { ScrollProgress } from "../components/shared/ScrollProgress";
 import { VALUES, TIMELINE, MEDIA, WHY_WIN, ABOUT_VIDEO_BG } from "../data/content";
+import { CARD_TEXT } from "../data/cardTranslations";
 import { ArrowRight, Check } from "lucide-react";
 import { useLang } from "../context/LangContext";
 
@@ -35,8 +36,12 @@ const RevealPhoto = ({ src, alt = "", className = "", children, delay = 0 }) => 
 );
 
 export default function About() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const a = t.about || {};
+  const ct = CARD_TEXT[lang] || {};
+  const whyWinItems = ct.whyWin || WHY_WIN;
+  const valueItems = VALUES.map((value, i) => ({ ...value, ...(ct.values?.[i] || {}) }));
+  const timelineItems = TIMELINE.map((item, i) => ({ ...item, ...(ct.timeline?.[i] || {}) }));
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -93,7 +98,7 @@ export default function About() {
             <p className="text-brown-500/55 leading-relaxed mb-4">{a.missionBody1}</p>
             <p className="text-brown-500/40 leading-relaxed mb-8">{a.missionBody2}</p>
             <div className="space-y-3">
-              {WHY_WIN.slice(0, 4).map((w, i) => (
+              {whyWinItems.slice(0, 4).map((w, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-gold-600" />
@@ -111,15 +116,15 @@ export default function About() {
                 <RevealPhoto src={MEDIA.berlin} alt="Berlin office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.1}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">Germany</p>
-                    <p className="text-xs text-white/60">Global HQ</p>
+                    <p className="text-xs text-gold-300 font-semibold">{a.germany || "Germany"}</p>
+                    <p className="text-xs text-white/60">{a.globalHq || "Global HQ"}</p>
                   </div>
                 </RevealPhoto>
-                <RevealPhoto src={MEDIA.teamWork} alt="Team working" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
+                <RevealPhoto src={MEDIA.philippinesLandmark} alt="Makati City" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">India + Philippines</p>
-                    <p className="text-xs text-white/60">Tech &amp; Ops</p>
+                    <p className="text-xs text-gold-300 font-semibold">{a.indiaPhilippines || "India + Philippines"}</p>
+                    <p className="text-xs text-white/60">{a.techOps || "Tech & Ops"}</p>
                   </div>
                 </RevealPhoto>
               </div>
@@ -165,7 +170,7 @@ export default function About() {
           <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{a.valuesTitle}</h2>
         </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {VALUES.map((v, i) => (
+          {valueItems.map((v, i) => (
             <Reveal key={v.title} delay={i * 0.08}>
               <GlowCard variant="light" className="p-7 h-full">
                 <div className="font-heading text-5xl font-light text-gold/25 mb-4">0{i + 1}</div>
@@ -182,18 +187,18 @@ export default function About() {
         <Reveal className="mb-14">
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
-            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">Culture</span>
+            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-gold-600">{a.cultureEyebrow || "Culture"}</span>
             <span className="w-10 h-px bg-gold" />
           </div>
-          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">Life at Felipillon</h2>
+          <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">{a.cultureTitle || "Life at Felipillon"}</h2>
         </Reveal>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { video: true, span: "lg:col-span-2 lg:row-span-2", aspect: "aspect-square lg:aspect-auto" },
-            { src: MEDIA.teamMeeting, span: "", aspect: "aspect-square" },
-            { src: MEDIA.staffing, span: "", aspect: "aspect-square" },
-            { src: MEDIA.software, span: "", aspect: "aspect-square" },
-            { src: MEDIA.officeWide, span: "", aspect: "aspect-square" },
+            { src: MEDIA.berlinOffice, span: "", aspect: "aspect-square" },
+            { src: MEDIA.indiaLandmark, span: "", aspect: "aspect-square" },
+            { src: MEDIA.philippinesLandmark, span: "", aspect: "aspect-square" },
+            { src: MEDIA.italy, span: "", aspect: "aspect-square" },
           ].map((g, i) => (
             <Reveal key={i} delay={i * 0.06} className={g.span}>
               <div className={`group relative overflow-hidden rounded-2xl ${g.aspect} h-full shadow-[0_8px_24px_-12px_rgba(61,35,20,0.2)]`}>
@@ -233,7 +238,7 @@ export default function About() {
           <div className="relative">
             <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-gold/50 via-gold/20 to-transparent ml-4 hidden sm:block" />
             <div className="space-y-8">
-              {TIMELINE.map((tl, i) => (
+              {timelineItems.map((tl, i) => (
                 <Reveal key={tl.year} delay={i * 0.08}>
                   <div className="sm:pl-14 relative">
                     <div className="absolute left-0 top-1.5 w-9 h-9 rounded-full bg-gold/15 border border-gold/40 items-center justify-center hidden sm:flex">

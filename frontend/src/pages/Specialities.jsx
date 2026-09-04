@@ -246,14 +246,11 @@ export default function Specialities() {
               >
                 <div className="relative h-40 overflow-hidden">
                   <img src={svc.img} alt={svcTitle} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                  <div className="absolute bottom-4 left-4 w-11 h-11 rounded-xl bg-white/92 backdrop-blur-sm border border-white/70 flex items-center justify-center shadow-lg">
-                    <svc.icon className="w-5 h-5 text-gold-600" />
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/28 via-black/5 to-transparent" />
                 </div>
                 <div className="p-7">
-                  <h3 className="font-heading text-xl font-medium mb-3 text-[#231911]">{svcTitle}</h3>
-                  <p className="text-sm text-brown-500/45 leading-relaxed">{svcDesc}</p>
+                  <h3 className="font-heading text-xl font-semibold mb-3 text-[#1A0E08]">{svcTitle}</h3>
+                  <p className="text-sm font-medium text-brown-500/70 leading-relaxed">{svcDesc}</p>
                 </div>
                 <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 transition-all duration-500 bg-gold" />
               </motion.div>

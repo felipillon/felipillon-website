@@ -141,7 +141,7 @@ export default function Testimonials() {
           <p className="text-brown-500/50 mb-8 max-w-xl mx-auto">{tm.addYourStoryDesc}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <MagneticButton to="/contact" variant="lightPrimary" icon={ArrowRight}>{tm.startConversation}</MagneticButton>
-            <MagneticButton to="/case-studies" variant="lightSecondary">{tm.viewCaseStudies}</MagneticButton>
+            <MagneticButton to="/specialities" variant="lightSecondary">{t.specialities?.eyebrow || "Our Specialities"}</MagneticButton>
           </div>
         </Reveal>
       </section>
