@@ -10,6 +10,7 @@ const COLS = [
       { labelKey: "about", path: "/about" },
       { labelKey: "team", path: "/team" },
       { labelKey: "locations", path: "/locations" },
+      { labelKey: "blog", path: "/blog" },
     ],
   },
   {
@@ -18,6 +19,7 @@ const COLS = [
       { labelKey: "specialitiesServices", path: "/specialities" },
       { labelKey: "staffingRecruitment", path: "/staffing" },
       { labelKey: "openRoles", path: "/open-roles" },
+      { labelKey: "caseStudies", path: "/case-studies" },
     ],
   },
   {
@@ -78,10 +80,10 @@ export const Footer = () => {
                 { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/felipillon" },
                 { label: "X", href: "https://x.com/felipillon", isX: true },
                 { icon: Mail, label: "Email", href: "mailto:hello@felipillon.com" },
-                { label: "Instagram", href: "https://www.instagram.com/felipillon", text: "IG" },
-                { label: "Facebook", href: "https://www.facebook.com/felipillon", text: "f" },
-                { label: "Indeed", href: "https://www.indeed.com/cmp/felipillon", text: "in" },
-                { label: "Glassdoor", href: "https://www.glassdoor.com/Overview/Working-at-felipillon", text: "Gd" },
+                // { label: "Instagram", href: "https://www.instagram.com/felipillon", text: "IG" },
+                // { label: "Facebook", href: "https://www.facebook.com/felipillon", text: "f" },
+                // { label: "Indeed", href: "https://www.indeed.com/cmp/felipillon", text: "in" },
+                // { label: "Glassdoor", href: "https://www.glassdoor.com/Overview/Working-at-felipillon", text: "Gd" },
               ].map(({ icon: Icon, label, href, isX }) => (
                 <a key={label} href={href} aria-label={label} target={href?.startsWith("mailto") ? undefined : "_blank"} rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full border border-white/[0.14] flex items-center justify-center text-white/62 hover:text-[#C9973A] hover:border-[#C9973A]/40 transition-all">

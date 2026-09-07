@@ -195,10 +195,10 @@ export default function About() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { video: true, span: "lg:col-span-2 lg:row-span-2", aspect: "aspect-square lg:aspect-auto" },
-            { src: MEDIA.berlinOffice, span: "", aspect: "aspect-square" },
-            { src: MEDIA.indiaLandmark, span: "", aspect: "aspect-square" },
-            { src: MEDIA.philippinesLandmark, span: "", aspect: "aspect-square" },
-            { src: MEDIA.italy, span: "", aspect: "aspect-square" },
+            { src: MEDIA.teamMeeting, span: "", aspect: "aspect-square" },
+            { src: MEDIA.staffing, span: "", aspect: "aspect-square" },
+            { src: MEDIA.software, span: "", aspect: "aspect-square" },
+            { src: MEDIA.officeWide, span: "", aspect: "aspect-square" },
           ].map((g, i) => (
             <Reveal key={i} delay={i * 0.06} className={g.span}>
               <div className={`group relative overflow-hidden rounded-2xl ${g.aspect} h-full shadow-[0_8px_24px_-12px_rgba(61,35,20,0.2)]`}>

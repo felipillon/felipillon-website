@@ -89,20 +89,45 @@ export const HERO_VIDEO = {
 
 export const HERO_VIDEOS = [
   {
+    label: "Felipillon",
+    src: HERO_VIDEO.src,
+    sources: [HERO_VIDEO.src],
+    poster: HERO_VIDEO.poster,
+    maxDuration: 7,
+  },
+  {
     label: "Construction",
-    src: "https://videos.pexels.com/video-files/3252575/3252575-hd_1920_1080_25fps.mp4",
-    poster: "https://images.pexels.com/videos/3252575/free-video-3252575.jpg?auto=compress&cs=tinysrgb&w=1920",
+    src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
+    sources: [
+      "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
+    ],
+    poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
+    maxDuration: 7,
+  },
+  {
+    label: "Healthcare",
+    src: "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
+    sources: [
+      "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
+    ],
+    poster: "https://images.pexels.com/videos/5722215/pexels-photo-5722215.jpeg?auto=compress&cs=tinysrgb&w=1920",
     maxDuration: 7,
   },
   {
     label: "Renewable Energy",
     src: "https://videos.pexels.com/video-files/9789926/9789926-uhd_2560_1440_30fps.mp4",
+    sources: [
+      "https://videos.pexels.com/video-files/9789926/9789926-uhd_2560_1440_30fps.mp4",
+    ],
     poster: "https://images.pexels.com/videos/9789926/4-k-aerial-shot-battery-bird-eye-view-9789926.jpeg?auto=compress&cs=tinysrgb&w=1920",
     maxDuration: 7,
   },
   {
     label: "Technology",
     src: "https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4",
+    sources: [
+      "https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4",
+    ],
     poster: "https://images.pexels.com/videos/6804109/pexels-photo-6804109.jpeg?auto=compress&cs=tinysrgb&w=1920",
     maxDuration: 7,
   },
@@ -145,8 +170,10 @@ export const NAV_LINKS = [
   { label: "staffing", path: "/staffing" },
   { label: "team", path: "/team" },
   { label: "openRoles", path: "/open-roles" },
+  { label: "caseStudies", path: "/case-studies" },
   { label: "testimonials", path: "/testimonials" },
   { label: "locations", path: "/locations" },
+  { label: "blog", path: "/blog" },
 ];
 
 // ── Specialities (6 sectors from PDF) ──────────────────────────────────────

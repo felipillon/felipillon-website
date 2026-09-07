@@ -17,8 +17,10 @@ import Specialities from "@/pages/Specialities";
 import Staffing from "@/pages/Staffing";
 import Team from "@/pages/Team";
 import OpenRoles from "@/pages/OpenRoles";
+import CaseStudies from "@/pages/CaseStudies";
 import Testimonials from "@/pages/Testimonials";
 import Locations from "@/pages/Locations";
+import Blog from "@/pages/Blog";
 import Contact from "@/pages/Contact";
 import Impressum from "@/pages/Impressum";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
@@ -35,10 +37,10 @@ const AnimatedRoutes = () => {
         <Route path="/staffing" element={<Staffing />} />
         <Route path="/team" element={<Team />} />
         <Route path="/open-roles" element={<OpenRoles />} />
-        <Route path="/case-studies" element={<Navigate to="/" replace />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/locations" element={<Locations />} />
-        <Route path="/blog" element={<Navigate to="/" replace />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/impressum" element={<Impressum />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

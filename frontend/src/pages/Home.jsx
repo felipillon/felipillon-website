@@ -142,11 +142,16 @@ const Hero = () => {
               muted
               playsInline
               autoPlay
-              preload={i === 0 ? "auto" : "metadata"}
+              preload="auto"
               poster={v.poster}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
               className="absolute inset-0 w-full h-full object-cover"
             >
-              <source src={v.src} type="video/mp4" />
+              {(v.sources || [v.src]).map((src) => (
+                <source key={src} src={src} type="video/mp4" />
+              ))}
             </video>
           </motion.div>
         ))}
