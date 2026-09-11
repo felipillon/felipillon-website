@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2 } from "lucide-react";
+import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2, RotateCcw } from "lucide-react";
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/felipillon";
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
@@ -41,6 +41,12 @@ const getLanguage = (text) => {
 
 const copy = {
   en: {
+    founder: "Felipillon was founded by Ketan Bhanudas Barve in Berlin, Germany. The site does not list a specific founding year.",
+    history: "Felipillon launched in Berlin as a specialist healthcare recruitment firm. The website timeline lists the Technology Division in 2021, the India Hub in Pune in 2023, the Philippines expansion in Makati City in 2024, and People Match AI in 2026.",
+    peopleMatch: "People Match AI is Felipillon's proprietary AI recruitment platform. The site says it scans more than 50 global job platforms to support AI-assisted sourcing.",
+    team: "Felipillon is led by Ketan Bhanudas Barve, Founder & CEO, with leadership and teams across recruitment, business development, software, administration, marketing, and talent acquisition.",
+    values: "Felipillon's positioning focuses on fast delivery, quality, global reach, follow-the-sun operations, and combining human recruitment expertise with AI-assisted sourcing.",
+    industries: "Felipillon supports healthcare, skilled trades, logistics and warehouse, construction, renewable energy, and technology roles.",
     detailed: "That needs a support conversation so the team can give you an accurate answer. Share your details here and Felipillon can follow up directly.",
     company: "Felipillon is a global professional services and technology firm. The company works across staffing, recruitment, software development, AI applications, CRM platforms, and digital solutions.",
     services: "Felipillon offers staffing and recruitment, software development, digital marketing, AI applications, CRM platforms, and broader technology solutions.",
@@ -52,6 +58,12 @@ const copy = {
     noJobs: "I could not load current roles right now, but you can still visit the Open Roles page.",
   },
   de: {
+    founder: "Felipillon wurde von Ketan Bhanudas Barve in Berlin gegründet. Auf der Website wird kein genaues Gründungsjahr genannt.",
+    history: "Felipillon startete in Berlin als spezialisiertes Recruiting-Unternehmen im Gesundheitswesen. Die Website nennt die Technologiesparte 2021, den Indien-Standort in Pune 2023, die Expansion auf die Philippinen in Makati City 2024 und People Match AI 2026.",
+    peopleMatch: "People Match AI ist Felipillons eigene KI-Recruiting-Plattform. Laut Website durchsucht sie mehr als 50 globale Jobplattformen zur Unterstützung des AI-gestützten Sourcings.",
+    team: "Felipillon wird von Ketan Bhanudas Barve, Gründer & CEO, geführt. Das Team arbeitet in Recruiting, Business Development, Software, Administration, Marketing und Talent Acquisition.",
+    values: "Felipillon steht für schnelle Umsetzung, Qualität, globale Reichweite, Follow-the-Sun-Operations und die Verbindung menschlicher Recruiting-Expertise mit KI-gestütztem Sourcing.",
+    industries: "Felipillon unterstützt Healthcare, Handwerk, Logistik und Lager, Bau, erneuerbare Energien und Technologierollen.",
     detailed: "Dafür sollte das Support-Team direkt antworten, damit Sie eine genaue Auskunft bekommen. Hinterlassen Sie hier Ihre Daten und Felipillon meldet sich.",
     company: "Felipillon ist ein globales Professional-Services- und Technologieunternehmen. Das Unternehmen arbeitet in Recruiting, Softwareentwicklung, KI-Anwendungen, CRM-Plattformen und digitalen Lösungen.",
     services: "Felipillon bietet Staffing und Recruiting, Softwareentwicklung, digitales Marketing, KI-Anwendungen, CRM-Plattformen und weitere Technologielösungen.",
@@ -63,6 +75,12 @@ const copy = {
     noJobs: "Ich konnte aktuelle Rollen gerade nicht laden, aber Sie können weiterhin die Open-Roles-Seite besuchen.",
   },
   it: {
+    founder: "Felipillon è stata fondata da Ketan Bhanudas Barve a Berlino, in Germania. Il sito non indica un anno esatto di fondazione.",
+    history: "Felipillon nasce a Berlino come agenzia specializzata nel recruiting sanitario. La timeline del sito indica la divisione tecnologica nel 2021, l'hub in India a Pune nel 2023, l'espansione nelle Filippine a Makati City nel 2024 e People Match AI nel 2026.",
+    peopleMatch: "People Match AI è la piattaforma proprietaria di recruiting AI di Felipillon. Il sito indica che analizza oltre 50 piattaforme di lavoro globali per supportare il sourcing assistito dall'AI.",
+    team: "Felipillon è guidata da Ketan Bhanudas Barve, Founder & CEO, con team in recruiting, business development, software, amministrazione, marketing e talent acquisition.",
+    values: "Felipillon si posiziona su consegna rapida, qualità, presenza globale, operazioni follow-the-sun e combinazione tra esperienza umana nel recruiting e sourcing assistito dall'AI.",
+    industries: "Felipillon supporta ruoli in sanità, mestieri specializzati, logistica e magazzino, edilizia, energie rinnovabili e tecnologia.",
     detailed: "Per questa richiesta serve un confronto diretto con il team, così possiamo darti una risposta accurata. Lascia i tuoi dati qui e Felipillon ti ricontatterà.",
     company: "Felipillon è una società globale di servizi professionali e tecnologia. Opera in staffing, recruiting, sviluppo software, applicazioni AI, piattaforme CRM e soluzioni digitali.",
     services: "Felipillon offre staffing e recruiting, sviluppo software, marketing digitale, applicazioni AI, piattaforme CRM e soluzioni tecnologiche più ampie.",
@@ -74,6 +92,12 @@ const copy = {
     noJobs: "Non riesco a caricare i ruoli attuali in questo momento, ma puoi comunque visitare la pagina Posizioni aperte.",
   },
   ru: {
+    founder: "Felipillon была основана Кетаном Бханудасом Барве в Берлине, Германия. На сайте не указан точный год основания.",
+    history: "Felipillon начала работу в Берлине как специализированная рекрутинговая компания в сфере здравоохранения. В timeline сайта указаны технологическое направление в 2021 году, хаб в Пуне, Индия, в 2023 году, расширение на Филиппины в Макати-Сити в 2024 году и People Match AI в 2026 году.",
+    peopleMatch: "People Match AI, собственная AI-платформа Felipillon для рекрутинга. На сайте указано, что она сканирует более 50 глобальных job-платформ для AI-assisted sourcing.",
+    team: "Felipillon возглавляет Ketan Bhanudas Barve, Founder & CEO. Команды работают в рекрутинге, business development, software, administration, marketing и talent acquisition.",
+    values: "Felipillon делает акцент на быстрой и качественной delivery, глобальном охвате, follow-the-sun операциях и сочетании человеческой рекрутинговой экспертизы с AI-assisted sourcing.",
+    industries: "Felipillon поддерживает подбор в healthcare, skilled trades, logistics and warehouse, construction, renewable energy и technology.",
     detailed: "Для этого вопроса лучше подключить команду поддержки, чтобы дать точный ответ. Оставьте свои данные здесь, и Felipillon свяжется с вами напрямую.",
     company: "Felipillon, глобальная компания в сфере профессиональных услуг и технологий. Компания работает в подборе персонала, рекрутинге, разработке ПО, AI-приложениях, CRM-платформах и цифровых решениях.",
     services: "Felipillon предлагает подбор персонала и рекрутинг, разработку ПО, цифровой маркетинг, AI-приложения, CRM-платформы и другие технологические решения.",
@@ -85,6 +109,12 @@ const copy = {
     noJobs: "Сейчас не удалось загрузить актуальные роли, но вы можете перейти на страницу вакансий.",
   },
   tr: {
+    founder: "Felipillon, Berlin'de Ketan Bhanudas Barve tarafından kuruldu. Web sitesinde belirli bir kuruluş yılı belirtilmiyor.",
+    history: "Felipillon Berlin'de uzman bir sağlık işe alım firması olarak başladı. Web sitesi zaman çizelgesi 2021'de Teknoloji Bölümü'nü, 2023'te Pune'daki Hindistan merkezini, 2024'te Makati City'deki Filipinler genişlemesini ve 2026'da People Match AI'ı listeler.",
+    peopleMatch: "People Match AI, Felipillon'un özel yapay zeka işe alım platformudur. Siteye göre AI destekli aday bulma için 50'den fazla küresel iş platformunu tarar.",
+    team: "Felipillon'a Kurucu ve CEO Ketan Bhanudas Barve liderlik eder. Ekipler işe alım, iş geliştirme, yazılım, idari işler, pazarlama ve talent acquisition alanlarında çalışır.",
+    values: "Felipillon hızlı teslimat, kalite, küresel erişim, follow-the-sun operasyonlar ve insan işe alım uzmanlığını AI destekli sourcing ile birleştirme üzerine konumlanır.",
+    industries: "Felipillon sağlık, teknik işler, lojistik ve depo, inşaat, yenilenebilir enerji ve teknoloji rolleri için destek sağlar.",
     detailed: "Bu konu için ekibin doğru yanıt verebilmesi adına destek görüşmesi gerekir. Bilgilerinizi burada bırakın, Felipillon sizinle doğrudan iletişime geçebilir.",
     company: "Felipillon global bir profesyonel hizmetler ve teknoloji şirketidir. Staffing, işe alım, yazılım geliştirme, yapay zeka uygulamaları, CRM platformları ve dijital çözümler alanlarında çalışır.",
     services: "Felipillon staffing ve işe alım, yazılım geliştirme, dijital pazarlama, yapay zeka uygulamaları, CRM platformları ve teknoloji çözümleri sunar.",
@@ -116,9 +146,52 @@ const isDetailedQuestion = (text) => {
   return q.length > 120 || detailWords.some((word) => q.includes(word));
 };
 
+const isFounderQuestion = (text) => {
+  const q = normalize(text);
+  return /\b(founder|founded|established|started|created|launched|ceo|gründ|grunder|gründer|fondat|fondata|fondatore|основал|основатель|kurdu|kurulus|kuruluş)\b/.test(q);
+};
+
+const includesAny = (text, terms) => terms.some((term) => text.includes(term));
+
 const getReply = (text) => {
   const q = normalize(text);
   const c = getCopy(text);
+
+  if (isFounderQuestion(text)) {
+    return {
+      content: c.founder,
+    };
+  }
+
+  if (includesAny(q, ["history", "timeline", "journey", "milestone", "growth", "when", "founded", "geschichte", "verlauf", "storia", "cronologia", "история", "tarih", "geçmiş"])) {
+    return {
+      content: c.history,
+    };
+  }
+
+  if (includesAny(q, ["people match", "peoplematch", "ai platform", "sourcing", "platform", "job platforms", "ki plattform", "yapay zeka platformu"])) {
+    return {
+      content: c.peopleMatch,
+    };
+  }
+
+  if (includesAny(q, ["team", "leader", "leadership", "employee", "people behind", "wer leitet", "team", "équipe", "команд", "lider"])) {
+    return {
+      content: c.team,
+    };
+  }
+
+  if (includesAny(q, ["industry", "industries", "sector", "sectors", "specialit", "healthcare", "construction", "renewable", "logistics", "trade", "branche", "industrie", "sektor"])) {
+    return {
+      content: c.industries,
+    };
+  }
+
+  if (includesAny(q, ["value", "values", "why", "different", "quality", "fast", "global reach", "follow the sun", "principle", "warum", "neden"])) {
+    return {
+      content: c.values,
+    };
+  }
 
   if (isDetailedQuestion(text)) {
     return {
@@ -232,31 +305,10 @@ export const ChatSupportWidget = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const fetchAiReply = async (text) => {
-    if (!BACKEND) {
-      const fallback = getReply(text);
-      return { ...fallback, jobPreview: [] };
-    }
-    const history = messages
-      .filter((message) => message.role === "user" || message.role === "assistant")
-      .slice(-8)
-      .map(({ role, content }) => ({ role, content }));
-
-    const res = await fetch(`${BACKEND}/api/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, history }),
-    });
-
-    if (!res.ok) throw new Error("Chat request failed");
-    const data = await res.json();
-    const jobPreview = data.jobs ? await fetchJobPreview(text) : [];
-    return {
-      content: data.reply,
-      support: !!data.support,
-      jobs: !!data.jobs,
-      jobPreview,
-    };
+  const buildLocalReply = async (text) => {
+    const reply = getReply(text);
+    const jobPreview = reply.jobs ? await fetchJobPreview(text) : [];
+    return { ...reply, jobPreview };
   };
 
   const sendMessage = async (value = input) => {
@@ -268,20 +320,18 @@ export const ChatSupportWidget = () => {
 
     try {
       const [reply] = await Promise.all([
-        fetchAiReply(text),
+        buildLocalReply(text),
         new Promise((resolve) => window.setTimeout(resolve, 650)),
       ]);
       setMessages((current) => [...current, { role: "assistant", ...reply }]);
     } catch {
       const fallback = getReply(text);
-      const jobPreview = fallback.jobs ? await fetchJobPreview(text) : [];
       setMessages((current) => [
         ...current,
         {
           role: "assistant",
           ...fallback,
-          jobPreview,
-          content: `${fallback.content} The live assistant is temporarily unavailable.`,
+          jobPreview: [],
         },
       ]);
     } finally {
@@ -292,6 +342,15 @@ export const ChatSupportWidget = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     sendMessage();
+  };
+
+  const resetChat = () => {
+    setMessages(STARTER_MESSAGES);
+    setInput("");
+    setIsTyping(false);
+    setHandoffOpen(false);
+    setLeadStatus("idle");
+    setLeadError("");
   };
 
   const submitLead = async (event) => {
@@ -352,10 +411,19 @@ export const ChatSupportWidget = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-[#231911]">Felipillon Support</p>
-                <p className="text-xs text-brown-500/55">Quick company answers</p>
+                <p className="text-xs text-brown-500/55">Site-trained answers</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={resetChat}
+                className="rounded-full p-2 text-brown-500/55 transition-colors hover:bg-brown-500/[0.06] hover:text-[#231911]"
+                aria-label="Start a new support chat"
+                title="New chat"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </button>
               <button
                 type="button"
                 onClick={() => setExpanded((value) => !value)}
@@ -545,7 +613,7 @@ export const ChatSupportWidget = () => {
             </div>
           )}
           <div className="border-t border-white/5 bg-[#1B1410] px-4 py-2 text-[10px] leading-relaxed text-white/45">
-            Messages may be processed by Felipillon systems and AI providers to answer support questions.
+            Messages are answered from Felipillon site knowledge. Contact details are sent only when you submit the support form.
           </div>
         </div>
       )}
