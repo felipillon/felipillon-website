@@ -52,7 +52,7 @@ const copy = {
     services: "Felipillon offers staffing and recruitment, software development, digital marketing, AI applications, CRM platforms, and broader technology solutions.",
     staffing: "Felipillon helps companies find talent across healthcare, skilled trades, logistics, construction, renewable energy, and technology.",
     locations: "Felipillon is headquartered in Berlin, with hubs in Pune, India, Makati City in the Philippines, and a new Italy office for European operations.",
-    jobs: "You can view current opportunities on the Open Roles page. I can also show a few current roles when the jobs feed is available.",
+    jobs: "You can view and apply for current opportunities on the Open Roles page. Open a role there, then use the Apply button to submit your details and CV.",
     contact: "For support, share your details in this chat, use the contact page, email hello@felipillon.com, or connect with Felipillon on LinkedIn.",
     fallback: "I can help with quick company questions about services, locations, hiring, jobs, and contact details. For anything specific, support can help directly.",
     noJobs: "I could not load current roles right now, but you can still visit the Open Roles page.",
@@ -69,7 +69,7 @@ const copy = {
     services: "Felipillon bietet Staffing und Recruiting, Softwareentwicklung, digitales Marketing, KI-Anwendungen, CRM-Plattformen und weitere Technologielösungen.",
     staffing: "Felipillon hilft Unternehmen, Fachkräfte in Healthcare, Handwerk, Logistik, Bau, erneuerbaren Energien und Technologie zu finden.",
     locations: "Felipillon hat den Hauptsitz in Berlin sowie Hubs in Pune, Indien, Makati City auf den Philippinen und einen neuen Standort in Italien für europäische Aktivitäten.",
-    jobs: "Aktuelle Stellen finden Sie auf der Open-Roles-Seite. Wenn der Stellen-Feed verfügbar ist, kann ich auch einige aktuelle Rollen anzeigen.",
+    jobs: "Aktuelle Stellen finden Sie auf der Open-Roles-Seite. Öffnen Sie dort eine Rolle und nutzen Sie den Bewerben-Button, um Ihre Daten und Ihren Lebenslauf einzureichen.",
     contact: "Für Support können Sie Ihre Daten hier im Chat hinterlassen, die Kontaktseite nutzen, hello@felipillon.com schreiben oder Felipillon auf LinkedIn kontaktieren.",
     fallback: "Ich kann kurze Fragen zu Services, Standorten, Recruiting, Jobs und Kontaktdaten beantworten. Für spezifische Anliegen hilft der Support direkt.",
     noJobs: "Ich konnte aktuelle Rollen gerade nicht laden, aber Sie können weiterhin die Open-Roles-Seite besuchen.",
@@ -86,7 +86,7 @@ const copy = {
     services: "Felipillon offre staffing e recruiting, sviluppo software, marketing digitale, applicazioni AI, piattaforme CRM e soluzioni tecnologiche più ampie.",
     staffing: "Felipillon aiuta le aziende a trovare talenti in sanità, mestieri specializzati, logistica, edilizia, energie rinnovabili e tecnologia.",
     locations: "Felipillon ha sede a Berlino, con hub a Pune in India, Makati City nelle Filippine e una nuova sede in Italia per le operazioni europee.",
-    jobs: "Puoi vedere le opportunità attuali nella pagina Posizioni aperte. Se il feed è disponibile, posso anche mostrarti alcuni ruoli qui.",
+    jobs: "Puoi vedere e candidarti alle opportunità attuali nella pagina Posizioni aperte. Apri un ruolo e usa il pulsante Candidati per inviare i tuoi dati e il CV.",
     contact: "Per supporto puoi lasciare i tuoi dati in questa chat, usare la pagina contatti, scrivere a hello@felipillon.com o contattare Felipillon su LinkedIn.",
     fallback: "Posso aiutarti con domande rapide su servizi, sedi, recruiting, lavoro e contatti. Per richieste specifiche, il supporto può aiutarti direttamente.",
     noJobs: "Non riesco a caricare i ruoli attuali in questo momento, ma puoi comunque visitare la pagina Posizioni aperte.",
@@ -103,7 +103,7 @@ const copy = {
     services: "Felipillon предлагает подбор персонала и рекрутинг, разработку ПО, цифровой маркетинг, AI-приложения, CRM-платформы и другие технологические решения.",
     staffing: "Felipillon помогает компаниям находить специалистов в здравоохранении, квалифицированных рабочих профессиях, логистике, строительстве, возобновляемой энергетике и технологиях.",
     locations: "Главный офис Felipillon находится в Берлине, также есть хабы в Пуне, Индия, Макати-Сити на Филиппинах и новый офис в Италии для европейских операций.",
-    jobs: "Актуальные возможности доступны на странице вакансий. Если лента вакансий доступна, я также могу показать несколько ролей здесь.",
+    jobs: "Актуальные вакансии доступны на странице Open Roles. Откройте вакансию и нажмите Apply, чтобы отправить свои данные и CV.",
     contact: "Для поддержки оставьте данные в этом чате, используйте страницу контактов, напишите на hello@felipillon.com или свяжитесь с Felipillon в LinkedIn.",
     fallback: "Я могу ответить на короткие вопросы об услугах, офисах, рекрутинге, вакансиях и контактах. По конкретным запросам команда поддержки поможет напрямую.",
     noJobs: "Сейчас не удалось загрузить актуальные роли, но вы можете перейти на страницу вакансий.",
@@ -120,7 +120,7 @@ const copy = {
     services: "Felipillon staffing ve işe alım, yazılım geliştirme, dijital pazarlama, yapay zeka uygulamaları, CRM platformları ve teknoloji çözümleri sunar.",
     staffing: "Felipillon şirketlerin sağlık, teknik işler, lojistik, inşaat, yenilenebilir enerji ve teknoloji alanlarında yetenek bulmasına yardımcı olur.",
     locations: "Felipillon'un merkezi Berlin'dedir; Pune Hindistan, Makati City Filipinler ve Avrupa operasyonları için yeni İtalya ofisi bulunur.",
-    jobs: "Güncel fırsatları Open Roles sayfasında görebilirsiniz. İş ilanı akışı uygunsa birkaç güncel rolü de burada gösterebilirim.",
+    jobs: "Güncel fırsatları Open Roles sayfasında görebilir ve başvurabilirsiniz. Bir rolü açıp Apply düğmesiyle bilgilerinizi ve CV'nizi gönderebilirsiniz.",
     contact: "Destek için bilgilerinizi bu sohbette bırakabilir, iletişim sayfasını kullanabilir, hello@felipillon.com adresine yazabilir veya LinkedIn'den ulaşabilirsiniz.",
     fallback: "Hizmetler, lokasyonlar, işe alım, işler ve iletişim bilgileri hakkında kısa soruları yanıtlayabilirim. Spesifik konularda destek ekibi yardımcı olur.",
     noJobs: "Güncel rolleri şu anda yükleyemedim, ancak Open Roles sayfasını ziyaret edebilirsiniz.",
@@ -129,9 +129,166 @@ const copy = {
 
 const getCopy = (text) => copy[getLanguage(text)] || copy.en;
 
-const isJobQuestion = (text) => {
+const INTENTS = {
+  FOUNDER: "FOUNDER",
+  HISTORY: "HISTORY",
+  PEOPLE_MATCH: "PEOPLE_MATCH",
+  TEAM: "TEAM",
+  VALUES: "VALUES",
+  INDUSTRIES: "INDUSTRIES",
+  SERVICES: "SERVICES",
+  STAFFING: "STAFFING",
+  LOCATIONS: "LOCATIONS",
+  OPEN_ROLES: "OPEN_ROLES",
+  JOB_APPLICATION: "JOB_APPLICATION",
+  CONTACT: "CONTACT",
+  COMPANY: "COMPANY",
+};
+
+const STOP_WORDS = new Set([
+  "a", "an", "and", "are", "at", "can", "do", "does", "for", "how", "i", "in", "is", "it", "me", "my", "of", "on", "or", "page", "the", "to", "what", "where", "you", "your",
+]);
+
+const KNOWLEDGE_ACTIONS = {
+  openRoles: { label: "View open roles", to: "/open-roles" },
+  contact: { label: "Contact page", to: "/contact" },
+  services: { label: "View services", to: "/specialities" },
+  locations: { label: "View locations", to: "/locations" },
+  linkedIn: { label: "LinkedIn", href: LINKEDIN_URL },
+};
+
+const INTENT_RULES = {
+  [INTENTS.OPEN_ROLES]: {
+    topic: "careers",
+    phrases: ["open roles", "open role", "jobs page", "job page", "careers page", "career page", "current roles", "open positions", "current opportunities", "are you hiring"],
+    keywords: ["job", "jobs", "role", "roles", "career", "careers", "vacancy", "vacancies", "position", "positions", "opening", "openings", "hiring", "stellen", "karriere", "lavoro", "posizione", "вакансия", "ilan"],
+    negative: ["office", "headquarters", "located", "location"],
+  },
+  [INTENTS.JOB_APPLICATION]: {
+    topic: "careers",
+    phrases: ["how do i apply", "where can i apply", "send my cv", "submit cv", "submit resume", "apply for a job", "apply for a role", "sign up", "join the team"],
+    keywords: ["apply", "application", "applying", "cv", "resume", "join", "signup", "bewerben", "bewerbung", "candidati", "basvuru", "başvuru"],
+  },
+  [INTENTS.CONTACT]: {
+    topic: "contact",
+    phrases: ["contact you", "contact the team", "talk to", "speak with", "get in touch", "reach out"],
+    keywords: ["contact", "support", "email", "phone", "call", "linkedin", "reach", "message", "kontakt", "contatto"],
+  },
+  [INTENTS.LOCATIONS]: {
+    topic: "locations",
+    phrases: ["where are you located", "where is your office", "office locations", "headquarters", "which countries"],
+    keywords: ["location", "locations", "office", "offices", "headquarters", "located", "country", "countries", "berlin", "pune", "makati", "italy", "standort", "büro", "buero", "sede", "ofis"],
+    negative: ["job", "jobs", "role", "roles", "career", "careers", "apply", "application", "open"],
+  },
+  [INTENTS.SERVICES]: {
+    topic: "services",
+    phrases: ["what does felipillon do", "what do you do", "what services", "services do you offer", "what do you offer"],
+    keywords: ["service", "services", "offer", "offers", "provide", "development", "marketing", "software", "ai", "crm", "hizmet", "servizi"],
+  },
+  [INTENTS.STAFFING]: {
+    topic: "services",
+    phrases: ["hiring support", "find talent", "need staff", "recruitment support"],
+    keywords: ["staff", "staffing", "recruit", "recruitment", "hire", "hiring", "talent", "personal"],
+  },
+  [INTENTS.COMPANY]: {
+    topic: "company",
+    phrases: ["about felipillon", "tell me about felipillon", "what is felipillon"],
+    keywords: ["company", "firm", "business", "unternehmen", "firma"],
+  },
+  [INTENTS.FOUNDER]: {
+    topic: "company",
+    phrases: ["who founded", "who started", "who created", "who launched", "who is the founder", "who is ceo"],
+    keywords: ["founder", "founded", "established", "started", "created", "launched", "ceo", "gründer", "fondatore", "основатель", "kurdu"],
+  },
+  [INTENTS.HISTORY]: {
+    topic: "company",
+    keywords: ["history", "timeline", "journey", "milestone", "growth", "geschichte", "storia", "история", "tarih"],
+  },
+  [INTENTS.PEOPLE_MATCH]: {
+    topic: "technology",
+    phrases: ["people match", "peoplematch", "ai platform", "job platforms"],
+    keywords: ["sourcing", "platform"],
+  },
+  [INTENTS.TEAM]: {
+    topic: "company",
+    phrases: ["who works at", "who works for", "who is on the team", "people behind"],
+    keywords: ["team", "leader", "leadership", "employee", "employees", "people", "works", "équipe", "команд", "lider"],
+  },
+  [INTENTS.INDUSTRIES]: {
+    topic: "services",
+    phrases: ["what sectors", "which sectors", "what industries", "which industries", "find work", "help people find work", "help me get a job", "help me find a job"],
+    keywords: ["industry", "industries", "sector", "sectors", "field", "fields", "speciality", "specialities", "healthcare", "construction", "renewable", "logistics", "trade", "branche", "sektor"],
+  },
+  [INTENTS.VALUES]: {
+    topic: "company",
+    phrases: ["why felipillon", "global reach", "follow the sun"],
+    keywords: ["value", "values", "different", "quality", "fast", "principle", "warum", "neden"],
+  },
+};
+
+const getTokens = (text) => normalize(text).split(/\s+/).filter((token) => token && !STOP_WORDS.has(token));
+
+const levenshtein = (a, b) => {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    let previous = i - 1;
+    row[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const next = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+      previous = next;
+    }
+  }
+  return row[b.length];
+};
+
+const extractEntities = (text) => {
   const q = normalize(text);
-  return /\b(job|jobs|role|roles|career|careers|apply|opening|openings|stelle|stellen|bewerben|karriere|iş|is|ilan|basvuru|başvuru|kariyer)\b/.test(q);
+  const rolePhrases = ["software developer", "developer", "engineer", "recruiter", "nurse", "marketing", "crm", "ai"];
+  const locationPhrases = ["berlin", "germany", "pune", "india", "makati", "philippines", "italy"];
+  return {
+    role: rolePhrases.find((role) => q.includes(role)),
+    location: locationPhrases.find((location) => q.includes(location)),
+  };
+};
+
+const scoreIntent = (text, intent, context, entities) => {
+  const q = normalize(text);
+  const tokens = getTokens(text);
+  const rule = INTENT_RULES[intent];
+  let score = 0;
+
+  (rule.phrases || []).forEach((phrase) => {
+    if (q.includes(normalize(phrase))) score += phrase.split(/\s+/).length > 1 ? 8 : 5;
+  });
+
+  (rule.keywords || []).forEach((keyword) => {
+    const normalizedKeyword = normalize(keyword);
+    if (tokens.includes(normalizedKeyword)) score += 3;
+    else if (normalizedKeyword.length > 4 && tokens.some((token) => token.length > 4 && levenshtein(token, normalizedKeyword) <= 1)) score += 1;
+  });
+
+  (rule.negative || []).forEach((keyword) => {
+    if (q.includes(normalize(keyword))) score -= 5;
+  });
+
+  if (context?.topic && context.topic === rule.topic && tokens.length <= 3) score += 2;
+  if (context?.lastIntent && context.lastIntent === intent && tokens.length <= 3) score += 1;
+  if (entities.role && [INTENTS.OPEN_ROLES, INTENTS.JOB_APPLICATION].includes(intent)) score += 3;
+  if (entities.location && intent === INTENTS.LOCATIONS) score += 3;
+
+  return score;
+};
+
+const classifyIntent = (text, context = {}) => {
+  const entities = extractEntities(text);
+  const scores = Object.values(INTENTS)
+    .map((intent) => ({ intent, score: scoreIntent(text, intent, context, entities) }))
+    .sort((a, b) => b.score - a.score);
+  const [best, second] = scores;
+  const confidence = best.score >= 8 && best.score - (second?.score || 0) >= 2 ? "high" : best.score >= 5 ? "medium" : "low";
+  return { intent: best.intent, score: best.score, confidence, entities };
 };
 
 const isDetailedQuestion = (text) => {
@@ -146,106 +303,69 @@ const isDetailedQuestion = (text) => {
   return q.length > 120 || detailWords.some((word) => q.includes(word));
 };
 
-const isFounderQuestion = (text) => {
-  const q = normalize(text);
-  return /\b(founder|founded|established|started|created|launched|ceo|gründ|grunder|gründer|fondat|fondata|fondatore|основал|основатель|kurdu|kurulus|kuruluş)\b/.test(q);
-};
+const buildActions = (...actions) => actions.filter(Boolean);
 
-const includesAny = (text, terms) => terms.some((term) => text.includes(term));
-
-const getReply = (text) => {
-  const q = normalize(text);
+const getReply = (text, context = {}) => {
   const c = getCopy(text);
-
-  if (isFounderQuestion(text)) {
-    return {
-      content: c.founder,
-    };
-  }
-
-  if (includesAny(q, ["history", "timeline", "journey", "milestone", "growth", "when", "founded", "geschichte", "verlauf", "storia", "cronologia", "история", "tarih", "geçmiş"])) {
-    return {
-      content: c.history,
-    };
-  }
-
-  if (includesAny(q, ["people match", "peoplematch", "ai platform", "sourcing", "platform", "job platforms", "ki plattform", "yapay zeka platformu"])) {
-    return {
-      content: c.peopleMatch,
-    };
-  }
-
-  if (includesAny(q, ["team", "leader", "leadership", "employee", "people behind", "wer leitet", "team", "équipe", "команд", "lider"])) {
-    return {
-      content: c.team,
-    };
-  }
-
-  if (includesAny(q, ["industry", "industries", "sector", "sectors", "specialit", "healthcare", "construction", "renewable", "logistics", "trade", "branche", "industrie", "sektor"])) {
-    return {
-      content: c.industries,
-    };
-  }
-
-  if (includesAny(q, ["value", "values", "why", "different", "quality", "fast", "global reach", "follow the sun", "principle", "warum", "neden"])) {
-    return {
-      content: c.values,
-    };
-  }
+  const result = classifyIntent(text, context);
+  const nextContext = {
+    topic: INTENT_RULES[result.intent]?.topic,
+    lastIntent: result.intent,
+    role: result.entities.role || context.role,
+    location: result.entities.location || context.location,
+    lastUpdated: Date.now(),
+  };
 
   if (isDetailedQuestion(text)) {
     return {
       content: c.detailed,
       support: true,
+      actions: buildActions(KNOWLEDGE_ACTIONS.contact),
+      nextContext,
     };
   }
 
-  if (q.includes("service") || q.includes("offer") || q.includes("do") || q.includes("hizmet") || q.includes("angebot")) {
+  if (result.confidence === "low") {
     return {
-      content: c.services,
-    };
-  }
-
-  if (q.includes("what") || q.includes("about") || q.includes("company") || q.includes("firma") || q.includes("unternehmen")) {
-    return {
-      content: c.company,
-    };
-  }
-
-  if (q.includes("staff") || q.includes("recruit") || q.includes("hire") || q.includes("talent") || q.includes("işe") || q.includes("personal")) {
-    return {
-      content: c.staffing,
-    };
-  }
-
-  if (q.includes("location") || q.includes("office") || q.includes("where") || q.includes("standort") || q.includes("büro") || q.includes("buero") || q.includes("konum") || q.includes("ofis")) {
-    return {
-      content: c.locations,
-    };
-  }
-
-  if (isJobQuestion(text)) {
-    return {
-      content: c.jobs,
-      jobs: true,
-    };
-  }
-
-  if (q.includes("contact") || q.includes("support") || q.includes("email") || q.includes("linkedin")) {
-    return {
-      content: c.contact,
+      content: "I could not determine exactly what you are looking for. I can help with services, open roles, job applications, office locations, or contact information.",
       support: true,
+      actions: buildActions(KNOWLEDGE_ACTIONS.services, KNOWLEDGE_ACTIONS.openRoles, KNOWLEDGE_ACTIONS.contact),
+      nextContext,
+    };
+  }
+
+  const responses = {
+    [INTENTS.FOUNDER]: { content: c.founder },
+    [INTENTS.HISTORY]: { content: c.history },
+    [INTENTS.PEOPLE_MATCH]: { content: c.peopleMatch },
+    [INTENTS.TEAM]: { content: c.team },
+    [INTENTS.VALUES]: { content: c.values },
+    [INTENTS.INDUSTRIES]: { content: c.industries, actions: buildActions(KNOWLEDGE_ACTIONS.services) },
+    [INTENTS.COMPANY]: { content: c.company, actions: buildActions(KNOWLEDGE_ACTIONS.services) },
+    [INTENTS.SERVICES]: { content: c.services, actions: buildActions(KNOWLEDGE_ACTIONS.services, KNOWLEDGE_ACTIONS.contact) },
+    [INTENTS.STAFFING]: { content: c.staffing, actions: buildActions(KNOWLEDGE_ACTIONS.contact, KNOWLEDGE_ACTIONS.services) },
+    [INTENTS.LOCATIONS]: { content: c.locations, actions: buildActions(KNOWLEDGE_ACTIONS.locations, KNOWLEDGE_ACTIONS.contact) },
+    [INTENTS.OPEN_ROLES]: { content: c.jobs, jobs: true, actions: buildActions(KNOWLEDGE_ACTIONS.openRoles) },
+    [INTENTS.JOB_APPLICATION]: { content: c.jobs, jobs: true, actions: buildActions(KNOWLEDGE_ACTIONS.openRoles) },
+    [INTENTS.CONTACT]: { content: c.contact, support: true, actions: buildActions(KNOWLEDGE_ACTIONS.contact, KNOWLEDGE_ACTIONS.linkedIn) },
+  };
+
+  if (result.confidence === "medium" && [INTENTS.OPEN_ROLES, INTENTS.JOB_APPLICATION].includes(result.intent)) {
+    return {
+      content: "Are you asking about open roles or how to apply for a job?",
+      actions: buildActions(KNOWLEDGE_ACTIONS.openRoles, KNOWLEDGE_ACTIONS.contact),
+      nextContext,
     };
   }
 
   return {
-    content: c.fallback,
-    support: true,
+    ...responses[result.intent],
+    nextContext,
   };
 };
 
-const fetchJobPreview = async (text) => {
-  if (!BACKEND || !isJobQuestion(text)) return [];
+const fetchJobPreview = async (reply) => {
+  if (!BACKEND || !reply.jobs) return [];
   try {
     const res = await fetch(`${BACKEND}/api/jobs?size=3`);
     if (!res.ok) return [];
@@ -278,6 +398,7 @@ export const ChatSupportWidget = () => {
   const [lead, setLead] = useState({ name: "", email: "", company: "" });
   const [leadStatus, setLeadStatus] = useState("idle");
   const [leadError, setLeadError] = useState("");
+  const [conversationContext, setConversationContext] = useState({});
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -306,8 +427,8 @@ export const ChatSupportWidget = () => {
   }, []);
 
   const buildLocalReply = async (text) => {
-    const reply = getReply(text);
-    const jobPreview = reply.jobs ? await fetchJobPreview(text) : [];
+    const reply = getReply(text, conversationContext);
+    const jobPreview = await fetchJobPreview(reply);
     return { ...reply, jobPreview };
   };
 
@@ -323,9 +444,11 @@ export const ChatSupportWidget = () => {
         buildLocalReply(text),
         new Promise((resolve) => window.setTimeout(resolve, 650)),
       ]);
+      setConversationContext(reply.nextContext || {});
       setMessages((current) => [...current, { role: "assistant", ...reply }]);
     } catch {
-      const fallback = getReply(text);
+      const fallback = getReply(text, conversationContext);
+      setConversationContext(fallback.nextContext || {});
       setMessages((current) => [
         ...current,
         {
@@ -351,6 +474,7 @@ export const ChatSupportWidget = () => {
     setHandoffOpen(false);
     setLeadStatus("idle");
     setLeadError("");
+    setConversationContext({});
   };
 
   const submitLead = async (event) => {
@@ -478,6 +602,33 @@ export const ChatSupportWidget = () => {
                     <Link to="/open-roles" className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700">
                       View open roles <ArrowUpRight className="h-3 w-3" />
                     </Link>
+                  </div>
+                )}
+                {message.actions?.filter((action) => !(message.jobs && action.to === "/open-roles")).length > 0 && (
+                  <div className="mt-2 flex flex-wrap justify-start gap-2">
+                    {message.actions
+                      .filter((action) => !(message.jobs && action.to === "/open-roles"))
+                      .map((action) =>
+                        action.to ? (
+                          <Link
+                            key={`${action.label}-${action.to}`}
+                            to={action.to}
+                            className="inline-flex items-center gap-1 rounded-full border border-brown-500/[0.14] bg-white px-3 py-1.5 text-xs font-semibold text-brown-500"
+                          >
+                            {action.label} <ArrowUpRight className="h-3 w-3" />
+                          </Link>
+                        ) : (
+                          <a
+                            key={`${action.label}-${action.href}`}
+                            href={action.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 rounded-full border border-brown-500/[0.14] bg-white px-3 py-1.5 text-xs font-semibold text-brown-500"
+                          >
+                            {action.label} <ArrowUpRight className="h-3 w-3" />
+                          </a>
+                        ),
+                      )}
                   </div>
                 )}
                 {message.support && (
