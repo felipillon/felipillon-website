@@ -232,13 +232,9 @@ export default function Team() {
                 >
                   <team.icon className="w-6 h-6" style={{ color: team.color }} />
                 </div>
-<<<<<<< HEAD
                 <p className="font-heading text-lg font-medium text-[#231911]">
                   {tm.deptNames?.[team.dept] || team.dept}
                 </p>
-=======
-                <p className="font-heading text-lg font-medium text-[#231911]">{teamLabels[team.dept] || team.dept}</p>
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
               </GlowCard>
             </Reveal>
           ))}

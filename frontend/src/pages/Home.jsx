@@ -137,14 +137,14 @@ const Hero = () => {
             className="absolute inset-0"
             style={{ zIndex: i === activeIdx ? 1 : 0 }}
           >
-            <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            {v.poster && <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />}
             <video
               ref={(el) => { videoRefs.current[i] = el; }}
               muted
               playsInline
               autoPlay
               preload="auto"
-              poster={v.poster}
+              poster={v.poster || undefined}
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}

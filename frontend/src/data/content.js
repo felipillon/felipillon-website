@@ -16,13 +16,8 @@ export const MEDIA = {
   aboutTeam: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=85",
   aboutMission: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=85",
 
-<<<<<<< HEAD
-  // Staffing — human capital
-  staffing: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1400&q=85",
-=======
   // Staffing, human capital
   staffing: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=85",
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
   interview: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=85",
   handshake: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=85",
 
@@ -93,21 +88,13 @@ export const HERO_VIDEOS = [
   {
     label: "Felipillon",
     src: HERO_VIDEO.src,
-<<<<<<< HEAD
-    poster: HERO_VIDEO.poster,
-    maxDuration: 60, // full 60-second video
-=======
     sources: [HERO_VIDEO.src],
     poster: HERO_VIDEO.poster,
-    maxDuration: 7,
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
+    maxDuration: 60, // full 60-second video
   },
   {
     label: "Construction",
     src: "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
-<<<<<<< HEAD
-    poster: "https://images.pexels.com/videos/1197802/free-video-1197802.jpg?auto=compress&cs=tinysrgb&w=1920",
-=======
     sources: [
       "https://videos.pexels.com/video-files/1197802/1197802-hd_1920_1080_25fps.mp4",
     ],
@@ -121,7 +108,6 @@ export const HERO_VIDEOS = [
       "https://videos.pexels.com/video-files/5722215/5722215-uhd_2732_1440_25fps.mp4",
     ],
     poster: "https://images.pexels.com/videos/5722215/pexels-photo-5722215.jpeg?auto=compress&cs=tinysrgb&w=1920",
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
     maxDuration: 7,
   },
   {
@@ -450,13 +436,8 @@ export const TRUSTED = ["NORDHEALTH", "SOLARIS ENERGY", "HELIX CLOUD", "BUILDWOR
 export const BLOG_CATEGORIES = ["All", "AI", "Recruitment", "Healthcare", "Renewable Energy", "Software Engineering"];
 
 export const BLOG = [
-<<<<<<< HEAD
   { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.blog1 },
   { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI — they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
-=======
-  { id: 1, category: "AI", title: "How RAG Is Reshaping Enterprise Knowledge Work", excerpt: "Retrieval-augmented generation moves from hype to production. Here's what we've learned shipping it for regulated clients.", date: "Jun 12, 2026", read: "7 min", featured: true, img: MEDIA.rag },
-  { id: 2, category: "Recruitment", title: "The AI-Augmented Recruiter: A New Operating Model", excerpt: "Why the best recruiters aren't replaced by AI, they're amplified by it.", date: "Jun 04, 2026", read: "5 min", img: MEDIA.blog2 },
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
   { id: 3, category: "Healthcare", title: "Closing the Clinical Talent Gap in Europe", excerpt: "Cross-border clinician mobility, credentialing and retention strategies that work.", date: "May 28, 2026", read: "6 min", img: MEDIA.blog3 },
   { id: 4, category: "Renewable Energy", title: "Hiring for the Battery Storage Boom", excerpt: "PV and BESS specialists are the new bottleneck. How to build the team.", date: "May 19, 2026", read: "4 min", img: MEDIA.blog4 },
   { id: 5, category: "Software Engineering", title: "Shipping Platforms at Enterprise Scale", excerpt: "Architecture patterns for performance, security and developer velocity.", date: "May 09, 2026", read: "8 min", img: MEDIA.blog1 },

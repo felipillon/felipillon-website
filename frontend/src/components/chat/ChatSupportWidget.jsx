@@ -160,7 +160,7 @@ const KNOWLEDGE_ACTIONS = {
 const INTENT_RULES = {
   [INTENTS.OPEN_ROLES]: {
     topic: "careers",
-    phrases: ["open roles", "open role", "jobs page", "job page", "careers page", "career page", "current roles", "open positions", "current opportunities", "are you hiring"],
+    phrases: ["open roles", "open role", "open jobs", "open job", "jobs page", "job page", "find jobs", "find open jobs", "careers page", "career page", "current roles", "open positions", "current opportunities", "are you hiring"],
     keywords: ["job", "jobs", "role", "roles", "career", "careers", "vacancy", "vacancies", "position", "positions", "opening", "openings", "hiring", "stellen", "karriere", "lavoro", "posizione", "вакансия", "ilan"],
     negative: ["office", "headquarters", "located", "location"],
   },
@@ -216,7 +216,7 @@ const INTENT_RULES = {
   },
   [INTENTS.INDUSTRIES]: {
     topic: "services",
-    phrases: ["what sectors", "which sectors", "what industries", "which industries", "find work", "help people find work", "help me get a job", "help me find a job"],
+    phrases: ["what sectors", "which sectors", "what industries", "which industries", "find work", "need a job", "looking for a job", "help people find work", "help me get a job", "help me find a job"],
     keywords: ["industry", "industries", "sector", "sectors", "field", "fields", "speciality", "specialities", "healthcare", "construction", "renewable", "logistics", "trade", "branche", "sektor"],
   },
   [INTENTS.VALUES]: {
