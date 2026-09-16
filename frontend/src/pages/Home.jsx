@@ -8,6 +8,7 @@ import { Reveal } from "../components/shared/Reveal";
 import { Counter } from "../components/shared/Counter";
 import { Globe } from "../components/shared/Globe";
 import { CursorFollower } from "../components/shared/CursorFollower";
+import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { useLang } from "../context/LangContext";
 import { SPECIALITIES, WHY, METRICS, TRUSTED, TESTIMONIALS, MEDIA, VIDEO_BG, HERO_VIDEOS } from "../data/content";
 import { CARD_TEXT } from "../data/cardTranslations";
@@ -96,16 +97,8 @@ const Hero = () => {
   useEffect(() => {
     const vid = videoRefs.current[activeIdx];
     if (vid) {
-      // Ensure this slide's video is preloaded before playing
-      if (vid.preload === "none") vid.preload = "auto";
       vid.currentTime = 0;
       vid.play().catch(() => {});
-    }
-    // Preload the next slide in the background so it's ready
-    const nextIdx = (activeIdx + 1) % HERO_VIDEOS.length;
-    const nextVid = videoRefs.current[nextIdx];
-    if (nextVid && nextVid.preload === "none") {
-      nextVid.preload = "metadata";
     }
   }, [activeIdx]);
 
@@ -131,7 +124,7 @@ const Hero = () => {
   });
 
   return (
-    <section ref={ref} className="relative min-h-[58svh] flex items-end overflow-hidden">
+    <section ref={ref} className="relative h-screen min-h-screen flex items-end overflow-hidden">
 
       {/* ── Video layers with crossfade ── */}
       <div className="absolute inset-0 z-0">
@@ -144,24 +137,18 @@ const Hero = () => {
             className="absolute inset-0"
             style={{ zIndex: i === activeIdx ? 1 : 0 }}
           >
-            <img
-              src={v.poster}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
             <video
               ref={(el) => { videoRefs.current[i] = el; }}
               muted
               playsInline
               autoPlay
-              preload={i === 0 ? "auto" : "none"}
+              preload="auto"
               poster={v.poster}
               onError={(e) => {
-                // Hide broken video — poster image underneath stays visible
-                e.currentTarget.style.visibility = "hidden";
+                e.currentTarget.style.display = "none";
               }}
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ imageRendering: "auto", willChange: "opacity" }}
             >
               {(v.sources || [v.src]).map((src) => (
                 <source key={src} src={src} type="video/mp4" />
@@ -260,67 +247,6 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* ── Video carousel indicators ── */}
-        <motion.div
-          {...entrance(0.55)}
-          className="mt-10 flex items-center gap-2.5 px-4 py-2.5 rounded-full"
-          style={{
-            background: "rgba(7,7,10,0.35)",
-            backdropFilter: "blur(16px) saturate(140%)",
-            WebkitBackdropFilter: "blur(16px) saturate(140%)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            boxShadow: "0 4px 24px -4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
-            width: "fit-content",
-          }}
-        >
-          {HERO_VIDEOS.map((v, i) => {
-            const isActive = i === activeIdx;
-            const isPast = i < activeIdx || (activeIdx === 0 && i === count - 1 && progress < 0.05);
-            return (
-              <button
-                key={v.label}
-                onClick={() => goTo(i)}
-                className="group relative flex items-center gap-2 focus:outline-none transition-all duration-300"
-                aria-label={`Show ${v.label} video`}
-              >
-                {/* Progress bar track */}
-                <div
-                  className="relative overflow-hidden rounded-full transition-all duration-500 ease-out"
-                  style={{
-                    width: isActive ? 56 : 16,
-                    height: isActive ? 4 : 4,
-                    background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.15)",
-                  }}
-                >
-                  <div
-                    className="absolute inset-y-0 left-0 rounded-full transition-colors duration-300"
-                    style={{
-                      width: isActive ? `${progress * 100}%` : isPast ? "100%" : "0%",
-                      background: isActive
-                        ? "linear-gradient(90deg, #C9973A, #E8C97A)"
-                        : "rgba(255,255,255,0.32)",
-                      boxShadow: isActive ? "0 0 8px rgba(201,151,58,0.4)" : "none",
-                    }}
-                  />
-                </div>
-                {/* Label (visible for active slide) */}
-                <AnimatePresence mode="wait">
-                  {isActive && (
-                    <motion.span
-                      initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                      animate={{ opacity: 1, width: "auto", marginLeft: 2 }}
-                      exit={{ opacity: 0, width: 0, marginLeft: 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="text-[9px] font-bold tracking-[0.22em] uppercase text-white/70 whitespace-nowrap overflow-hidden"
-                    >
-                      {v.label}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
-            );
-          })}
-        </motion.div>
       </motion.div>
 
     </section>
@@ -329,7 +255,7 @@ const Hero = () => {
 
 // ── Trusted strip ─────────────────────────────────────────────────────────
 const TrustedStrip = () => (
-  <div className="relative border-y border-brown-500/[0.07] bg-[#FBF8F3] py-10 overflow-hidden">
+  <div className="relative border-y border-brown-500/[0.07] py-10 overflow-hidden">
     <p className="text-center text-[9px] tracking-[0.45em] uppercase text-brown-500/40 mb-7">
       Trusted by enterprise leaders worldwide
     </p>
@@ -533,8 +459,8 @@ const SpecialitiesSection = () => {
   const stageSize = radius * 2 + cardH + 40;
 
   return (
-    <section className="py-24 sm:py-32 relative">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 mb-10">
+    <section className="py-16 sm:py-20 relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 mb-6">
         <Reveal>
           <div className="inline-flex items-center gap-3 mb-5">
             <span className="w-10 h-px bg-gold" />
@@ -549,44 +475,17 @@ const SpecialitiesSection = () => {
         </Reveal>
       </div>
 
-      <div
-        ref={stageRef}
-        className="relative isolate mx-auto flex items-center justify-center select-none"
-        style={{ height: stageSize, maxWidth: stageSize }}
-        onMouseEnter={() => {
-          isCarouselHoveredRef.current = true;
-          controlsRef.current?.pause();
-        }}
-        onMouseLeave={() => {
-          isCarouselHoveredRef.current = false;
-          controlsRef.current?.play();
-        }}
-      >
-        {SPECIALITIES.map((item, i) => (
-          <OrbitCard
-            key={item.id}
-            item={item}
-            index={i}
-            count={SPECIALITIES.length}
-            rotation={rotation}
-            radius={radius}
-            cardW={cardW}
-            cardH={cardH}
-            onOpen={() => navigate("/specialities")}
-            tr={CARD_TEXT[lang]?.specialities?.[item.id]}
-          />
-        ))}
-      </div>
+      {/* ── Orbit circle with left/right arrows on sides ── */}
+      <div className="relative flex items-center justify-center">
 
-      {/* ── Prev / Next navigation buttons ── */}
-      <div className="flex items-center justify-center gap-4 mt-6">
+        {/* Left arrow */}
         <button
           onClick={() => {
             controlsRef.current?.stop();
             rotation.set(rotation.get() + (360 / SPECIALITIES.length));
             setTimeout(startAutoRotation, 1200);
           }}
-          className="w-11 h-11 rounded-full border border-brown-500/20 bg-white shadow-sm flex items-center justify-center text-brown-500/60 hover:text-[#231911] hover:border-gold/50 hover:shadow-[0_4px_16px_-4px_rgba(201,151,58,0.35)] transition-all duration-200"
+          className="absolute left-4 sm:left-10 z-20 w-11 h-11 rounded-full border border-brown-500/20 bg-white shadow-md flex items-center justify-center text-brown-500/60 hover:text-[#231911] hover:border-gold/50 hover:shadow-[0_4px_16px_-4px_rgba(201,151,58,0.35)] transition-all duration-200"
           aria-label="Previous speciality"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -594,26 +493,51 @@ const SpecialitiesSection = () => {
           </svg>
         </button>
 
-        <button
-          onClick={() => navigate("/specialities")}
-          className="px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
+        {/* Orbit stage */}
+        <div
+          ref={stageRef}
+          className="relative isolate mx-auto flex items-center justify-center select-none"
+          style={{ height: stageSize, maxWidth: stageSize }}
+          onMouseEnter={() => {
+            isCarouselHoveredRef.current = true;
+            controlsRef.current?.pause();
+          }}
+          onMouseLeave={() => {
+            isCarouselHoveredRef.current = false;
+            controlsRef.current?.play();
+          }}
         >
-          {t.specialities?.explore || "Explore All"}
-        </button>
+          {SPECIALITIES.map((item, i) => (
+            <OrbitCard
+              key={item.id}
+              item={item}
+              index={i}
+              count={SPECIALITIES.length}
+              rotation={rotation}
+              radius={radius}
+              cardW={cardW}
+              cardH={cardH}
+              onOpen={() => navigate("/specialities")}
+              tr={CARD_TEXT[lang]?.specialities?.[item.id]}
+            />
+          ))}
+        </div>
 
+        {/* Right arrow */}
         <button
           onClick={() => {
             controlsRef.current?.stop();
             rotation.set(rotation.get() - (360 / SPECIALITIES.length));
             setTimeout(startAutoRotation, 1200);
           }}
-          className="w-11 h-11 rounded-full border border-brown-500/20 bg-white shadow-sm flex items-center justify-center text-brown-500/60 hover:text-[#231911] hover:border-gold/50 hover:shadow-[0_4px_16px_-4px_rgba(201,151,58,0.35)] transition-all duration-200"
+          className="absolute right-4 sm:right-10 z-20 w-11 h-11 rounded-full border border-brown-500/20 bg-white shadow-md flex items-center justify-center text-brown-500/60 hover:text-[#231911] hover:border-gold/50 hover:shadow-[0_4px_16px_-4px_rgba(201,151,58,0.35)] transition-all duration-200"
           aria-label="Next speciality"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>
+
       </div>
 
     </section>
@@ -942,13 +866,14 @@ export default function Home() {
   // strip below it. The home content still paints its own cream background.
   useEffect(() => {
     const prevBg = document.body.style.background;
-    document.body.style.background = "#07070A";
+    document.body.style.background = 'transparent';
     setReady(true);
     return () => { document.body.style.background = prevBg; };
   }, []);
 
   return (
-    <div className="relative bg-[#FBF8F3] text-brown-500">
+    <div className="relative bg-transparent text-brown-500">
+      <AmbientBackground />
       {ready && <CursorFollower />}
       <Hero />
       <TrustedStrip />

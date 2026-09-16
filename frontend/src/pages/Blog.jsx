@@ -18,13 +18,13 @@ export default function Blog() {
 
   useEffect(() => {
     const prevBg = document.body.style.background;
-    document.body.style.background = "#FBF8F3";
+    document.body.style.background = 'transparent';
     setReady(true);
     return () => { document.body.style.background = prevBg; };
   }, []);
 
   return (
-    <div className="relative bg-[#FBF8F3] text-brown-500">
+    <div className="relative bg-transparent text-brown-500">
       <ScrollProgress />
       <AmbientBackground />
       {ready && <CursorFollower />}

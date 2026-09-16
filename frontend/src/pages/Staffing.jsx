@@ -4,6 +4,7 @@ import { GlowCard } from "../components/shared/GlowCard";
 import { Reveal } from "../components/shared/Reveal";
 import { MagneticButton } from "../components/shared/MagneticButton";
 import { CursorFollower } from "../components/shared/CursorFollower";
+import { AmbientBackground } from "../components/shared/AmbientBackground";
 import { SPECIALITIES, MEDIA, STAFFING_VIDEO_BG } from "../data/content";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LangContext";
@@ -43,7 +44,7 @@ export default function Staffing() {
 
   useEffect(() => {
     const prevBg = document.body.style.background;
-    document.body.style.background = "#FBF8F3";
+    document.body.style.background = 'transparent';
     setReady(true);
     return () => { document.body.style.background = prevBg; };
   }, []);
@@ -56,7 +57,8 @@ export default function Staffing() {
   ];
 
   return (
-    <div className="relative bg-[#FBF8F3] text-brown-500">
+    <div className="relative bg-transparent text-brown-500">
+      <AmbientBackground />
       {ready && <CursorFollower />}
 
       {/* ── Hero — large type left, video panel right ── */}

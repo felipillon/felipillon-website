@@ -11,7 +11,10 @@ const PRIMARY_NAV = [
   "about",
   "specialities",
   "staffing",
+  "team",
   "openRoles",
+  "testimonials",
+  "locations",
 ];
 
 export const Navbar = () => {
@@ -183,8 +186,8 @@ export const Navbar = () => {
             alt="Felipillon"
             style={{
               filter: useDarkForeground
-                ? "brightness(0) drop-shadow(0 10px 22px rgba(61,35,20,0.2))"
-                : "brightness(0) saturate(100%) invert(63%) sepia(37%) saturate(830%) hue-rotate(4deg) brightness(91%) contrast(88%) drop-shadow(0 5px 8px rgba(0,0,0,0.72)) drop-shadow(0 16px 28px rgba(0,0,0,0.5))",
+                ? "brightness(0) drop-shadow(0 2px 8px rgba(61,35,20,0.15))"
+                : "brightness(0) invert(1) drop-shadow(0 2px 12px rgba(255,255,255,0.9)) drop-shadow(0 0 24px rgba(255,255,255,0.6))",
             }}
             className={`
               ${isFloating ? "h-14 sm:h-16" : "h-16 sm:h-20"}
@@ -251,8 +254,8 @@ export const Navbar = () => {
             );
           })}
 
-          {/* MORE DROPDOWN */}
-          <div className="relative group">
+          {/* MORE DROPDOWN — only shown when there are links not in PRIMARY_NAV */}
+          {moreLinks.length > 0 && <div className="relative group">
             <button
               type="button"
               className={`
@@ -344,7 +347,7 @@ export const Navbar = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </div>}
         </nav>
 
         {/* RIGHT ACTIONS */}

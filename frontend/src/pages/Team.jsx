@@ -97,7 +97,7 @@ export default function Team() {
 
   useEffect(() => {
     const prevBg = document.body.style.background;
-    document.body.style.background = "#FBF8F3";
+    document.body.style.background = 'transparent';
     setReady(true);
     return () => { document.body.style.background = prevBg; };
   }, []);
@@ -117,7 +117,7 @@ export default function Team() {
   }, [selectedMember]);
 
   return (
-    <div className="relative bg-[#FBF8F3] text-brown-500">
+    <div className="relative bg-transparent text-brown-500">
       <ScrollProgress />
       <AmbientBackground />
       {ready && <CursorFollower />}
@@ -230,7 +230,9 @@ export default function Team() {
                 >
                   <team.icon className="w-6 h-6" style={{ color: team.color }} />
                 </div>
-                <p className="font-heading text-lg font-medium text-[#231911]">{team.dept}</p>
+                <p className="font-heading text-lg font-medium text-[#231911]">
+                  {tm.deptNames?.[team.dept] || team.dept}
+                </p>
               </GlowCard>
             </Reveal>
           ))}

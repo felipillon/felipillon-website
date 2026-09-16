@@ -46,13 +46,13 @@ export default function About() {
 
   useEffect(() => {
     const prevBg = document.body.style.background;
-    document.body.style.background = "#FBF8F3";
+    document.body.style.background = 'transparent';
     setReady(true);
     return () => { document.body.style.background = prevBg; };
   }, []);
 
   return (
-    <div className="relative bg-[#FBF8F3] text-brown-500">
+    <div className="relative bg-transparent text-brown-500">
       <ScrollProgress />
       <AmbientBackground />
       {ready && <CursorFollower />}
@@ -120,11 +120,18 @@ export default function About() {
                     <p className="text-xs text-white/60">{a.globalHq || "Global HQ"}</p>
                   </div>
                 </RevealPhoto>
-                <RevealPhoto src={MEDIA.philippinesLandmark} alt="Makati City" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
+                <RevealPhoto src={MEDIA.italy} alt="Italy office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">{a.indiaPhilippines || "India + Philippines"}</p>
-                    <p className="text-xs text-white/60">{a.techOps || "Tech & Ops"}</p>
+                    <p className="text-xs text-gold-300 font-semibold">{a.italyLabel || "Italy"}</p>
+                    <p className="text-xs text-white/60">{a.europeanExpansion || "European Expansion"}</p>
+                  </div>
+                </RevealPhoto>
+                <RevealPhoto src={MEDIA.indiaLandmark} alt="India office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.26}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    <p className="text-xs text-gold-300 font-semibold">{a.indiaLabel || "India"}</p>
+                    <p className="text-xs text-white/60">{a.operationsHub || "Operations Hub"}</p>
                   </div>
                 </RevealPhoto>
               </div>

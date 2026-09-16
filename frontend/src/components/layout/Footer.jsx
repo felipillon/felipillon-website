@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Linkedin, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { useLang } from "../../context/LangContext";
 import { MEDIA } from "../../data/content";
 
@@ -10,7 +10,6 @@ const COLS = [
       { labelKey: "about", path: "/about" },
       { labelKey: "team", path: "/team" },
       { labelKey: "locations", path: "/locations" },
-      { labelKey: "blog", path: "/blog" },
     ],
   },
   {
@@ -19,7 +18,6 @@ const COLS = [
       { labelKey: "specialitiesServices", path: "/specialities" },
       { labelKey: "staffingRecruitment", path: "/staffing" },
       { labelKey: "openRoles", path: "/open-roles" },
-      { labelKey: "caseStudies", path: "/case-studies" },
     ],
   },
   {
@@ -77,24 +75,56 @@ export const Footer = () => {
             </div>
             <div className="flex flex-wrap gap-3">
               {[
-                { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/felipillon" },
-                { label: "X", href: "https://x.com/felipillon", isX: true },
-                { icon: Mail, label: "Email", href: "mailto:hello@felipillon.com" },
-                // { label: "Instagram", href: "https://www.instagram.com/felipillon", text: "IG" },
-                // { label: "Facebook", href: "https://www.facebook.com/felipillon", text: "f" },
-                // { label: "Indeed", href: "https://www.indeed.com/cmp/felipillon", text: "in" },
-                // { label: "Glassdoor", href: "https://www.glassdoor.com/Overview/Working-at-felipillon", text: "Gd" },
-              ].map(({ icon: Icon, label, href, isX }) => (
-                <a key={label} href={href} aria-label={label} target={href?.startsWith("mailto") ? undefined : "_blank"} rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-white/[0.14] flex items-center justify-center text-white/62 hover:text-[#C9973A] hover:border-[#C9973A]/40 transition-all">
-                  {isX ? (
+                { label: "LinkedIn", href: "https://www.linkedin.com/company/felipillon" },
+                { label: "X", href: "https://x.com/felipillon" },
+                { label: "Email", href: "mailto:hello@felipillon.com" },
+                { label: "Instagram", href: "https://www.instagram.com/felipillon" },
+                { label: "Facebook", href: "https://www.facebook.com/felipillon" },
+                { label: "Indeed", href: "https://www.indeed.com/cmp/felipillon" },
+                { label: "Glassdoor", href: "https://www.glassdoor.com/Overview/Working-at-felipillon" },
+              ].map(({ label, href }) => (
+                <a key={label} href={href} aria-label={label}
+                  target={href?.startsWith("mailto") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full border border-white/[0.14] flex items-center justify-center text-white/62 hover:text-[#C9973A] hover:border-[#C9973A]/40 transition-all"
+                >
+                  {label === "LinkedIn" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  )}
+                  {label === "X" && (
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                     </svg>
-                  ) : Icon ? (
-                    <Icon className="w-4 h-4" />
-                  ) : (
-                    <span className="text-[10px] font-bold">{label === "Facebook" ? "f" : label === "Instagram" ? "IG" : label === "Indeed" ? "in" : "Gd"}</span>
+                  )}
+                  {label === "Email" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                  )}
+                  {label === "Instagram" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                      <circle cx="12" cy="12" r="4"/>
+                      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                  )}
+                  {label === "Facebook" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                  )}
+                  {label === "Indeed" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V9h2v7zm4 0h-2V6h2v10z"/>
+                    </svg>
+                  )}
+                  {label === "Glassdoor" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 3a7 7 0 1 1 0 14A7 7 0 0 1 12 5zm-1 2v5h2V7h-2zm0 7v2h2v-2h-2z"/>
+                    </svg>
                   )}
                 </a>
               ))}

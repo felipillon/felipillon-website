@@ -60,7 +60,7 @@
 @layer base {
   * { border-color: hsl(var(--border)); }
   body {
-    background: #07070A;
+    background: #FBF8F3;
     color: white;
     font-family: 'Cambria', 'Times New Roman', Times, serif;
     -webkit-font-smoothing: antialiased;
