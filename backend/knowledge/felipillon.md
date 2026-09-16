@@ -13,6 +13,15 @@ Technology services include software development, digital marketing, AI applicat
 
 Felipillon positions itself around fast, quality-focused delivery, global reach, follow-the-sun operations across Germany, India, the Philippines and Italy, and a combination of human recruitment expertise with AI-assisted sourcing.
 
+Founder and company history:
+
+- Founder: Ketan Bhanudas Barve.
+- Leadership role on the website: Founder & CEO, Germany.
+- Founding location: Berlin, Germany.
+- The website timeline says "Founded in Germany" and describes Felipillon launching as a specialist healthcare recruitment firm in Berlin, Germany.
+- The public website content does not publish a specific founding year. If asked for the exact founding year, say that the site does not list the exact year.
+- Timeline milestones listed on the website include the Technology Division in 2021, India Hub in 2023, Philippines Expansion in 2024, and People Match AI in 2026.
+
 The website has these important pages:
 
 - Contact: /contact

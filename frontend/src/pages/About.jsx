@@ -120,6 +120,7 @@ export default function About() {
                     <p className="text-xs text-white/60">{a.globalHq || "Global HQ"}</p>
                   </div>
                 </RevealPhoto>
+<<<<<<< HEAD
                 <RevealPhoto src={MEDIA.italy} alt="Italy office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
@@ -132,6 +133,13 @@ export default function About() {
                   <div className="absolute bottom-4 left-4">
                     <p className="text-xs text-gold-300 font-semibold">{a.indiaLabel || "India"}</p>
                     <p className="text-xs text-white/60">{a.operationsHub || "Operations Hub"}</p>
+=======
+                <RevealPhoto src={MEDIA.philippinesLandmark} alt="Makati City" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    <p className="text-xs text-gold-300 font-semibold">{a.indiaPhilippines || "India + Philippines"}</p>
+                    <p className="text-xs text-white/60">{a.techOps || "Tech & Ops"}</p>
+>>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
                   </div>
                 </RevealPhoto>
               </div>

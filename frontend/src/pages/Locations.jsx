@@ -68,13 +68,6 @@ export default function Locations() {
                       </motion.div>
                     </motion.div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
-                    <div className="absolute top-6 left-6">
-                      {loc.flag.length <= 3 ? (
-                        <span className="inline-flex items-center justify-center w-10 h-7 text-xs font-bold tracking-wider bg-white/90 backdrop-blur-sm rounded text-brown-500 shadow">{loc.flag}</span>
-                      ) : (
-                        <span className="text-4xl drop-shadow-lg">{loc.flag}</span>
-                      )}
-                    </div>
                   </div>
                 </div>
 

@@ -111,17 +111,17 @@ export default function Impressum() {
               <p className="text-sm">Felipillon</p>
               <p className="text-sm">Franz-Ehrlich-Straße 12</p>
               <p className="text-sm">12489 Berlin</p>
-              <p className="text-sm">Deutschland</p>
+              <p className="text-sm">{t.impressum?.countryGermany || "Deutschland"}</p>
             </Section>
 
             <Section id="represented" title={t.impressum?.represented || "Vertreten durch"}>
-              <p className="text-sm">Geschäftsführer: Ketan Bhanudas Barve</p>
+              <p className="text-sm">{t.impressum?.director || "Geschäftsführer"}: Ketan Bhanudas Barve</p>
             </Section>
 
             <Section id="contact" title={t.impressum?.contact || "Kontakt"}>
-              <Field label={t.impressum?.phone || "Telefon"} placeholder="[TELEFONNUMMER]" />
+              <Field label={t.impressum?.phone || "Telefon"} placeholder={t.impressum?.phonePlaceholder || "[TELEFONNUMMER]"} />
               <div className="mt-3">
-                <Field label={t.impressum?.email || "E-Mail"} placeholder="[E-MAIL-ADRESSE]" />
+                <Field label={t.impressum?.email || "E-Mail"} placeholder={t.impressum?.emailPlaceholder || "[E-MAIL-ADRESSE]"} />
               </div>
             </Section>
 
@@ -135,12 +135,12 @@ export default function Impressum() {
               <p className="text-sm mb-3">
                 {t.impressum?.vat1 || "Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:"}
               </p>
-              <Field placeholder="[USt-IdNr.]" />
+              <Field placeholder={t.impressum?.vatPlaceholder || "[USt-IdNr.]"} />
             </Section>
 
             <Section id="contentResp" title={t.impressum?.contentResp || "Verantwortlich für den Inhalt"}>
               <p className="text-sm mb-3">{t.impressum?.content1 || "gemäß § 18 Abs. 2 MStV:"}</p>
-              <Field placeholder="[NAME, ANSCHRIFT]" />
+              <Field placeholder={t.impressum?.contentPlaceholder || "[NAME, ANSCHRIFT]"} />
             </Section>
 
             <Section id="euDispute" title={t.impressum?.euDispute || "EU-Streitschlichtung"}>

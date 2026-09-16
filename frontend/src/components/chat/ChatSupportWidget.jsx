@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2 } from "lucide-react";
+import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2, RotateCcw } from "lucide-react";
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/felipillon";
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
@@ -9,15 +9,15 @@ const STARTER_MESSAGES = [
   {
     role: "assistant",
     content:
-      "Hi. I can answer quick questions about Felipillon. For detailed requests, I can point you to support.",
+      "Hi. Ask me about Felipillon's services, locations, hiring support, open roles, or how to contact the team.",
   },
 ];
 
 const QUICK_TOPICS = [
-  "What does Felipillon do?",
-  "Where are you located?",
-  "What services do you offer?",
-  "How can I contact support?",
+  "I need hiring support",
+  "I'm looking for a job",
+  "Which countries do you cover?",
+  "What technology services do you offer?",
 ];
 
 const normalize = (value) => value.toLowerCase().replace(/[^\p{L}0-9\s]/gu, " ").trim();
@@ -30,39 +30,97 @@ const getLanguage = (text) => {
   if (/[äöüß]/i.test(text) || /\b(hallo|deutsch|standort|büro|buero|jobs|stellen|bewerben|kontakt|unterstützung|unterstuetzung)\b/.test(q)) {
     return "de";
   }
+  if (/[а-яё]/i.test(text) || /\b(привет|работа|вакансия|офис|услуги|контакт|поддержка)\b/.test(q)) {
+    return "ru";
+  }
+  if (/\b(ciao|lavoro|posizione|sede|servizi|contatto|supporto|assunzione|recruiting)\b/.test(q)) {
+    return "it";
+  }
   return "en";
 };
 
 const copy = {
   en: {
+    founder: "Felipillon was founded by Ketan Bhanudas Barve in Berlin, Germany. The site does not list a specific founding year.",
+    history: "Felipillon launched in Berlin as a specialist healthcare recruitment firm. The website timeline lists the Technology Division in 2021, the India Hub in Pune in 2023, the Philippines expansion in Makati City in 2024, and People Match AI in 2026.",
+    peopleMatch: "People Match AI is Felipillon's proprietary AI recruitment platform. The site says it scans more than 50 global job platforms to support AI-assisted sourcing.",
+    team: "Felipillon is led by Ketan Bhanudas Barve, Founder & CEO, with leadership and teams across recruitment, business development, software, administration, marketing, and talent acquisition.",
+    values: "Felipillon's positioning focuses on fast delivery, quality, global reach, follow-the-sun operations, and combining human recruitment expertise with AI-assisted sourcing.",
+    industries: "Felipillon supports healthcare, skilled trades, logistics and warehouse, construction, renewable energy, and technology roles.",
     detailed: "That needs a support conversation so the team can give you an accurate answer. Share your details here and Felipillon can follow up directly.",
     company: "Felipillon is a global professional services and technology firm. The company works across staffing, recruitment, software development, AI applications, CRM platforms, and digital solutions.",
     services: "Felipillon offers staffing and recruitment, software development, digital marketing, AI applications, CRM platforms, and broader technology solutions.",
     staffing: "Felipillon helps companies find talent across healthcare, skilled trades, logistics, construction, renewable energy, and technology.",
     locations: "Felipillon is headquartered in Berlin, with hubs in Pune, India, Makati City in the Philippines, and a new Italy office for European operations.",
-    jobs: "You can view current opportunities on the Open Roles page. I can also show a few current roles when the jobs feed is available.",
+    jobs: "You can view and apply for current opportunities on the Open Roles page. Open a role there, then use the Apply button to submit your details and CV.",
     contact: "For support, share your details in this chat, use the contact page, email hello@felipillon.com, or connect with Felipillon on LinkedIn.",
     fallback: "I can help with quick company questions about services, locations, hiring, jobs, and contact details. For anything specific, support can help directly.",
     noJobs: "I could not load current roles right now, but you can still visit the Open Roles page.",
   },
   de: {
+    founder: "Felipillon wurde von Ketan Bhanudas Barve in Berlin gegründet. Auf der Website wird kein genaues Gründungsjahr genannt.",
+    history: "Felipillon startete in Berlin als spezialisiertes Recruiting-Unternehmen im Gesundheitswesen. Die Website nennt die Technologiesparte 2021, den Indien-Standort in Pune 2023, die Expansion auf die Philippinen in Makati City 2024 und People Match AI 2026.",
+    peopleMatch: "People Match AI ist Felipillons eigene KI-Recruiting-Plattform. Laut Website durchsucht sie mehr als 50 globale Jobplattformen zur Unterstützung des AI-gestützten Sourcings.",
+    team: "Felipillon wird von Ketan Bhanudas Barve, Gründer & CEO, geführt. Das Team arbeitet in Recruiting, Business Development, Software, Administration, Marketing und Talent Acquisition.",
+    values: "Felipillon steht für schnelle Umsetzung, Qualität, globale Reichweite, Follow-the-Sun-Operations und die Verbindung menschlicher Recruiting-Expertise mit KI-gestütztem Sourcing.",
+    industries: "Felipillon unterstützt Healthcare, Handwerk, Logistik und Lager, Bau, erneuerbare Energien und Technologierollen.",
     detailed: "Dafür sollte das Support-Team direkt antworten, damit Sie eine genaue Auskunft bekommen. Hinterlassen Sie hier Ihre Daten und Felipillon meldet sich.",
     company: "Felipillon ist ein globales Professional-Services- und Technologieunternehmen. Das Unternehmen arbeitet in Recruiting, Softwareentwicklung, KI-Anwendungen, CRM-Plattformen und digitalen Lösungen.",
     services: "Felipillon bietet Staffing und Recruiting, Softwareentwicklung, digitales Marketing, KI-Anwendungen, CRM-Plattformen und weitere Technologielösungen.",
     staffing: "Felipillon hilft Unternehmen, Fachkräfte in Healthcare, Handwerk, Logistik, Bau, erneuerbaren Energien und Technologie zu finden.",
     locations: "Felipillon hat den Hauptsitz in Berlin sowie Hubs in Pune, Indien, Makati City auf den Philippinen und einen neuen Standort in Italien für europäische Aktivitäten.",
-    jobs: "Aktuelle Stellen finden Sie auf der Open-Roles-Seite. Wenn der Stellen-Feed verfügbar ist, kann ich auch einige aktuelle Rollen anzeigen.",
+    jobs: "Aktuelle Stellen finden Sie auf der Open-Roles-Seite. Öffnen Sie dort eine Rolle und nutzen Sie den Bewerben-Button, um Ihre Daten und Ihren Lebenslauf einzureichen.",
     contact: "Für Support können Sie Ihre Daten hier im Chat hinterlassen, die Kontaktseite nutzen, hello@felipillon.com schreiben oder Felipillon auf LinkedIn kontaktieren.",
     fallback: "Ich kann kurze Fragen zu Services, Standorten, Recruiting, Jobs und Kontaktdaten beantworten. Für spezifische Anliegen hilft der Support direkt.",
     noJobs: "Ich konnte aktuelle Rollen gerade nicht laden, aber Sie können weiterhin die Open-Roles-Seite besuchen.",
   },
+  it: {
+    founder: "Felipillon è stata fondata da Ketan Bhanudas Barve a Berlino, in Germania. Il sito non indica un anno esatto di fondazione.",
+    history: "Felipillon nasce a Berlino come agenzia specializzata nel recruiting sanitario. La timeline del sito indica la divisione tecnologica nel 2021, l'hub in India a Pune nel 2023, l'espansione nelle Filippine a Makati City nel 2024 e People Match AI nel 2026.",
+    peopleMatch: "People Match AI è la piattaforma proprietaria di recruiting AI di Felipillon. Il sito indica che analizza oltre 50 piattaforme di lavoro globali per supportare il sourcing assistito dall'AI.",
+    team: "Felipillon è guidata da Ketan Bhanudas Barve, Founder & CEO, con team in recruiting, business development, software, amministrazione, marketing e talent acquisition.",
+    values: "Felipillon si posiziona su consegna rapida, qualità, presenza globale, operazioni follow-the-sun e combinazione tra esperienza umana nel recruiting e sourcing assistito dall'AI.",
+    industries: "Felipillon supporta ruoli in sanità, mestieri specializzati, logistica e magazzino, edilizia, energie rinnovabili e tecnologia.",
+    detailed: "Per questa richiesta serve un confronto diretto con il team, così possiamo darti una risposta accurata. Lascia i tuoi dati qui e Felipillon ti ricontatterà.",
+    company: "Felipillon è una società globale di servizi professionali e tecnologia. Opera in staffing, recruiting, sviluppo software, applicazioni AI, piattaforme CRM e soluzioni digitali.",
+    services: "Felipillon offre staffing e recruiting, sviluppo software, marketing digitale, applicazioni AI, piattaforme CRM e soluzioni tecnologiche più ampie.",
+    staffing: "Felipillon aiuta le aziende a trovare talenti in sanità, mestieri specializzati, logistica, edilizia, energie rinnovabili e tecnologia.",
+    locations: "Felipillon ha sede a Berlino, con hub a Pune in India, Makati City nelle Filippine e una nuova sede in Italia per le operazioni europee.",
+    jobs: "Puoi vedere e candidarti alle opportunità attuali nella pagina Posizioni aperte. Apri un ruolo e usa il pulsante Candidati per inviare i tuoi dati e il CV.",
+    contact: "Per supporto puoi lasciare i tuoi dati in questa chat, usare la pagina contatti, scrivere a hello@felipillon.com o contattare Felipillon su LinkedIn.",
+    fallback: "Posso aiutarti con domande rapide su servizi, sedi, recruiting, lavoro e contatti. Per richieste specifiche, il supporto può aiutarti direttamente.",
+    noJobs: "Non riesco a caricare i ruoli attuali in questo momento, ma puoi comunque visitare la pagina Posizioni aperte.",
+  },
+  ru: {
+    founder: "Felipillon была основана Кетаном Бханудасом Барве в Берлине, Германия. На сайте не указан точный год основания.",
+    history: "Felipillon начала работу в Берлине как специализированная рекрутинговая компания в сфере здравоохранения. В timeline сайта указаны технологическое направление в 2021 году, хаб в Пуне, Индия, в 2023 году, расширение на Филиппины в Макати-Сити в 2024 году и People Match AI в 2026 году.",
+    peopleMatch: "People Match AI, собственная AI-платформа Felipillon для рекрутинга. На сайте указано, что она сканирует более 50 глобальных job-платформ для AI-assisted sourcing.",
+    team: "Felipillon возглавляет Ketan Bhanudas Barve, Founder & CEO. Команды работают в рекрутинге, business development, software, administration, marketing и talent acquisition.",
+    values: "Felipillon делает акцент на быстрой и качественной delivery, глобальном охвате, follow-the-sun операциях и сочетании человеческой рекрутинговой экспертизы с AI-assisted sourcing.",
+    industries: "Felipillon поддерживает подбор в healthcare, skilled trades, logistics and warehouse, construction, renewable energy и technology.",
+    detailed: "Для этого вопроса лучше подключить команду поддержки, чтобы дать точный ответ. Оставьте свои данные здесь, и Felipillon свяжется с вами напрямую.",
+    company: "Felipillon, глобальная компания в сфере профессиональных услуг и технологий. Компания работает в подборе персонала, рекрутинге, разработке ПО, AI-приложениях, CRM-платформах и цифровых решениях.",
+    services: "Felipillon предлагает подбор персонала и рекрутинг, разработку ПО, цифровой маркетинг, AI-приложения, CRM-платформы и другие технологические решения.",
+    staffing: "Felipillon помогает компаниям находить специалистов в здравоохранении, квалифицированных рабочих профессиях, логистике, строительстве, возобновляемой энергетике и технологиях.",
+    locations: "Главный офис Felipillon находится в Берлине, также есть хабы в Пуне, Индия, Макати-Сити на Филиппинах и новый офис в Италии для европейских операций.",
+    jobs: "Актуальные вакансии доступны на странице Open Roles. Откройте вакансию и нажмите Apply, чтобы отправить свои данные и CV.",
+    contact: "Для поддержки оставьте данные в этом чате, используйте страницу контактов, напишите на hello@felipillon.com или свяжитесь с Felipillon в LinkedIn.",
+    fallback: "Я могу ответить на короткие вопросы об услугах, офисах, рекрутинге, вакансиях и контактах. По конкретным запросам команда поддержки поможет напрямую.",
+    noJobs: "Сейчас не удалось загрузить актуальные роли, но вы можете перейти на страницу вакансий.",
+  },
   tr: {
+    founder: "Felipillon, Berlin'de Ketan Bhanudas Barve tarafından kuruldu. Web sitesinde belirli bir kuruluş yılı belirtilmiyor.",
+    history: "Felipillon Berlin'de uzman bir sağlık işe alım firması olarak başladı. Web sitesi zaman çizelgesi 2021'de Teknoloji Bölümü'nü, 2023'te Pune'daki Hindistan merkezini, 2024'te Makati City'deki Filipinler genişlemesini ve 2026'da People Match AI'ı listeler.",
+    peopleMatch: "People Match AI, Felipillon'un özel yapay zeka işe alım platformudur. Siteye göre AI destekli aday bulma için 50'den fazla küresel iş platformunu tarar.",
+    team: "Felipillon'a Kurucu ve CEO Ketan Bhanudas Barve liderlik eder. Ekipler işe alım, iş geliştirme, yazılım, idari işler, pazarlama ve talent acquisition alanlarında çalışır.",
+    values: "Felipillon hızlı teslimat, kalite, küresel erişim, follow-the-sun operasyonlar ve insan işe alım uzmanlığını AI destekli sourcing ile birleştirme üzerine konumlanır.",
+    industries: "Felipillon sağlık, teknik işler, lojistik ve depo, inşaat, yenilenebilir enerji ve teknoloji rolleri için destek sağlar.",
     detailed: "Bu konu için ekibin doğru yanıt verebilmesi adına destek görüşmesi gerekir. Bilgilerinizi burada bırakın, Felipillon sizinle doğrudan iletişime geçebilir.",
     company: "Felipillon global bir profesyonel hizmetler ve teknoloji şirketidir. Staffing, işe alım, yazılım geliştirme, yapay zeka uygulamaları, CRM platformları ve dijital çözümler alanlarında çalışır.",
     services: "Felipillon staffing ve işe alım, yazılım geliştirme, dijital pazarlama, yapay zeka uygulamaları, CRM platformları ve teknoloji çözümleri sunar.",
     staffing: "Felipillon şirketlerin sağlık, teknik işler, lojistik, inşaat, yenilenebilir enerji ve teknoloji alanlarında yetenek bulmasına yardımcı olur.",
     locations: "Felipillon'un merkezi Berlin'dedir; Pune Hindistan, Makati City Filipinler ve Avrupa operasyonları için yeni İtalya ofisi bulunur.",
-    jobs: "Güncel fırsatları Open Roles sayfasında görebilirsiniz. İş ilanı akışı uygunsa birkaç güncel rolü de burada gösterebilirim.",
+    jobs: "Güncel fırsatları Open Roles sayfasında görebilir ve başvurabilirsiniz. Bir rolü açıp Apply düğmesiyle bilgilerinizi ve CV'nizi gönderebilirsiniz.",
     contact: "Destek için bilgilerinizi bu sohbette bırakabilir, iletişim sayfasını kullanabilir, hello@felipillon.com adresine yazabilir veya LinkedIn'den ulaşabilirsiniz.",
     fallback: "Hizmetler, lokasyonlar, işe alım, işler ve iletişim bilgileri hakkında kısa soruları yanıtlayabilirim. Spesifik konularda destek ekibi yardımcı olur.",
     noJobs: "Güncel rolleri şu anda yükleyemedim, ancak Open Roles sayfasını ziyaret edebilirsiniz.",
@@ -71,9 +129,166 @@ const copy = {
 
 const getCopy = (text) => copy[getLanguage(text)] || copy.en;
 
-const isJobQuestion = (text) => {
+const INTENTS = {
+  FOUNDER: "FOUNDER",
+  HISTORY: "HISTORY",
+  PEOPLE_MATCH: "PEOPLE_MATCH",
+  TEAM: "TEAM",
+  VALUES: "VALUES",
+  INDUSTRIES: "INDUSTRIES",
+  SERVICES: "SERVICES",
+  STAFFING: "STAFFING",
+  LOCATIONS: "LOCATIONS",
+  OPEN_ROLES: "OPEN_ROLES",
+  JOB_APPLICATION: "JOB_APPLICATION",
+  CONTACT: "CONTACT",
+  COMPANY: "COMPANY",
+};
+
+const STOP_WORDS = new Set([
+  "a", "an", "and", "are", "at", "can", "do", "does", "for", "how", "i", "in", "is", "it", "me", "my", "of", "on", "or", "page", "the", "to", "what", "where", "you", "your",
+]);
+
+const KNOWLEDGE_ACTIONS = {
+  openRoles: { label: "View open roles", to: "/open-roles" },
+  contact: { label: "Contact page", to: "/contact" },
+  services: { label: "View services", to: "/specialities" },
+  locations: { label: "View locations", to: "/locations" },
+  linkedIn: { label: "LinkedIn", href: LINKEDIN_URL },
+};
+
+const INTENT_RULES = {
+  [INTENTS.OPEN_ROLES]: {
+    topic: "careers",
+    phrases: ["open roles", "open role", "jobs page", "job page", "careers page", "career page", "current roles", "open positions", "current opportunities", "are you hiring"],
+    keywords: ["job", "jobs", "role", "roles", "career", "careers", "vacancy", "vacancies", "position", "positions", "opening", "openings", "hiring", "stellen", "karriere", "lavoro", "posizione", "вакансия", "ilan"],
+    negative: ["office", "headquarters", "located", "location"],
+  },
+  [INTENTS.JOB_APPLICATION]: {
+    topic: "careers",
+    phrases: ["how do i apply", "where can i apply", "send my cv", "submit cv", "submit resume", "apply for a job", "apply for a role", "sign up", "join the team"],
+    keywords: ["apply", "application", "applying", "cv", "resume", "join", "signup", "bewerben", "bewerbung", "candidati", "basvuru", "başvuru"],
+  },
+  [INTENTS.CONTACT]: {
+    topic: "contact",
+    phrases: ["contact you", "contact the team", "talk to", "speak with", "get in touch", "reach out"],
+    keywords: ["contact", "support", "email", "phone", "call", "linkedin", "reach", "message", "kontakt", "contatto"],
+  },
+  [INTENTS.LOCATIONS]: {
+    topic: "locations",
+    phrases: ["where are you located", "where is your office", "office locations", "headquarters", "which countries"],
+    keywords: ["location", "locations", "office", "offices", "headquarters", "located", "country", "countries", "berlin", "pune", "makati", "italy", "standort", "büro", "buero", "sede", "ofis"],
+    negative: ["job", "jobs", "role", "roles", "career", "careers", "apply", "application", "open"],
+  },
+  [INTENTS.SERVICES]: {
+    topic: "services",
+    phrases: ["what does felipillon do", "what do you do", "what services", "services do you offer", "what do you offer"],
+    keywords: ["service", "services", "offer", "offers", "provide", "development", "marketing", "software", "ai", "crm", "hizmet", "servizi"],
+  },
+  [INTENTS.STAFFING]: {
+    topic: "services",
+    phrases: ["hiring support", "find talent", "need staff", "recruitment support"],
+    keywords: ["staff", "staffing", "recruit", "recruitment", "hire", "hiring", "talent", "personal"],
+  },
+  [INTENTS.COMPANY]: {
+    topic: "company",
+    phrases: ["about felipillon", "tell me about felipillon", "what is felipillon"],
+    keywords: ["company", "firm", "business", "unternehmen", "firma"],
+  },
+  [INTENTS.FOUNDER]: {
+    topic: "company",
+    phrases: ["who founded", "who started", "who created", "who launched", "who is the founder", "who is ceo"],
+    keywords: ["founder", "founded", "established", "started", "created", "launched", "ceo", "gründer", "fondatore", "основатель", "kurdu"],
+  },
+  [INTENTS.HISTORY]: {
+    topic: "company",
+    keywords: ["history", "timeline", "journey", "milestone", "growth", "geschichte", "storia", "история", "tarih"],
+  },
+  [INTENTS.PEOPLE_MATCH]: {
+    topic: "technology",
+    phrases: ["people match", "peoplematch", "ai platform", "job platforms"],
+    keywords: ["sourcing", "platform"],
+  },
+  [INTENTS.TEAM]: {
+    topic: "company",
+    phrases: ["who works at", "who works for", "who is on the team", "people behind"],
+    keywords: ["team", "leader", "leadership", "employee", "employees", "people", "works", "équipe", "команд", "lider"],
+  },
+  [INTENTS.INDUSTRIES]: {
+    topic: "services",
+    phrases: ["what sectors", "which sectors", "what industries", "which industries", "find work", "help people find work", "help me get a job", "help me find a job"],
+    keywords: ["industry", "industries", "sector", "sectors", "field", "fields", "speciality", "specialities", "healthcare", "construction", "renewable", "logistics", "trade", "branche", "sektor"],
+  },
+  [INTENTS.VALUES]: {
+    topic: "company",
+    phrases: ["why felipillon", "global reach", "follow the sun"],
+    keywords: ["value", "values", "different", "quality", "fast", "principle", "warum", "neden"],
+  },
+};
+
+const getTokens = (text) => normalize(text).split(/\s+/).filter((token) => token && !STOP_WORDS.has(token));
+
+const levenshtein = (a, b) => {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    let previous = i - 1;
+    row[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const next = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+      previous = next;
+    }
+  }
+  return row[b.length];
+};
+
+const extractEntities = (text) => {
   const q = normalize(text);
-  return /\b(job|jobs|role|roles|career|careers|apply|opening|openings|stelle|stellen|bewerben|karriere|iş|is|ilan|basvuru|başvuru|kariyer)\b/.test(q);
+  const rolePhrases = ["software developer", "developer", "engineer", "recruiter", "nurse", "marketing", "crm", "ai"];
+  const locationPhrases = ["berlin", "germany", "pune", "india", "makati", "philippines", "italy"];
+  return {
+    role: rolePhrases.find((role) => q.includes(role)),
+    location: locationPhrases.find((location) => q.includes(location)),
+  };
+};
+
+const scoreIntent = (text, intent, context, entities) => {
+  const q = normalize(text);
+  const tokens = getTokens(text);
+  const rule = INTENT_RULES[intent];
+  let score = 0;
+
+  (rule.phrases || []).forEach((phrase) => {
+    if (q.includes(normalize(phrase))) score += phrase.split(/\s+/).length > 1 ? 8 : 5;
+  });
+
+  (rule.keywords || []).forEach((keyword) => {
+    const normalizedKeyword = normalize(keyword);
+    if (tokens.includes(normalizedKeyword)) score += 3;
+    else if (normalizedKeyword.length > 4 && tokens.some((token) => token.length > 4 && levenshtein(token, normalizedKeyword) <= 1)) score += 1;
+  });
+
+  (rule.negative || []).forEach((keyword) => {
+    if (q.includes(normalize(keyword))) score -= 5;
+  });
+
+  if (context?.topic && context.topic === rule.topic && tokens.length <= 3) score += 2;
+  if (context?.lastIntent && context.lastIntent === intent && tokens.length <= 3) score += 1;
+  if (entities.role && [INTENTS.OPEN_ROLES, INTENTS.JOB_APPLICATION].includes(intent)) score += 3;
+  if (entities.location && intent === INTENTS.LOCATIONS) score += 3;
+
+  return score;
+};
+
+const classifyIntent = (text, context = {}) => {
+  const entities = extractEntities(text);
+  const scores = Object.values(INTENTS)
+    .map((intent) => ({ intent, score: scoreIntent(text, intent, context, entities) }))
+    .sort((a, b) => b.score - a.score);
+  const [best, second] = scores;
+  const confidence = best.score >= 8 && best.score - (second?.score || 0) >= 2 ? "high" : best.score >= 5 ? "medium" : "low";
+  return { intent: best.intent, score: best.score, confidence, entities };
 };
 
 const isDetailedQuestion = (text) => {
@@ -88,63 +303,69 @@ const isDetailedQuestion = (text) => {
   return q.length > 120 || detailWords.some((word) => q.includes(word));
 };
 
-const getReply = (text) => {
-  const q = normalize(text);
+const buildActions = (...actions) => actions.filter(Boolean);
+
+const getReply = (text, context = {}) => {
   const c = getCopy(text);
+  const result = classifyIntent(text, context);
+  const nextContext = {
+    topic: INTENT_RULES[result.intent]?.topic,
+    lastIntent: result.intent,
+    role: result.entities.role || context.role,
+    location: result.entities.location || context.location,
+    lastUpdated: Date.now(),
+  };
 
   if (isDetailedQuestion(text)) {
     return {
       content: c.detailed,
       support: true,
+      actions: buildActions(KNOWLEDGE_ACTIONS.contact),
+      nextContext,
     };
   }
 
-  if (q.includes("service") || q.includes("offer") || q.includes("do") || q.includes("hizmet") || q.includes("angebot")) {
+  if (result.confidence === "low") {
     return {
-      content: c.services,
-    };
-  }
-
-  if (q.includes("what") || q.includes("about") || q.includes("company") || q.includes("firma") || q.includes("unternehmen")) {
-    return {
-      content: c.company,
-    };
-  }
-
-  if (q.includes("staff") || q.includes("recruit") || q.includes("hire") || q.includes("talent") || q.includes("işe") || q.includes("personal")) {
-    return {
-      content: c.staffing,
-    };
-  }
-
-  if (q.includes("location") || q.includes("office") || q.includes("where") || q.includes("standort") || q.includes("büro") || q.includes("buero") || q.includes("konum") || q.includes("ofis")) {
-    return {
-      content: c.locations,
-    };
-  }
-
-  if (isJobQuestion(text)) {
-    return {
-      content: c.jobs,
-      jobs: true,
-    };
-  }
-
-  if (q.includes("contact") || q.includes("support") || q.includes("email") || q.includes("linkedin")) {
-    return {
-      content: c.contact,
+      content: "I could not determine exactly what you are looking for. I can help with services, open roles, job applications, office locations, or contact information.",
       support: true,
+      actions: buildActions(KNOWLEDGE_ACTIONS.services, KNOWLEDGE_ACTIONS.openRoles, KNOWLEDGE_ACTIONS.contact),
+      nextContext,
+    };
+  }
+
+  const responses = {
+    [INTENTS.FOUNDER]: { content: c.founder },
+    [INTENTS.HISTORY]: { content: c.history },
+    [INTENTS.PEOPLE_MATCH]: { content: c.peopleMatch },
+    [INTENTS.TEAM]: { content: c.team },
+    [INTENTS.VALUES]: { content: c.values },
+    [INTENTS.INDUSTRIES]: { content: c.industries, actions: buildActions(KNOWLEDGE_ACTIONS.services) },
+    [INTENTS.COMPANY]: { content: c.company, actions: buildActions(KNOWLEDGE_ACTIONS.services) },
+    [INTENTS.SERVICES]: { content: c.services, actions: buildActions(KNOWLEDGE_ACTIONS.services, KNOWLEDGE_ACTIONS.contact) },
+    [INTENTS.STAFFING]: { content: c.staffing, actions: buildActions(KNOWLEDGE_ACTIONS.contact, KNOWLEDGE_ACTIONS.services) },
+    [INTENTS.LOCATIONS]: { content: c.locations, actions: buildActions(KNOWLEDGE_ACTIONS.locations, KNOWLEDGE_ACTIONS.contact) },
+    [INTENTS.OPEN_ROLES]: { content: c.jobs, jobs: true, actions: buildActions(KNOWLEDGE_ACTIONS.openRoles) },
+    [INTENTS.JOB_APPLICATION]: { content: c.jobs, jobs: true, actions: buildActions(KNOWLEDGE_ACTIONS.openRoles) },
+    [INTENTS.CONTACT]: { content: c.contact, support: true, actions: buildActions(KNOWLEDGE_ACTIONS.contact, KNOWLEDGE_ACTIONS.linkedIn) },
+  };
+
+  if (result.confidence === "medium" && [INTENTS.OPEN_ROLES, INTENTS.JOB_APPLICATION].includes(result.intent)) {
+    return {
+      content: "Are you asking about open roles or how to apply for a job?",
+      actions: buildActions(KNOWLEDGE_ACTIONS.openRoles, KNOWLEDGE_ACTIONS.contact),
+      nextContext,
     };
   }
 
   return {
-    content: c.fallback,
-    support: true,
+    ...responses[result.intent],
+    nextContext,
   };
 };
 
-const fetchJobPreview = async (text) => {
-  if (!BACKEND || !isJobQuestion(text)) return [];
+const fetchJobPreview = async (reply) => {
+  if (!BACKEND || !reply.jobs) return [];
   try {
     const res = await fetch(`${BACKEND}/api/jobs?size=3`);
     if (!res.ok) return [];
@@ -177,6 +398,7 @@ export const ChatSupportWidget = () => {
   const [lead, setLead] = useState({ name: "", email: "", company: "" });
   const [leadStatus, setLeadStatus] = useState("idle");
   const [leadError, setLeadError] = useState("");
+  const [conversationContext, setConversationContext] = useState({});
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -204,31 +426,10 @@ export const ChatSupportWidget = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const fetchAiReply = async (text) => {
-    if (!BACKEND) {
-      const fallback = getReply(text);
-      return { ...fallback, jobPreview: [] };
-    }
-    const history = messages
-      .filter((message) => message.role === "user" || message.role === "assistant")
-      .slice(-8)
-      .map(({ role, content }) => ({ role, content }));
-
-    const res = await fetch(`${BACKEND}/api/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, history }),
-    });
-
-    if (!res.ok) throw new Error("Chat request failed");
-    const data = await res.json();
-    const jobPreview = data.jobs ? await fetchJobPreview(text) : [];
-    return {
-      content: data.reply,
-      support: !!data.support,
-      jobs: !!data.jobs,
-      jobPreview,
-    };
+  const buildLocalReply = async (text) => {
+    const reply = getReply(text, conversationContext);
+    const jobPreview = await fetchJobPreview(reply);
+    return { ...reply, jobPreview };
   };
 
   const sendMessage = async (value = input) => {
@@ -240,20 +441,20 @@ export const ChatSupportWidget = () => {
 
     try {
       const [reply] = await Promise.all([
-        fetchAiReply(text),
+        buildLocalReply(text),
         new Promise((resolve) => window.setTimeout(resolve, 650)),
       ]);
+      setConversationContext(reply.nextContext || {});
       setMessages((current) => [...current, { role: "assistant", ...reply }]);
     } catch {
-      const fallback = getReply(text);
-      const jobPreview = fallback.jobs ? await fetchJobPreview(text) : [];
+      const fallback = getReply(text, conversationContext);
+      setConversationContext(fallback.nextContext || {});
       setMessages((current) => [
         ...current,
         {
           role: "assistant",
           ...fallback,
-          jobPreview,
-          content: `${fallback.content} The live assistant is temporarily unavailable.`,
+          jobPreview: [],
         },
       ]);
     } finally {
@@ -264,6 +465,16 @@ export const ChatSupportWidget = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     sendMessage();
+  };
+
+  const resetChat = () => {
+    setMessages(STARTER_MESSAGES);
+    setInput("");
+    setIsTyping(false);
+    setHandoffOpen(false);
+    setLeadStatus("idle");
+    setLeadError("");
+    setConversationContext({});
   };
 
   const submitLead = async (event) => {
@@ -324,10 +535,19 @@ export const ChatSupportWidget = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-[#231911]">Felipillon Support</p>
-                <p className="text-xs text-brown-500/55">Quick company answers</p>
+                <p className="text-xs text-brown-500/55">Site-trained answers</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={resetChat}
+                className="rounded-full p-2 text-brown-500/55 transition-colors hover:bg-brown-500/[0.06] hover:text-[#231911]"
+                aria-label="Start a new support chat"
+                title="New chat"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </button>
               <button
                 type="button"
                 onClick={() => setExpanded((value) => !value)}
@@ -382,6 +602,33 @@ export const ChatSupportWidget = () => {
                     <Link to="/open-roles" className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700">
                       View open roles <ArrowUpRight className="h-3 w-3" />
                     </Link>
+                  </div>
+                )}
+                {message.actions?.filter((action) => !(message.jobs && action.to === "/open-roles")).length > 0 && (
+                  <div className="mt-2 flex flex-wrap justify-start gap-2">
+                    {message.actions
+                      .filter((action) => !(message.jobs && action.to === "/open-roles"))
+                      .map((action) =>
+                        action.to ? (
+                          <Link
+                            key={`${action.label}-${action.to}`}
+                            to={action.to}
+                            className="inline-flex items-center gap-1 rounded-full border border-brown-500/[0.14] bg-white px-3 py-1.5 text-xs font-semibold text-brown-500"
+                          >
+                            {action.label} <ArrowUpRight className="h-3 w-3" />
+                          </Link>
+                        ) : (
+                          <a
+                            key={`${action.label}-${action.href}`}
+                            href={action.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 rounded-full border border-brown-500/[0.14] bg-white px-3 py-1.5 text-xs font-semibold text-brown-500"
+                          >
+                            {action.label} <ArrowUpRight className="h-3 w-3" />
+                          </a>
+                        ),
+                      )}
                   </div>
                 )}
                 {message.support && (
@@ -517,7 +764,7 @@ export const ChatSupportWidget = () => {
             </div>
           )}
           <div className="border-t border-white/5 bg-[#1B1410] px-4 py-2 text-[10px] leading-relaxed text-white/45">
-            Messages may be processed by Felipillon systems and AI providers to answer support questions.
+            Messages are answered from Felipillon site knowledge. Contact details are sent only when you submit the support form.
           </div>
         </div>
       )}
