@@ -1,7 +1,22 @@
 # Backend deployment on Render
 
-Create a Render Blueprint from the repository's `render.yaml`, or configure an
-existing web service with these settings:
+Create a Render Blueprint from the repository's `render.yaml`, or create a
+Docker web service with these settings:
+
+- Runtime: Docker
+- Root directory: `backend`
+- Dockerfile path: `./Dockerfile`
+- Docker build context: `.`
+- Docker command: leave blank to use the Dockerfile's command
+- Health check path: `/api/health`
+
+The Docker image installs the Python dependencies and checks that Uvicorn is
+available during the build. Set the environment variables described below in
+Render. A service still running `yarn` must be switched to Docker, or replaced
+with a new Docker web service. Pushing these files alone does not reconfigure a
+manually managed Node service.
+
+Alternatively, a native Python web service can use these settings:
 
 - Runtime: Python 3
 - Root directory: `backend`

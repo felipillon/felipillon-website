@@ -1,10 +1,10 @@
 services:
   - type: web
     name: felipillon-backend
-    runtime: python
+    runtime: docker
     rootDir: backend
-    buildCommand: python -m pip install -r requirements.txt
-    startCommand: python -m uvicorn server:app --host 0.0.0.0 --port $PORT
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
