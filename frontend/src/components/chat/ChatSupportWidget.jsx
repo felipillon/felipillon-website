@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2, RotateCcw } from "lucide-react";
 
+import { getGreetingReply } from "./greetings";
+
 const LINKEDIN_URL = "https://www.linkedin.com/company/felipillon";
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
 
@@ -9,7 +11,7 @@ const STARTER_MESSAGES = [
   {
     role: "assistant",
     content:
-      "Hi. Ask me about Felipillon's services, locations, hiring support, open roles, or how to contact the team.",
+      "Hi! Welcome to Felipillon. How can I help today? I can help you find a job, hire talent, explore our technology services, or get in touch with our team.",
   },
 ];
 
@@ -306,6 +308,14 @@ const isDetailedQuestion = (text) => {
 const buildActions = (...actions) => actions.filter(Boolean);
 
 const getReply = (text, context = {}) => {
+  const greeting = getGreetingReply(text, getLanguage(text));
+  if (greeting) {
+    return {
+      content: greeting,
+      actions: buildActions(KNOWLEDGE_ACTIONS.openRoles, KNOWLEDGE_ACTIONS.services, KNOWLEDGE_ACTIONS.contact),
+      nextContext: context,
+    };
+  }
   const c = getCopy(text);
   const result = classifyIntent(text, context);
   const nextContext = {
@@ -409,13 +419,27 @@ export const ChatSupportWidget = () => {
   );
 
   useEffect(() => {
+    if (!open) return;
+    const bodyOverflow = document.body.style.overflow;
+    const rootOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = bodyOverflow;
+      document.documentElement.style.overflow = rootOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
     if (open) {
-      window.setTimeout(() => inputRef.current?.focus(), 80);
+      const timer = window.setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 80);
+      return () => window.clearTimeout(timer);
     }
   }, [open]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+    const container = messagesEndRef.current?.closest(".chat-support-messages");
+    if (container) container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, isTyping, expanded]);
 
   useEffect(() => {
@@ -519,6 +543,9 @@ export const ChatSupportWidget = () => {
   };
 
   return (
+    <>
+    {open && <button type="button" aria-label="Close chat backdrop" onClick={() => setOpen(false)}
+      className="fixed inset-0 z-[85] cursor-default bg-black/15 touch-none" />}
     <div className="chat-support-widget fixed bottom-5 right-5 z-[90] pointer-events-auto">
       {open && (
         <div
@@ -572,7 +599,7 @@ export const ChatSupportWidget = () => {
           </div>
 
           <div
-            className={`chat-support-messages space-y-3 overflow-y-auto px-4 py-4 ${expanded ? "max-h-[560px] min-h-[420px]" : "max-h-[460px] min-h-[260px]"}`}
+            className={`chat-support-messages space-y-3 overflow-y-auto overscroll-contain px-4 py-4 ${expanded ? "max-h-[560px] min-h-[420px]" : "max-h-[460px] min-h-[260px]"}`}
             aria-live="polite"
           >
             {messages.map((message, index) => (
@@ -593,7 +620,7 @@ export const ChatSupportWidget = () => {
                         {message.jobPreview.map((job) => (
                           <Link
                             key={job.id || job.title}
-                            to="/open-roles"
+                            to="/open-roles" onClick={() => setOpen(false)}
                             className="block rounded-xl border border-brown-500/[0.1] bg-white px-3 py-2 text-left text-xs text-brown-500 shadow-[0_10px_24px_-24px_rgba(61,35,20,0.45)]"
                           >
                             <span className="block font-semibold text-[#231911]">{job.title}</span>
@@ -602,7 +629,7 @@ export const ChatSupportWidget = () => {
                         ))}
                       </div>
                     )}
-                    <Link to="/open-roles" className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700">
+                    <Link to="/open-roles" onClick={() => setOpen(false)} className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700">
                       View open roles <ArrowUpRight className="h-3 w-3" />
                     </Link>
                   </div>
@@ -616,6 +643,7 @@ export const ChatSupportWidget = () => {
                           <Link
                             key={`${action.label}-${action.to}`}
                             to={action.to}
+                            onClick={() => setOpen(false)}
                             className="inline-flex items-center gap-1 rounded-full border border-brown-500/[0.14] bg-white px-3 py-1.5 text-xs font-semibold text-brown-500"
                           >
                             {action.label} <ArrowUpRight className="h-3 w-3" />
@@ -784,5 +812,6 @@ export const ChatSupportWidget = () => {
         {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
       </button>
     </div>
+    </>
   );
 };

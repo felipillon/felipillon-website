@@ -604,7 +604,7 @@ export const Navbar = () => {
     </motion.header>
 
       <SheetContent id="mobile-navigation" side="right"
-        className="mobile-navigation z-[120] h-[100dvh] w-full max-w-sm overflow-y-auto overscroll-contain border-brown-500/10 bg-[#FBF8F3] px-5 pb-8 pt-7 text-[#3D2314]"
+        className="mobile-navigation z-[120] h-[100dvh] w-[82vw] max-w-[300px] overflow-y-auto overscroll-contain border-brown-500/10 bg-[#FBF8F3] px-5 pb-8 pt-7 text-[#3D2314]"
         data-testid="mobile-menu">
         <SheetTitle className="pr-12 text-left text-2xl text-[#3D2314]">Felipillon</SheetTitle>
         <SheetDescription className="sr-only">Browse pages and choose your language.</SheetDescription>
@@ -612,7 +612,7 @@ export const Navbar = () => {
           {[...NAV_LINKS, { label: "contact", path: "/contact" }].map((link) => (
             <SheetClose asChild key={link.path}>
               <Link to={link.path} aria-current={pathname === link.path ? "page" : undefined}
-                className={`flex min-h-12 items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors ${
+                className={`flex min-h-11 items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
                   pathname === link.path ? "bg-gold/15 text-gold-700" : "text-[#3D2314] hover:bg-white"
                 }`}>
                 {nav[link.label] || link.label}
