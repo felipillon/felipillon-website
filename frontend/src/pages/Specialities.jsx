@@ -52,7 +52,7 @@ export default function Specialities() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[5rem] text-[#231911] max-w-4xl">
             {s.title || "Where we deliver results"}
           </h1>
-          {s.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-2xl leading-relaxed font-light">{s.subtitle}</p>}
+          {s.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-2xl leading-relaxed font-normal">{s.subtitle}</p>}
 
           <Reveal delay={0.15}>
             <div className="mt-10 inline-flex items-baseline gap-3 px-6 py-4 rounded-2xl bg-white border border-brown-500/[0.08] shadow-[0_4px_20px_-10px_rgba(61,35,20,0.15)]">
@@ -106,7 +106,7 @@ export default function Specialities() {
                     style={{ background: `${spec.color}18`, border: `1px solid ${spec.color}35` }}>
                     <spec.icon className="w-5 h-5" style={{ color: spec.color }} />
                   </div>
-                  <p className="text-xs font-medium text-[#231911]">{trName}</p>
+                  <p className="text-sm font-medium text-[#231911]">{trName}</p>
                 </motion.div>
               </a>
             </Reveal>
@@ -250,7 +250,7 @@ export default function Specialities() {
                 </div>
                 <div className="p-7">
                   <h3 className="font-heading text-xl font-semibold mb-3 text-[#1A0E08]">{svcTitle}</h3>
-                  <p className="text-sm font-medium text-brown-500/70 leading-relaxed">{svcDesc}</p>
+                  <p className="text-base font-medium text-brown-500/70 leading-relaxed">{svcDesc}</p>
                 </div>
                 <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 transition-all duration-500 bg-gold" />
               </motion.div>
@@ -266,7 +266,7 @@ export default function Specialities() {
                 <h3 className="font-heading text-2xl sm:text-3xl font-light tracking-[-0.03em] text-[#231911]">
                   {s.techStackTitle || "Modern by default"}
                 </h3>
-                <p className="mt-3 text-sm text-brown-500/50 leading-relaxed">
+                <p className="mt-3 text-base text-brown-500/50 leading-relaxed">
                   {s.techStackDesc || "Production-grade platforms built for scale, security and maintainable delivery."}
                 </p>
               </div>

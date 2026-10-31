@@ -147,7 +147,7 @@ export const PageHero = ({ eyebrow, title, subtitle, children, img, tall = false
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.22 }}
-          className="mt-6 text-lg sm:text-xl text-white/50 max-w-2xl leading-relaxed font-light"
+          className="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed font-normal"
         >
           {subtitle}
         </motion.p>

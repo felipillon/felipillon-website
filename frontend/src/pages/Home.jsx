@@ -239,10 +239,10 @@ const Hero = () => {
             <MagneticButton to="/staffing" variant="primary" icon={ArrowRight} className="shadow-[0_16px_34px_-14px_rgba(0,0,0,1)]">
               {t.hero?.cta1 || "Hire Top Talent"}
             </MagneticButton>
-            <MagneticButton to="/specialities" variant="secondary" className="bg-black/62 border-white/35 text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/72">
+            <MagneticButton to="/specialities" variant="secondary" className="bg-[#3D2314] border-[#C9973A] text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-[#54321E]">
               {t.hero?.cta2 || "Our Specialities"}
             </MagneticButton>
-            <MagneticButton to="/open-roles" variant="ghost" className="bg-black/48 border-white/30 text-white/95 shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/62">
+            <MagneticButton to="/open-roles" variant="ghost" className="bg-[#231911] border-white/60 text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-[#3D2314]">
               {t.hero?.cta3 || "Open Roles"}
             </MagneticButton>
           </motion.div>
@@ -378,7 +378,7 @@ const OrbitCard = ({ item, index, count, rotation, radius, cardW, cardH, onOpen,
             <span className="text-xs sm:text-sm font-semibold text-[#FFF7E6] ml-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{statLabel}</span>
           </div>
           <h4 className="font-heading text-white text-base sm:text-lg font-semibold mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">{name}</h4>
-          <p className="text-[#FFF7E6] text-xs sm:text-sm font-medium leading-relaxed line-clamp-2 mb-2 hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{desc}</p>
+          <p className="text-[#FFF7E6] text-sm sm:text-sm font-medium leading-relaxed line-clamp-2 mb-2 hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{desc}</p>
           <div
             className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#FFE29A] opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]"
           >
@@ -483,7 +483,7 @@ const SpecialitiesSection = () => {
             <img src={item.img} alt="" loading="lazy" className="h-44 w-full object-cover" />
             <div className="p-5">
               <h3 className="text-xl text-[#231911]">{CARD_TEXT[lang]?.specialities?.[item.id]?.name || item.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-brown-500/70">{CARD_TEXT[lang]?.specialities?.[item.id]?.desc || item.desc}</p>
+              <p className="mt-2 text-base leading-relaxed text-brown-500/70">{CARD_TEXT[lang]?.specialities?.[item.id]?.desc || item.desc}</p>
               <ArrowUpRight className="mt-4 h-5 w-5 text-gold-600" />
             </div>
           </button>
@@ -570,7 +570,7 @@ const PhotoBreak = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <Reveal>
             <blockquote className="text-center max-w-3xl px-8">
-              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-relaxed tracking-[-0.02em]">
+              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-white leading-relaxed tracking-[-0.02em]">
                 "{t.quoteBreak?.quote || "We focus on real business problems, not just services. Long-term value over short-term fees."}"
               </p>
               <cite className="block mt-6 text-gold-300 text-sm tracking-widest not-italic">
@@ -613,7 +613,7 @@ const WhySection = () => {
                 <w.icon className="w-5 h-5 text-gold-600" />
               </div>
               <h4 className="font-heading text-lg font-medium mb-2 text-[#231911]">{translated.title || w.title}</h4>
-              <p className="text-sm text-brown-500/50 leading-relaxed">{translated.desc || w.desc}</p>
+              <p className="text-base text-brown-500/50 leading-relaxed">{translated.desc || w.desc}</p>
             </GlowCard>
           </Reveal>
         )})}
@@ -644,7 +644,7 @@ const MetricsSection = () => {
                 <div className="font-heading text-5xl sm:text-6xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent">
                   <Counter value={m.value} suffix={m.suffix} />
                 </div>
-                <p className="mt-3 text-xs tracking-[0.22em] uppercase text-white/45">{labels[i]}</p>
+                <p className="mt-3 text-sm tracking-[0.22em] uppercase text-white/45">{labels[i]}</p>
               </div>
             </Reveal>
           ))}
@@ -722,8 +722,8 @@ const TestimonialsSection = () => {
                     {tm.name[0]}
                   </div>
                   <div>
-                    <p className="font-semibold text-sm text-[#231911]">{tm.name}</p>
-                    <p className="text-xs text-brown-500/40 mt-0.5">{tm.title}</p>
+                    <p className="font-semibold text-base text-[#231911]">{tm.name}</p>
+                    <p className="text-sm text-brown-500/40 mt-0.5">{tm.title}</p>
                   </div>
                 </div>
               </GlowCard>
@@ -776,7 +776,7 @@ const TestimonialsSection = () => {
                   <span key={j} className="text-gold text-xl">★</span>
                 ))}
               </div>
-              <p className="font-heading text-xl sm:text-2xl font-light leading-relaxed text-brown-500/80 italic mb-8">
+              <p className="font-heading text-xl sm:text-2xl font-normal leading-relaxed text-brown-500/80 italic mb-8">
                 "{activeItem.quote}"
               </p>
               <div className="flex items-center gap-4 pt-6 border-t border-brown-500/[0.08]">
@@ -785,7 +785,7 @@ const TestimonialsSection = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-base text-[#231911]">{activeItem.name}</p>
-                  <p className="text-sm text-brown-500/40 mt-0.5">{activeItem.title}</p>
+                  <p className="text-base text-brown-500/40 mt-0.5">{activeItem.title}</p>
                 </div>
               </div>
             </motion.div>
@@ -834,7 +834,7 @@ const FootprintSection = () => {
                     <span className="font-medium text-[#231911] text-sm">{loc.country}</span>
                     <span className="text-xs text-gold-600">· {loc.role}</span>
                   </div>
-                  <p className="text-xs text-brown-500/35 mt-0.5">{loc.entity}</p>
+                  <p className="text-sm text-brown-500/35 mt-0.5">{loc.entity}</p>
                 </div>
               </div>
             </Reveal>
@@ -886,7 +886,7 @@ const CTASection = () => {
               <MagneticButton to="/contact" variant="primary" icon={ArrowRight}>
                 {t.cta?.btn1 || "Send Inquiry"}
               </MagneticButton>
-              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08]/95 border-white/45 font-semibold text-white backdrop-blur-none shadow-[0_10px_24px_-14px_rgba(0,0,0,0.9)] hover:bg-[#231911]">
+              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08] border-white/60 font-semibold text-white backdrop-blur-none shadow-[0_10px_24px_-14px_rgba(0,0,0,0.9)] hover:bg-[#231911]">
                 {t.cta?.btn2 || "View Open Roles"}
               </MagneticButton>
             </div>

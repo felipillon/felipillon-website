@@ -48,7 +48,7 @@ export default function Innovation() {
                     <Icon className="w-6 h-6 text-electric-500" />
                   </div>
                   <h3 className="font-heading text-xl font-medium">{s}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">Enterprise-grade {s.toLowerCase()} engineered for scale, security and speed.</p>
+                  <p className="mt-2 text-base text-muted-foreground">Enterprise-grade {s.toLowerCase()} engineered for scale, security and speed.</p>
                 </GlowCard>
               </Reveal>
             );

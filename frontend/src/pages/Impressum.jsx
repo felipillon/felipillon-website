@@ -25,10 +25,10 @@ const SocialLink = ({ href, label, children }) => (
 const Field = ({ label, value, placeholder }) => (
   <div className="mb-2 last:mb-0">
     {label && (
-      <p className="text-xs text-brown-500/40 uppercase tracking-wide mb-0.5">{label}</p>
+      <p className="text-sm text-brown-500/40 uppercase tracking-wide mb-0.5">{label}</p>
     )}
     {value ? (
-      <p className="text-sm text-brown-500/65">{value}</p>
+      <p className="text-base text-brown-500/65">{value}</p>
     ) : (
       <span className="inline-block text-xs px-2.5 py-1 rounded-md bg-gold/10 border border-dashed border-gold/40 text-gold-600">
         {placeholder}
@@ -86,7 +86,7 @@ export default function Impressum() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl text-[#231911] max-w-2xl">
             {t.impressum?.title || "Impressum"}
           </h1>
-          <p className="mt-6 text-lg text-brown-500/50 max-w-xl leading-relaxed font-light">{t.impressum?.subtitle || "Angaben gemäß § 5 TMG"}</p>
+          <p className="mt-6 text-lg text-brown-500/50 max-w-xl leading-relaxed font-normal">{t.impressum?.subtitle || "Angaben gemäß § 5 TMG"}</p>
         </div>
       </section>
 
@@ -108,14 +108,14 @@ export default function Impressum() {
           <GlowCard variant="light" lift={false} className="p-8 sm:p-12" data-testid="impressum-card">
 
             <Section id="company" title={t.impressum?.company || "Unternehmen"}>
-              <p className="text-sm">Felipillon</p>
-              <p className="text-sm">Franz-Ehrlich-Straße 12</p>
-              <p className="text-sm">12489 Berlin</p>
-              <p className="text-sm">{t.impressum?.countryGermany || "Deutschland"}</p>
+              <p className="text-base">Felipillon</p>
+              <p className="text-base">Franz-Ehrlich-Straße 12</p>
+              <p className="text-base">12489 Berlin</p>
+              <p className="text-base">{t.impressum?.countryGermany || "Deutschland"}</p>
             </Section>
 
             <Section id="represented" title={t.impressum?.represented || "Vertreten durch"}>
-              <p className="text-sm">{t.impressum?.director || "Geschäftsführer"}: Ketan Bhanudas Barve</p>
+              <p className="text-base">{t.impressum?.director || "Geschäftsführer"}: Ketan Bhanudas Barve</p>
             </Section>
 
             <Section id="contact" title={t.impressum?.contact || "Kontakt"}>
@@ -126,25 +126,25 @@ export default function Impressum() {
             </Section>
 
             <Section id="registry" title={t.impressum?.registry || "Registereintrag"}>
-              <p className="text-sm">{t.impressum?.reg1 || "Eintragung im Handelsregister"}</p>
-              <p className="text-sm">{t.impressum?.reg2 || "Registergericht: Amtsgericht Charlottenburg (Berlin)"}</p>
-              <p className="text-sm">{t.impressum?.reg3 || "Registernummer: HRB 280553 B"}</p>
+              <p className="text-base">{t.impressum?.reg1 || "Eintragung im Handelsregister"}</p>
+              <p className="text-base">{t.impressum?.reg2 || "Registergericht: Amtsgericht Charlottenburg (Berlin)"}</p>
+              <p className="text-base">{t.impressum?.reg3 || "Registernummer: HRB 280553 B"}</p>
             </Section>
 
             <Section id="vat" title={t.impressum?.vat || "Umsatzsteuer-ID"}>
-              <p className="text-sm mb-3">
+              <p className="text-base mb-3">
                 {t.impressum?.vat1 || "Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:"}
               </p>
               <Field placeholder={t.impressum?.vatPlaceholder || "[USt-IdNr.]"} />
             </Section>
 
             <Section id="contentResp" title={t.impressum?.contentResp || "Verantwortlich für den Inhalt"}>
-              <p className="text-sm mb-3">{t.impressum?.content1 || "gemäß § 18 Abs. 2 MStV:"}</p>
+              <p className="text-base mb-3">{t.impressum?.content1 || "gemäß § 18 Abs. 2 MStV:"}</p>
               <Field placeholder={t.impressum?.contentPlaceholder || "[NAME, ANSCHRIFT]"} />
             </Section>
 
             <Section id="euDispute" title={t.impressum?.euDispute || "EU-Streitschlichtung"}>
-              <p className="text-sm mb-2">
+              <p className="text-base mb-2">
                 {t.impressum?.eu1 || "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit:"}{" "}
                 <a
                   href="https://ec.europa.eu/consumers/odr/"
@@ -155,10 +155,10 @@ export default function Impressum() {
                   https://ec.europa.eu/consumers/odr/
                 </a>
               </p>
-              <p className="text-sm mb-2">
+              <p className="text-base mb-2">
                 {t.impressum?.eu2 || "Unsere E-Mail-Adresse finden Sie oben im Impressum."}
               </p>
-              <p className="text-sm">
+              <p className="text-base">
                 {t.impressum?.eu3 || "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren teilzunehmen."}
               </p>
             </Section>
@@ -169,7 +169,7 @@ export default function Impressum() {
 
             {/* ── Social Media ── */}
             <div className="mt-8 pt-6 border-t border-brown-500/[0.08]">
-              <p className="text-xs text-brown-500/40 uppercase tracking-wide mb-4">{t.impressum?.followUs || "Follow Us"}</p>
+              <p className="text-sm text-brown-500/40 uppercase tracking-wide mb-4">{t.impressum?.followUs || "Follow Us"}</p>
               <div className="flex flex-wrap gap-3">
                 {/* LinkedIn */}
                 <SocialLink href="https://www.linkedin.com/company/felipillon" label="LinkedIn">

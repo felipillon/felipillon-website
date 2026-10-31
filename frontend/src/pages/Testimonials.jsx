@@ -56,7 +56,7 @@ export default function Testimonials() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {tm.title || "Trusted by the people we serve"}
           </h1>
-          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{tm.subtitle}</p>}
+          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{tm.subtitle}</p>}
         </div>
       </section>
 
@@ -92,8 +92,8 @@ export default function Testimonials() {
                       {item.name[0]}
                     </div>
                     <div>
-                      <p className="font-semibold text-sm text-[#231911]">{item.name}</p>
-                      <p className="text-xs text-brown-500/40 mt-0.5">{item.title}</p>
+                      <p className="font-semibold text-base text-[#231911]">{item.name}</p>
+                      <p className="text-sm text-brown-500/40 mt-0.5">{item.title}</p>
                     </div>
                   </div>
                 </GlowCard>
@@ -131,14 +131,14 @@ export default function Testimonials() {
                 <X className="w-4 h-4" />
               </button>
               <p className="text-gold text-xl mb-6">★★★★★</p>
-              <p className="font-heading text-xl sm:text-2xl font-light leading-relaxed text-brown-500/80 italic mb-8">"{activeItem.quote}"</p>
+              <p className="font-heading text-xl sm:text-2xl font-normal leading-relaxed text-brown-500/80 italic mb-8">"{activeItem.quote}"</p>
               <div className="flex items-center gap-4 pt-6 border-t border-brown-500/[0.08]">
                 <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gold-300 to-gold-700 flex items-center justify-center text-white font-bold text-lg shrink-0">
                   {activeItem.name[0]}
                 </div>
                 <div>
                   <p className="font-semibold text-base text-[#231911]">{activeItem.name}</p>
-                  <p className="text-sm text-brown-500/40 mt-0.5">{activeItem.title}</p>
+                  <p className="text-base text-brown-500/40 mt-0.5">{activeItem.title}</p>
                 </div>
               </div>
             </motion.div>
@@ -153,8 +153,8 @@ export default function Testimonials() {
           <div className="absolute inset-0 bg-gradient-to-br from-brown-500/90 via-brown-600/85 to-[#180F08]/92" />
           <Reveal className="relative">
             <p className="font-heading text-4xl sm:text-5xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent mb-3">95%</p>
-            <p className="text-gold-300 text-sm tracking-widest uppercase mb-2">{tm.satisfactionRate}</p>
-            <p className="text-white/45 text-sm">{tm.satisfactionDesc}</p>
+            <p className="text-gold-300 text-base tracking-widest uppercase mb-2">{tm.satisfactionRate}</p>
+            <p className="text-white/45 text-base">{tm.satisfactionDesc}</p>
           </Reveal>
         </div>
       </div>

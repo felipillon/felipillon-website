@@ -224,7 +224,7 @@ const ApplyModal = ({ role, onClose, t }) => {
           {!loadingForm && formError && (
             <div className="py-12 text-center">
               <AlertCircle className="w-8 h-8 text-white/20 mx-auto mb-3" />
-              <p className="text-white/50 text-sm">Couldn't load this application form. Please try again shortly.</p>
+              <p className="text-white/50 text-base">Couldn't load this application form. Please try again shortly.</p>
             </div>
           )}
 
@@ -248,7 +248,7 @@ const ApplyModal = ({ role, onClose, t }) => {
                   <><Send className="w-4 h-4" />{r.submitApplication || "Submit Application"}</>
                 )}
               </motion.button>
-              <p className="text-xs text-white/25 text-center">{r.contactDays2 || "We'll be in touch within 2 business days."}</p>
+              <p className="text-sm text-white/25 text-center">{r.contactDays2 || "We'll be in touch within 2 business days."}</p>
             </form>
           )}
         </motion.div>
@@ -360,7 +360,7 @@ export default function OpenRoles() {
               </div>
               <div className="flex flex-col sm:flex-row gap-6">
                 <div className="flex-1">
-                  <p className="text-xs text-brown-500/65 mb-3 uppercase font-semibold">{r.department || "Department"}</p>
+                  <p className="text-sm text-brown-500/65 mb-3 uppercase font-semibold">{r.department || "Department"}</p>
                   <div className="flex flex-wrap gap-2.5">
                     {departments.map((d) => (
                       <button key={d} onClick={() => reset(setDept)(d)}
@@ -371,7 +371,7 @@ export default function OpenRoles() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-brown-500/65 mb-3 uppercase font-semibold">{r.location || "Location"}</p>
+                  <p className="text-sm text-brown-500/65 mb-3 uppercase font-semibold">{r.location || "Location"}</p>
                   <div className="flex flex-wrap gap-2.5">
                     {locations.map((l) => (
                       <button key={l} onClick={() => reset(setLoc)(l)}
@@ -384,7 +384,7 @@ export default function OpenRoles() {
               </div>
             </div>
 
-            <p className="text-sm text-brown-500/65 mb-6" data-testid="roles-count">
+            <p className="text-base text-brown-500/65 mb-6" data-testid="roles-count">
               {filtered.length} {filtered.length === 1 ? (r.roles || "open role") : (r.rolesPlural || "open roles")}
             </p>
 

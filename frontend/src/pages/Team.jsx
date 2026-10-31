@@ -138,7 +138,7 @@ export default function Team() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {tm.title || "The people behind every placement"}
           </h1>
-          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{tm.subtitle}</p>}
+          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{tm.subtitle}</p>}
         </div>
       </section>
 
@@ -178,8 +178,8 @@ export default function Team() {
                   </div>
                   <div className="p-6">
                     <h3 className="font-heading text-lg font-medium text-[#231911] mb-1">{l.name}</h3>
-                    <p className="text-gold-600 text-xs mb-1">{l.role}</p>
-                    <p className="text-brown-500/35 text-xs">{l.office}</p>
+                    <p className="text-gold-600 text-sm mb-1">{l.role}</p>
+                    <p className="text-brown-500/35 text-sm">{l.office}</p>
                     <span className="mt-4 w-8 h-8 rounded-full border border-brown-500/15 flex items-center justify-center text-brown-500/60">
                       <Linkedin className="w-3.5 h-3.5" />
                     </span>
@@ -206,7 +206,7 @@ export default function Team() {
                 <div className="font-heading text-5xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent">
                   <Counter value={m.val} suffix={m.suffix} />
                 </div>
-                <p className="text-xs text-white/45 mt-1 tracking-wider uppercase">{m.label}</p>
+                <p className="text-sm text-white/45 mt-1 tracking-wider uppercase">{m.label}</p>
               </Reveal>
             ))}
           </div>
@@ -304,7 +304,7 @@ export default function Team() {
               <h4 className="mt-2 font-heading text-3xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">
                 {selectedMember.name}
               </h4>
-              <p className="mt-2 text-sm font-medium text-brown-500/65">
+              <p className="mt-2 text-base font-medium text-brown-500/65">
                 {selectedMember.role || roleFor(selectedMember.name, selectedMember.group.dept)}
               </p>
             </div>

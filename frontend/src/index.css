@@ -17,7 +17,7 @@
     --secondary: 222 14% 92%;
     --secondary-foreground: 222 30% 8%;
     --muted: 222 14% 92%;
-    --muted-foreground: 222 10% 50%;
+    --muted-foreground: 222 10% 35%;
     --accent: 36 57% 51%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
@@ -43,7 +43,7 @@
     --secondary: 220 12% 10%;
     --secondary-foreground: 36 20% 95%;
     --muted: 220 10% 9%;
-    --muted-foreground: 220 8% 55%;
+    --muted-foreground: 220 8% 75%;
     --accent: 36 57% 51%;
     --accent-foreground: 220 15% 5%;
     --destructive: 0 62% 30%;
@@ -71,20 +71,20 @@
   ::selection { background: rgba(201,151,58,0.25); color: white; }
 }
 
-/* Global readability pass for muted supporting copy. */
-.text-brown-500\/30 { color: rgb(61 35 20 / 0.45); }
-.text-brown-500\/35 { color: rgb(61 35 20 / 0.50); }
-.text-brown-500\/40 { color: rgb(61 35 20 / 0.56); }
-.text-brown-500\/45 { color: rgb(61 35 20 / 0.62); }
-.text-brown-500\/50 { color: rgb(61 35 20 / 0.68); }
-.text-brown-500\/55 { color: rgb(61 35 20 / 0.72); }
-.text-brown-500\/60 { color: rgb(61 35 20 / 0.76); }
-.text-white\/35 { color: rgb(255 255 255 / 0.56); }
-.text-white\/40 { color: rgb(255 255 255 / 0.62); }
-.text-white\/45 { color: rgb(255 255 255 / 0.68); }
-.text-white\/50 { color: rgb(255 255 255 / 0.72); }
-.text-white\/55 { color: rgb(255 255 255 / 0.76); }
-.text-white\/60 { color: rgb(255 255 255 / 0.80); }
+/* Keep supporting copy readable on light and dark surfaces. */
+.text-brown-500\/30 { color: rgb(61 35 20 / 0.74); }
+.text-brown-500\/35 { color: rgb(61 35 20 / 0.76); }
+.text-brown-500\/40 { color: rgb(61 35 20 / 0.78); }
+.text-brown-500\/45 { color: rgb(61 35 20 / 0.80); }
+.text-brown-500\/50 { color: rgb(61 35 20 / 0.82); }
+.text-brown-500\/55 { color: rgb(61 35 20 / 0.84); }
+.text-brown-500\/60 { color: rgb(61 35 20 / 0.86); }
+.text-white\/35 { color: rgb(255 255 255 / 0.80); }
+.text-white\/40 { color: rgb(255 255 255 / 0.82); }
+.text-white\/45 { color: rgb(255 255 255 / 0.84); }
+.text-white\/50 { color: rgb(255 255 255 / 0.86); }
+.text-white\/55 { color: rgb(255 255 255 / 0.88); }
+.text-white\/60 { color: rgb(255 255 255 / 0.90); }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }

@@ -89,7 +89,7 @@ export const Navbar = () => {
       }
     };
     const onResize = () => {
-      if (window.innerWidth >= 1280) setOpen(false);
+      if (window.innerWidth >= 1536) setOpen(false);
     };
     document.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
@@ -128,7 +128,7 @@ export const Navbar = () => {
   const navItemClass = (active) => {
     if (useDarkForeground) {
       return active
-        ? "text-[#A47420] hover:text-[#8C6018] focus-visible:text-[#8C6018]"
+        ? "text-[#855A16] hover:text-[#8C6018] focus-visible:text-[#8C6018]"
         : "text-[#3D2314] hover:text-[#1A0E08] focus-visible:text-[#1A0E08]";
     }
 
@@ -184,7 +184,7 @@ export const Navbar = () => {
           ${
             isFloating
               ? `
-                max-w-7xl
+                max-w-[1440px]
                 rounded-2xl
                 border
                 border-brown-500/[0.12]
@@ -207,7 +207,7 @@ export const Navbar = () => {
                 sm:px-8
               `
               : `
-                max-w-7xl
+                max-w-[1440px]
                 rounded-none
                 border
                 border-transparent
@@ -245,7 +245,7 @@ export const Navbar = () => {
         </Link>
 
         {/* DESKTOP NAVIGATION */}
-        <nav className="hidden xl:flex items-center gap-1">
+        <nav className={`hidden 2xl:flex items-center gap-1 ${!useDarkForeground ? "[text-shadow:0_1px_6px_rgba(0,0,0,0.85)]" : ""}`}>
           {primaryLinks.map((link) => {
             const label = nav[link.label] || link.label;
             const active = pathname === link.path;
@@ -259,7 +259,7 @@ export const Navbar = () => {
                   relative
                   px-3
                   py-1.5
-                  text-[13px]
+                  text-base
                   font-semibold
                   rounded-full
 
@@ -306,7 +306,7 @@ export const Navbar = () => {
               className={`
                 px-3
                 py-1.5
-                text-[13px]
+                text-base
                 font-semibold
                 rounded-full
 
@@ -374,8 +374,8 @@ export const Navbar = () => {
                     px-4
                     py-3.5
 
-                    text-sm
-                    font-medium
+                    text-base
+                    font-semibold
 
                     transition-colors
 
@@ -416,7 +416,7 @@ export const Navbar = () => {
                 rounded-full
                 border
 
-                text-[13px]
+                text-base
                 font-semibold
 
                 transition-all
@@ -511,7 +511,7 @@ export const Navbar = () => {
                         px-4
                         py-3
 
-                        text-sm
+                        text-base
 
                         transition-colors
 
@@ -526,7 +526,7 @@ export const Navbar = () => {
                         {language.label}
                       </span>
 
-                      <span className="text-brown-500/60 text-xs">
+                      <span className="text-[#634B3B] text-sm">
                         {language.name}
                       </span>
                     </button>
@@ -555,7 +555,7 @@ export const Navbar = () => {
               bg-[#C9973A]
               text-[#1A0E08]
 
-              text-[13px]
+              text-base
               font-semibold
 
               hover:bg-[#D4A853]
@@ -591,7 +591,7 @@ export const Navbar = () => {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             className={`
-              xl:hidden
+              2xl:hidden
 
               min-w-11
               h-11
@@ -632,7 +632,7 @@ export const Navbar = () => {
             ) : (
               <Menu className="w-5 h-5" />
             )}
-            <span className="text-sm font-semibold">Menu</span>
+            <span className="text-base font-semibold">Menu</span>
           </button>
         </div>
       </div>
@@ -641,12 +641,12 @@ export const Navbar = () => {
       {open && createPortal(
         <div ref={menuRef} id="mobile-navigation" data-testid="mobile-menu"
           style={{ top: menuTop, maxHeight: `min(70dvh, calc(100dvh - ${menuTop + 16}px))` }}
-          className="fixed right-4 z-[120] w-[calc(100%-2rem)] max-w-sm overflow-y-auto overscroll-contain rounded-2xl border border-brown-500/15 bg-[#FBF8F3] p-3 text-[#3D2314] shadow-[0_16px_48px_-16px_rgba(61,35,20,0.45)] xl:hidden">
+          className="fixed right-4 z-[120] w-[calc(100%-2rem)] max-w-sm overflow-y-auto overscroll-contain rounded-2xl border border-brown-500/15 bg-[#FBF8F3] p-3 text-[#3D2314] shadow-[0_16px_48px_-16px_rgba(61,35,20,0.45)] 2xl:hidden">
           <nav aria-label="Mobile navigation" className="grid grid-cols-2 gap-1">
             {[...NAV_LINKS, { label: "contact", path: "/contact" }].map((link) => (
               <Link key={link.path} to={link.path} onClick={() => setOpen(false)}
                 aria-current={pathname === link.path ? "page" : undefined}
-                className={`flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 py-2 text-sm font-medium ${
+                className={`flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 py-2 text-base font-semibold ${
                   pathname === link.path ? "bg-gold/15 text-gold-700" : "text-[#3D2314] hover:bg-white"
                 }`}>
                 <span className="min-w-0 break-words">{nav[link.label] || link.label}</span>

@@ -16,7 +16,7 @@ export const SectionHeading = ({ eyebrow, title, subtitle, center = false, class
     </Reveal>
     {subtitle && (
       <Reveal delay={0.1}>
-        <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">{subtitle}</p>
+        <p className="mt-5 text-lg sm:text-xl text-muted-foreground leading-relaxed">{subtitle}</p>
       </Reveal>
     )}
   </div>

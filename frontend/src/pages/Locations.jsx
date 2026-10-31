@@ -42,7 +42,7 @@ export default function Locations() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {l.title || "Four locations. One borderless team."}
           </h1>
-          {l.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{l.subtitle}</p>}
+          {l.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{l.subtitle}</p>}
         </div>
       </section>
 
@@ -79,27 +79,27 @@ export default function Locations() {
                       <span className="w-8 h-px bg-gold" />
                     </div>
                     <h2 className="font-heading text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911] mb-2">{loc.country}</h2>
-                    <p className="text-gold-600 text-sm mb-8">{loc.entity}</p>
+                    <p className="text-gold-600 text-base mb-8">{loc.entity}</p>
 
                     <div className="space-y-4 mb-8">
                       <div className="flex items-start gap-3">
                         <MapPin className="w-4 h-4 text-brown-500/35 shrink-0 mt-0.5" />
-                        <p className="text-sm text-brown-500/55 leading-relaxed">{loc.addr}</p>
+                        <p className="text-base text-brown-500/55 leading-relaxed">{loc.addr}</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <Clock className="w-4 h-4 text-brown-500/35 shrink-0" />
-                        <p className="text-sm text-brown-500/55">{l.timezone}: {loc.tz}</p>
+                        <p className="text-base text-brown-500/55">{l.timezone}: {loc.tz}</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <Building2 className="w-4 h-4 text-brown-500/35 shrink-0" />
-                        <p className="text-sm text-brown-500/55">{loc.role}</p>
+                        <p className="text-base text-brown-500/55">{loc.role}</p>
                       </div>
                     </div>
 
                     <GlowCard variant="light" className="p-5">
-                      <p className="text-xs text-brown-500/40 uppercase tracking-wider mb-3">{l.officeHours}</p>
-                      <p className="text-sm text-[#231911]">{l.officeHoursVal} {loc.tz}</p>
-                      <p className="text-xs text-brown-500/35 mt-2">{l.alwaysOnNote}</p>
+                      <p className="text-sm text-brown-500/40 uppercase tracking-wider mb-3">{l.officeHours}</p>
+                      <p className="text-base text-[#231911]">{l.officeHoursVal} {loc.tz}</p>
+                      <p className="text-sm text-brown-500/35 mt-2">{l.alwaysOnNote}</p>
                     </GlowCard>
                   </Reveal>
                 </div>
