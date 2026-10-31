@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlowCard } from "../components/shared/GlowCard";
@@ -15,6 +16,17 @@ export default function Testimonials() {
   const tm = t.testimonials || {};
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState(null);
+  useEffect(() => {
+    if (active === null) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event) => { if (event.key === "Escape") setActive(null); };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [active]);
   const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(tm.items?.[i] || {}) }));
   const activeItem = active !== null ? testimonialItems[active] : null;
 
@@ -56,6 +68,16 @@ export default function Testimonials() {
               <motion.div
                 layoutId={`testimonial-page-${i}`}
                 onClick={() => setActive(i)}
+                role="button"
+                tabIndex={0}
+                data-testid={`testimonial-page-${i}`}
+                aria-label={`Read testimonial from ${item.name}`}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActive(i);
+                  }
+                }}
                 whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 300, damping: 24 }}
                 className="h-full cursor-pointer"
@@ -82,10 +104,13 @@ export default function Testimonials() {
       </section>
 
       {/* ── Zoom modal ── */}
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-center justify-center p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Testimonial from ${activeItem.name}`}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setActive(null)}
           >
@@ -94,12 +119,12 @@ export default function Testimonials() {
               layoutId={`testimonial-page-${active}`}
               onClick={(e) => e.stopPropagation()}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full p-9 sm:p-12 cursor-auto"
+              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full max-h-[85dvh] overflow-y-auto p-6 pt-16 sm:p-12 cursor-auto"
               style={{ cursor: "auto" }}
             >
               <button
                 onClick={() => setActive(null)}
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
+                className="absolute top-5 right-5 w-11 h-11 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
                 style={{ cursor: "pointer" }}
                 aria-label="Close"
               >
@@ -119,7 +144,7 @@ export default function Testimonials() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
 
       {/* ── Satisfaction — dark contrast band ── */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-6">

@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GlowCard } from "../components/shared/GlowCard";
@@ -258,7 +259,7 @@ export default function Team() {
         </div>
       </section>
 
-      {selectedMember && (
+      {selectedMember && createPortal(
         <div
           className="team-member-modal fixed inset-0 z-[100] flex items-center justify-center px-4 py-8 bg-[#120C08]/70 backdrop-blur-sm"
           role="dialog"
@@ -270,13 +271,13 @@ export default function Team() {
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-2xl rounded-[2rem] bg-[#FBF8F3] p-6 sm:p-8 shadow-[0_35px_90px_-28px_rgba(0,0,0,0.65)]"
+            className="relative w-full max-w-2xl max-h-[85dvh] overflow-y-auto rounded-[2rem] bg-[#FBF8F3] p-6 sm:p-8 shadow-[0_35px_90px_-28px_rgba(0,0,0,0.65)]"
             onClick={(event) => event.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setSelectedMember(null)}
-              className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white text-brown-500 shadow-[0_10px_30px_-20px_rgba(61,35,20,0.55)] border border-brown-500/10 hover:text-gold-700 hover:border-gold/50 transition-colors"
+              className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white text-brown-500 shadow-[0_10px_30px_-20px_rgba(61,35,20,0.55)] border border-brown-500/10 hover:text-gold-700 hover:border-gold/50 transition-colors"
               aria-label="Close profile"
             >
               <X className="h-4 w-4" />
@@ -340,7 +341,7 @@ export default function Team() {
               </div>
             </div>
           </motion.div>
-        </div>
+        </div>, document.body
       )}
     </div>
   );

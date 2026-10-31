@@ -66,7 +66,7 @@ export default function Specialities() {
       </section>
 
       {/* ── Quick jump ── */}
-      <div className="sticky top-[68px] z-30 bg-[#FBF8F3]/90 backdrop-blur-md border-y border-brown-500/[0.07]">
+      <div className="sticky top-[84px] sm:top-[104px] z-30 bg-[#FBF8F3]/90 backdrop-blur-md border-y border-brown-500/[0.07]">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-3 flex items-center gap-2 overflow-x-auto no-scrollbar">
           {SPECIALITIES.map((spec) => {
             const trName = ct[spec.id]?.name || spec.name;
@@ -74,7 +74,7 @@ export default function Specialities() {
               <a
                 key={spec.id}
                 href={`#${spec.id}`}
-                className="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
+                className="shrink-0 min-h-11 inline-flex items-center px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
               >
                 {trName}
               </a>
@@ -82,7 +82,7 @@ export default function Specialities() {
           })}
           <a
             href="#technology-growth-services"
-            className="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
+            className="shrink-0 min-h-11 inline-flex items-center px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap border border-brown-500/10 text-brown-500/55 hover:text-[#231911] hover:border-gold/40 transition-colors"
           >
             {s.techGrowthLabel || "Technology & Growth Services"}
           </a>

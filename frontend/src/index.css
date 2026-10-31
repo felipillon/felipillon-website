@@ -218,3 +218,44 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Prevent intrinsic content from widening narrow layouts. */
+main .grid > *, footer .grid > * { min-width: 0; }
+main h1, main h2, main h3, main p, footer a { overflow-wrap: anywhere; }
+html { scroll-padding-top: 7rem; }
+:focus-visible { outline: 2px solid #A47420; outline-offset: 4px; }
+
+@media (max-width: 639px) {
+  .home-hero { height: auto; }
+  .home-hero > .relative { padding-top: 8rem; padding-bottom: 2rem; }
+  main section.py-24 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  main .text-5xl { font-size: 2.5rem; }
+  main .grid-cols-2 .text-5xl { font-size: clamp(1.875rem, 8vw, 2.5rem); }
+  main .grid-cols-2 .tracking-\[0\.22em\] { letter-spacing: 0.08em; }
+  main .rounded-\[2\.5rem\] { border-radius: 1.5rem; }
+  input, select, textarea { font-size: 16px !important; }
+  .chat-support-widget {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .chat-support-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 6.5rem - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .chat-support-panel > * { flex-shrink: 0; }
+  .chat-support-panel .chat-support-messages {
+    flex: 1 1 auto;
+    min-height: 6rem;
+    max-height: 36dvh;
+    overflow-wrap: anywhere;
+  }
+  footer { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-marquee-reverse, .animate-blob,
+  .animate-blob-slow, .animate-float, .animate-drift { animation: none; }
+}

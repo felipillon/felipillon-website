@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion, animate } from "framer-motion";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
@@ -124,7 +125,7 @@ const Hero = () => {
   });
 
   return (
-    <section ref={ref} className="relative h-screen min-h-screen flex items-end overflow-hidden">
+    <section ref={ref} className="home-hero relative min-h-[100svh] flex items-end overflow-hidden">
 
       {/* ── Video layers with crossfade ── */}
       <div className="absolute inset-0 z-0">
@@ -233,7 +234,7 @@ const Hero = () => {
 
           <motion.div
             {...entrance(0.42)}
-            className="mt-8 flex flex-wrap gap-4"
+            className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4"
           >
             <MagneticButton to="/staffing" variant="primary" icon={ArrowRight} className="shadow-[0_16px_34px_-14px_rgba(0,0,0,1)]">
               {t.hero?.cta1 || "Hire Top Talent"}
@@ -475,8 +476,22 @@ const SpecialitiesSection = () => {
         </Reveal>
       </div>
 
+      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-6 pb-6 sm:hidden" aria-label={t.specialities?.title || "Specialities"}>
+        {SPECIALITIES.map((item) => (
+          <button key={item.id} onClick={() => navigate("/specialities")}
+            className="relative flex-none w-[82%] max-w-xs snap-center overflow-hidden rounded-2xl bg-white border border-brown-500/10 text-left shadow-sm">
+            <img src={item.img} alt="" loading="lazy" className="h-44 w-full object-cover" />
+            <div className="p-5">
+              <h3 className="text-xl text-[#231911]">{CARD_TEXT[lang]?.specialities?.[item.id]?.name || item.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brown-500/70">{CARD_TEXT[lang]?.specialities?.[item.id]?.desc || item.desc}</p>
+              <ArrowUpRight className="mt-4 h-5 w-5 text-gold-600" />
+            </div>
+          </button>
+        ))}
+      </div>
+
       {/* ── Orbit circle with left/right arrows on sides ── */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative hidden sm:flex items-center justify-center">
 
         {/* Left arrow */}
         <button
@@ -643,6 +658,17 @@ const MetricsSection = () => {
 const TestimonialsSection = () => {
   const { t } = useLang();
   const [active, setActive] = useState(null);
+  useEffect(() => {
+    if (active === null) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event) => { if (event.key === "Escape") setActive(null); };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [active]);
   const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(t.testimonials?.items?.[i] || {}) }));
   const activeItem = active !== null ? testimonialItems[active] : null;
 
@@ -667,6 +693,16 @@ const TestimonialsSection = () => {
             <motion.div
               layoutId={`testimonial-${i}`}
               onClick={() => setActive(i)}
+                role="button"
+                tabIndex={0}
+                data-testid={`testimonial-${i}`}
+                aria-label={`Read testimonial from ${tm.name}`}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActive(i);
+                  }
+                }}
               whileHover={{ y: -4 }}
               transition={{ type: "spring", stiffness: 300, damping: 24 }}
               className="h-full cursor-pointer"
@@ -703,10 +739,13 @@ const TestimonialsSection = () => {
       </div>
 
       {/* ── Zoom modal — the clicked card morphs into this larger view ── */}
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-center justify-center p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Testimonial from ${activeItem.name}`}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -722,11 +761,11 @@ const TestimonialsSection = () => {
               layoutId={`testimonial-${active}`}
               onClick={(e) => e.stopPropagation()}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full p-9 sm:p-12"
+              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full max-h-[85dvh] overflow-y-auto p-6 pt-16 sm:p-12"
             >
               <button
                 onClick={() => setActive(null)}
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
+                className="absolute top-5 right-5 w-11 h-11 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
@@ -752,7 +791,7 @@ const TestimonialsSection = () => {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </section>
   );
 };
@@ -789,8 +828,8 @@ const FootprintSection = () => {
                 <div className="relative w-14 h-10 rounded-md overflow-hidden shrink-0">
                   <img src={loc.img} alt={loc.country} className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center justify-center w-6 h-4 text-[9px] font-bold tracking-wider bg-brown-500/8 rounded text-brown-500/60">{loc.code}</span>
                     <span className="font-medium text-[#231911] text-sm">{loc.country}</span>
                     <span className="text-xs text-gold-600">· {loc.role}</span>
@@ -829,7 +868,7 @@ const CTASection = () => {
         {/* Layer 3 — bottom fade for clean blend into footer */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,8,4,0.28) 0%, transparent 35%)" }} />
 
-        <div className="relative px-10 sm:px-16 py-20 max-w-2xl">
+        <div className="relative px-6 sm:px-16 py-14 sm:py-20 max-w-2xl">
           <Reveal>
             <h2
               className="font-heading text-4xl sm:text-5xl font-semibold tracking-[-0.01em] leading-[1.06] mb-5 text-white"

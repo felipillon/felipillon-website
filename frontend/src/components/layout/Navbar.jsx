@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useLang } from "../../context/LangContext";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetClose } from "../ui/sheet";
 import { NAV_LINKS } from "../../data/content";
 import { LANGUAGES } from "../../data/i18n";
 
@@ -56,6 +57,24 @@ export const Navbar = () => {
     setScrolled(window.scrollY > 24);
   }, [pathname]);
 
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        setLangOpen(false);
+      }
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 1280) setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   const primaryLinks = NAV_LINKS.filter((link) =>
     PRIMARY_NAV.includes(link.label)
   );
@@ -104,6 +123,7 @@ export const Navbar = () => {
     "shadow-[0_22px_60px_-26px_rgba(61,35,20,0.65)]";
 
   return (
+    <Sheet open={open} onOpenChange={setOpen}>
     <motion.header
       initial={{ y: -90 }}
       animate={{ y: 0 }}
@@ -130,7 +150,7 @@ export const Navbar = () => {
           pointer-events-auto
           mx-auto
           flex items-center justify-between
-          gap-6
+          gap-2 sm:gap-6
 
           transition-all
           duration-500
@@ -190,7 +210,7 @@ export const Navbar = () => {
                 : "brightness(0) invert(1) drop-shadow(0 2px 12px rgba(255,255,255,0.9)) drop-shadow(0 0 24px rgba(255,255,255,0.6))",
             }}
             className={`
-              ${isFloating ? "h-14 sm:h-16" : "h-16 sm:h-20"}
+              ${isFloating ? "h-11 sm:h-16" : "h-12 sm:h-20"}
               w-auto
               object-contain
               transition-all
@@ -200,7 +220,7 @@ export const Navbar = () => {
         </Link>
 
         {/* DESKTOP NAVIGATION */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden xl:flex items-center gap-1">
           {primaryLinks.map((link) => {
             const label = nav[link.label] || link.label;
             const active = pathname === link.path;
@@ -307,9 +327,9 @@ export const Navbar = () => {
                 opacity-0
                 translate-y-1
 
-                group-hover:visible
-                group-hover:opacity-100
-                group-hover:translate-y-0
+                group-focus-within:visible group-hover:visible
+                group-focus-within:opacity-100 group-hover:opacity-100
+                group-focus-within:translate-y-0 group-hover:translate-y-0
 
                 transition-all
                 duration-200
@@ -357,6 +377,8 @@ export const Navbar = () => {
             <button
               type="button"
               onClick={() => setLangOpen((current) => !current)}
+              aria-expanded={langOpen}
+              aria-label="Choose language"
               data-testid="lang-switcher"
               className={`
                 flex
@@ -528,17 +550,18 @@ export const Navbar = () => {
           </Link>
 
           {/* MOBILE HAMBURGER */}
+          <SheetTrigger asChild>
           <button
             type="button"
-            onClick={() => setOpen((current) => !current)}
             data-testid="mobile-menu-toggle"
             aria-label={open ? "Close navigation" : "Open navigation"}
             aria-expanded={open}
+            aria-controls="mobile-navigation"
             className={`
-              lg:hidden
+              xl:hidden
 
-              w-9
-              h-9
+              w-11
+              h-11
 
               rounded-full
               border
@@ -575,118 +598,39 @@ export const Navbar = () => {
               <Menu className="w-5 h-5" />
             )}
           </button>
+          </SheetTrigger>
         </div>
       </div>
-
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              height: 0,
-              y: -8,
-            }}
-            animate={{
-              opacity: 1,
-              height: "auto",
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              height: 0,
-              y: -8,
-            }}
-            transition={{
-              duration: 0.25,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="
-              lg:hidden
-              overflow-hidden
-              pointer-events-auto
-            "
-          >
-            <div
-              className={`mx-4 mt-3 rounded-2xl border p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.65)] transition-colors duration-500 ${
-                useDarkForeground
-                  ? "bg-[#FBF8F3] border-brown-500/[0.12]"
-                  : "bg-[#0D0D10]/95 backdrop-blur-xl border-white/[0.08]"
-              }`}
-              data-testid="mobile-menu"
-            >
-              {/* MOBILE LINKS */}
-              <div className="grid grid-cols-2 gap-1 mb-4">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`
-                      px-4
-                      py-3
-
-                      rounded-xl
-
-                      text-sm
-                      font-medium
-
-                      transition-colors
-
-                      ${
-                        pathname === link.path
-                          ? useDarkForeground
-                            ? "bg-gold/14 text-gold-700"
-                            : "bg-[#C9973A]/10 text-[#C9973A]"
-                          : useDarkForeground
-                            ? "text-[#3D2314]/78 hover:text-[#1A0E08] hover:bg-white/70"
-                            : "text-white/70 hover:text-white hover:bg-white/[0.05]"
-                      }
-                    `}
-                  >
-                    {nav[link.label] || link.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* MOBILE LANGUAGE SWITCHER */}
-              <div className={`flex gap-2 pt-3 border-t ${
-                useDarkForeground ? "border-brown-500/[0.1]" : "border-white/[0.06]"
-              }`}>
-                {LANGUAGES.map((language) => (
-                  <button
-                    type="button"
-                    key={language.code}
-                    onClick={() => {
-                      switchLang(language.code);
-                    }}
-                    className={`
-                      px-3
-                      py-1.5
-
-                      rounded-full
-
-                      text-xs
-                      font-semibold
-
-                      transition-colors
-
-                      ${
-                        lang === language.code
-                          ? "bg-[#C9973A] text-black"
-                          : useDarkForeground
-                            ? "border border-brown-500/[0.12] text-[#3D2314]/70 hover:text-[#1A0E08]"
-                            : "border border-white/10 text-white/60 hover:text-white"
-                      }
-                    `}
-                  >
-                    {language.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
+
+      <SheetContent id="mobile-navigation" side="right"
+        className="mobile-navigation z-[120] h-[100dvh] w-full max-w-sm overflow-y-auto overscroll-contain border-brown-500/10 bg-[#FBF8F3] px-5 pb-8 pt-7 text-[#3D2314]"
+        data-testid="mobile-menu">
+        <SheetTitle className="pr-12 text-left text-2xl text-[#3D2314]">Felipillon</SheetTitle>
+        <SheetDescription className="sr-only">Browse pages and choose your language.</SheetDescription>
+        <nav aria-label="Mobile navigation" className="mt-6 grid gap-1">
+          {[...NAV_LINKS, { label: "contact", path: "/contact" }].map((link) => (
+            <SheetClose asChild key={link.path}>
+              <Link to={link.path} aria-current={pathname === link.path ? "page" : undefined}
+                className={`flex min-h-12 items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors ${
+                  pathname === link.path ? "bg-gold/15 text-gold-700" : "text-[#3D2314] hover:bg-white"
+                }`}>
+                {nav[link.label] || link.label}
+                <ArrowUpRight className="h-4 w-4 shrink-0" />
+              </Link>
+            </SheetClose>
+          ))}
+        </nav>
+        <div className="mt-6 flex flex-wrap gap-2 border-t border-brown-500/10 pt-5" aria-label="Language">
+          {LANGUAGES.map((language) => (
+            <button type="button" key={language.code} onClick={() => switchLang(language.code)}
+              aria-label={language.name} aria-pressed={lang === language.code}
+              className={`min-h-11 min-w-11 rounded-full border px-3 py-2 text-sm font-semibold ${
+                lang === language.code ? "border-gold bg-gold text-black" : "border-brown-500/20 bg-white text-[#3D2314]"
+              }`}>{language.label}</button>
+          ))}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };

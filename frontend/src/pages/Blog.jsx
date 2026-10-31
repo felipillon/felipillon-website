@@ -91,7 +91,8 @@ export default function Blog() {
             <button
               key={c}
               onClick={() => setCat(c)}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-200 ${
+              aria-pressed={cat === c}
+              className={`min-h-11 px-4 py-2 rounded-full text-sm transition-all duration-200 ${
                 cat === c
                   ? "bg-gold text-white font-semibold shadow-[0_4px_16px_-4px_rgba(201,151,58,0.5)]"
                   : "border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40"

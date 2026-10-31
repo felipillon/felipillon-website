@@ -522,7 +522,10 @@ export const ChatSupportWidget = () => {
     <div className="chat-support-widget fixed bottom-5 right-5 z-[90] pointer-events-auto">
       {open && (
         <div
-          className={`mb-4 overflow-hidden rounded-2xl border border-brown-500/[0.12] bg-[#FBF8F3] shadow-[0_24px_70px_-32px_rgba(61,35,20,0.55)] ${
+          id="support-chat-panel"
+          role="region"
+          aria-label="Support chat"
+          className={`chat-support-panel mb-4 overflow-hidden rounded-2xl border border-brown-500/[0.12] bg-[#FBF8F3] shadow-[0_24px_70px_-32px_rgba(61,35,20,0.55)] ${
             expanded
               ? "w-[min(calc(100vw-2.5rem),620px)]"
               : "w-[min(calc(100vw-2.5rem),440px)]"
@@ -569,7 +572,7 @@ export const ChatSupportWidget = () => {
           </div>
 
           <div
-            className={`space-y-3 overflow-y-auto px-4 py-4 ${expanded ? "max-h-[560px] min-h-[420px]" : "max-h-[460px] min-h-[260px]"}`}
+            className={`chat-support-messages space-y-3 overflow-y-auto px-4 py-4 ${expanded ? "max-h-[560px] min-h-[420px]" : "max-h-[460px] min-h-[260px]"}`}
             aria-live="polite"
           >
             {messages.map((message, index) => (
@@ -773,7 +776,9 @@ export const ChatSupportWidget = () => {
         type="button"
         onClick={() => setOpen((value) => !value)}
         className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#C9973A] text-[#1A0E08] shadow-[0_18px_44px_-18px_rgba(201,151,58,0.75)] transition-transform hover:scale-105"
-        aria-label="Open support chat"
+        aria-label={open ? "Close support chat" : "Open support chat"}
+        aria-expanded={open}
+        aria-controls="support-chat-panel"
       >
         {!open && <span className="absolute inset-0 rounded-full bg-[#C9973A]/45 animate-ping" />}
         {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}

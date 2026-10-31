@@ -10,6 +10,7 @@ export const MagneticButton = ({
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   const handleMove = (e) => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const rect = ref.current.getBoundingClientRect();
     setPos({
       x: (e.clientX - rect.left - rect.width / 2) * 0.22,
@@ -40,11 +41,11 @@ export const MagneticButton = ({
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
       transition={{ type: "spring", stiffness: 200, damping: 16 }}
-      className={`relative inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm transition-all duration-300 ${styles[variant]} ${className}`}
+      className={`relative min-h-11 max-w-full inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm transition-all duration-300 ${styles[variant]} ${className}`}
       {...props}
     >
       {children}
-      {Icon && <Icon className="w-4 h-4" />}
+      {Icon && <Icon className="w-4 h-4 shrink-0" />}
     </motion.button>
   );
 };
