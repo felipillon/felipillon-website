@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useState, useMemo, useEffect } from "react";
 import { GlowCard } from "../components/shared/GlowCard";
 import { CursorFollower } from "../components/shared/CursorFollower";
@@ -130,6 +131,17 @@ const ApplyModal = ({ role, onClose, t }) => {
     return () => { cancelled = true; };
   }, [role.id]);
 
+  useEffect(() => {
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event) => { if (event.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onClose]);
+
   const setAnswer = (fieldId, value) => setAnswers((a) => ({ ...a, [fieldId]: value }));
 
   const submit = async (e) => {
@@ -173,14 +185,14 @@ const ApplyModal = ({ role, onClose, t }) => {
     }
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
-      <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      <motion.div className="fixed inset-0 z-[100] flex items-center justify-center p-4"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
         <motion.div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
         <motion.div
-          className="relative w-full max-w-lg bg-[#0D0D10] border border-white/[0.08] rounded-2xl p-8 shadow-2xl z-10 max-h-[90vh] overflow-y-auto"
+          className="relative w-full max-w-lg bg-[#0D0D10] border border-white/[0.08] rounded-2xl p-5 sm:p-8 shadow-2xl z-10 max-h-[85dvh] overflow-y-auto"
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -190,13 +202,14 @@ const ApplyModal = ({ role, onClose, t }) => {
             <div>
               <span className="text-xs text-[#C9973A] font-semibold uppercase tracking-widest">{r.applyNow || "Apply Now"}</span>
               <h2 className="font-heading text-2xl font-medium mt-1 text-white">{role.title}</h2>
-              <div className="flex gap-3 mt-2 text-sm text-white/40">
+              <div className="flex flex-wrap gap-3 mt-2 text-sm text-white/40">
                 <span className="flex items-center gap-1"><Briefcase className="w-3.5 h-3.5" />{role.department}</span>
                 <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{role.location}</span>
               </div>
             </div>
             <button onClick={onClose} data-testid="apply-modal-close"
-              className="p-2 rounded-full border border-white/10 hover:border-white/30 transition-colors shrink-0 ml-4 text-white">
+              aria-label="Close application"
+              className="min-h-11 min-w-11 p-2 rounded-full border border-white/10 hover:border-white/30 transition-colors shrink-0 ml-4 text-white">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -211,7 +224,7 @@ const ApplyModal = ({ role, onClose, t }) => {
           {!loadingForm && formError && (
             <div className="py-12 text-center">
               <AlertCircle className="w-8 h-8 text-white/20 mx-auto mb-3" />
-              <p className="text-white/50 text-sm">Couldn't load this application form. Please try again shortly.</p>
+              <p className="text-white/50 text-base">Couldn't load this application form. Please try again shortly.</p>
             </div>
           )}
 
@@ -235,12 +248,12 @@ const ApplyModal = ({ role, onClose, t }) => {
                   <><Send className="w-4 h-4" />{r.submitApplication || "Submit Application"}</>
                 )}
               </motion.button>
-              <p className="text-xs text-white/25 text-center">{r.contactDays2 || "We'll be in touch within 2 business days."}</p>
+              <p className="text-sm text-white/25 text-center">{r.contactDays2 || "We'll be in touch within 2 business days."}</p>
             </form>
           )}
         </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence>, document.body
   );
 };
 
@@ -302,7 +315,7 @@ export default function OpenRoles() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-20 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-20 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -347,7 +360,7 @@ export default function OpenRoles() {
               </div>
               <div className="flex flex-col sm:flex-row gap-6">
                 <div className="flex-1">
-                  <p className="text-xs text-brown-500/65 mb-3 uppercase font-semibold">{r.department || "Department"}</p>
+                  <p className="text-sm text-brown-500/65 mb-3 uppercase font-semibold">{r.department || "Department"}</p>
                   <div className="flex flex-wrap gap-2.5">
                     {departments.map((d) => (
                       <button key={d} onClick={() => reset(setDept)(d)}
@@ -358,7 +371,7 @@ export default function OpenRoles() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-brown-500/65 mb-3 uppercase font-semibold">{r.location || "Location"}</p>
+                  <p className="text-sm text-brown-500/65 mb-3 uppercase font-semibold">{r.location || "Location"}</p>
                   <div className="flex flex-wrap gap-2.5">
                     {locations.map((l) => (
                       <button key={l} onClick={() => reset(setLoc)(l)}
@@ -371,7 +384,7 @@ export default function OpenRoles() {
               </div>
             </div>
 
-            <p className="text-sm text-brown-500/65 mb-6" data-testid="roles-count">
+            <p className="text-base text-brown-500/65 mb-6" data-testid="roles-count">
               {filtered.length} {filtered.length === 1 ? (r.roles || "open role") : (r.rolesPlural || "open roles")}
             </p>
 

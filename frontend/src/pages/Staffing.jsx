@@ -62,11 +62,11 @@ export default function Staffing() {
       {ready && <CursorFollower />}
 
       {/* ── Hero — large type left, video panel right ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="animate-blob absolute -top-40 -left-32 w-[560px] h-[560px] bg-gradient-to-br from-gold/20 via-gold-300/15 to-transparent blur-3xl" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-center">
           <div>
             <motion.div
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -78,14 +78,14 @@ export default function Staffing() {
             <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.4rem] text-[#231911]">
               {s.title || "Talent that moves your business forward"}
             </h1>
-            {s.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{s.subtitle}</p>}
+            {s.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{s.subtitle}</p>}
             <div className="mt-9 flex flex-wrap gap-4">
               <MagneticButton to="/open-roles" variant="lightPrimary" icon={ArrowRight}>{s.viewRoles}</MagneticButton>
               <MagneticButton to="/contact" variant="lightSecondary">{s.hireTalent}</MagneticButton>
             </div>
           </div>
 
-          <TiltPanel className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_-20px_rgba(61,35,20,0.35)] border border-white aspect-[4/5]">
+          <TiltPanel className="relative rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-[0_30px_80px_-20px_rgba(61,35,20,0.35)] border border-white aspect-[4/5] max-h-[55vw] sm:max-h-none">
             <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
               <source src={STAFFING_VIDEO_BG} type="video/mp4" />
             </video>
@@ -105,7 +105,7 @@ export default function Staffing() {
           ].map((st) => (
             <div key={st.label} className="text-center">
               <p className="font-heading text-3xl font-light bg-gradient-to-r from-gold-600 to-gold bg-clip-text text-transparent">{st.val}</p>
-              <p className="text-xs text-brown-500/40 tracking-wide mt-1">{st.label}</p>
+              <p className="text-sm text-brown-500/40 tracking-wide mt-1">{st.label}</p>
             </div>
           ))}
         </div>
@@ -140,7 +140,7 @@ export default function Staffing() {
                   <div className="flex-1">
                     <div className="mb-4 h-1 w-12 rounded-full" style={{ background: spec.color }} />
                     <h3 className="font-heading text-xl font-medium text-[#231911] mb-2">{name}</h3>
-                    <p className="text-sm text-brown-500/50 leading-relaxed mb-4">{desc}</p>
+                    <p className="text-base text-brown-500/50 leading-relaxed mb-4">{desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {services.map(sv => (
                         <span key={sv} className="px-2.5 py-1 rounded-full border border-brown-500/[0.1] text-[10px] text-brown-500/45">
@@ -176,7 +176,7 @@ export default function Staffing() {
                 <GlowCard variant="light" className="p-7 h-full">
                   <span className="font-heading text-4xl font-light text-gold/25">{pr.step}</span>
                   <h4 className="font-heading text-lg font-medium text-[#231911] mt-3 mb-3">{pr.title}</h4>
-                  <p className="text-sm text-brown-500/45 leading-relaxed">{pr.desc}</p>
+                  <p className="text-base text-brown-500/45 leading-relaxed">{pr.desc}</p>
                 </GlowCard>
               </Reveal>
             ))}
@@ -203,7 +203,7 @@ export default function Staffing() {
               ]).map((text, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="mt-2 h-px w-8 shrink-0 bg-gold" />
-                  <p className="text-brown-500/60 text-sm leading-relaxed">{text}</p>
+                  <p className="text-brown-500/60 text-base leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>
@@ -215,8 +215,8 @@ export default function Staffing() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-white/95 backdrop-blur-md rounded-xl p-5 shadow-lg">
-                  <p className="text-sm text-brown-500/70 italic">"{s.testimonialQuote || "From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone."}"</p>
-                  <p className="text-xs text-gold-600 mt-3 font-medium">— {s.testimonialAuthor || "Priya Nair, Head of Talent, Solaris Energy"}</p>
+                  <p className="text-base text-brown-500/70 italic">"{s.testimonialQuote || "From brief to shortlist in 4 days. Felipillon understands enterprise hiring better than anyone."}"</p>
+                  <p className="text-sm text-gold-600 mt-3 font-medium">— {s.testimonialAuthor || "Priya Nair, Head of Talent, Solaris Energy"}</p>
                 </div>
               </div>
             </TiltPanel>

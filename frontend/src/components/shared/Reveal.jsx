@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 
 // Scroll reveal wrapper
+// margin: "0px" means trigger as soon as ANY part of the element enters viewport
+// This prevents blank content on small mobile screens where -80px margin was too strict
 export const Reveal = ({ children, delay = 0, y = 28, className = "", ...props }) => (
   <motion.div
     initial={{ opacity: 0, y }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-80px" }}
+    viewport={{ once: true, margin: "0px" }}
     transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
     className={className}
     {...props}
@@ -25,7 +27,7 @@ export const fadeUp = {
 };
 
 export const StaggerGroup = ({ children, className = "" }) => (
-  <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }} className={className}>
+  <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "0px" }} className={className}>
     {children}
   </motion.div>
 );

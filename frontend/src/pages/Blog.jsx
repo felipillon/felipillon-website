@@ -30,7 +30,7 @@ export default function Blog() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -42,7 +42,7 @@ export default function Blog() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {b.title || "Insights on talent, technology and the future of work"}
           </h1>
-          {b.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{b.subtitle}</p>}
+          {b.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{b.subtitle}</p>}
         </div>
       </section>
 
@@ -54,7 +54,7 @@ export default function Blog() {
               <motion.div
                 initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
                 whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={{ once: true, margin: "0px" }}
                 transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <img
@@ -91,7 +91,8 @@ export default function Blog() {
             <button
               key={c}
               onClick={() => setCat(c)}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-200 ${
+              aria-pressed={cat === c}
+              className={`min-h-11 px-4 py-2 rounded-full text-sm transition-all duration-200 ${
                 cat === c
                   ? "bg-gold text-white font-semibold shadow-[0_4px_16px_-4px_rgba(201,151,58,0.5)]"
                   : "border border-brown-500/15 text-brown-500/55 hover:text-[#231911] hover:border-gold/40"
@@ -136,7 +137,7 @@ export default function Blog() {
                     <h3 className="font-heading text-lg font-medium text-[#231911] mb-2 leading-snug group-hover:text-gold-600 transition-colors">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-brown-500/45 leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>
+                    <p className="text-base text-brown-500/45 leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>
                     <div className="flex items-center gap-4 text-xs text-brown-500/30">
                       <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{post.date}</span>
                       <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{post.read} {b.read}</span>

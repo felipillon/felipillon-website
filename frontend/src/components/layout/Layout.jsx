@@ -101,7 +101,7 @@ export const Layout = ({ children }) => {
 
 // ── Photo Hero — full-bleed image behind page titles ─────────────────────────
 export const PageHero = ({ eyebrow, title, subtitle, children, img, tall = false }) => (
-  <section className={`relative overflow-hidden ${tall ? "min-h-[65vh] flex items-end pb-20" : "pt-44 pb-20"}`}>
+  <section className={`relative overflow-hidden ${tall ? "min-h-[65vh] flex items-end pb-20" : "pt-28 sm:pt-44 pb-16 sm:pb-20"}`}>
     {/* Full-bleed photo */}
     {img && (
       <div className="absolute inset-0">
@@ -147,7 +147,7 @@ export const PageHero = ({ eyebrow, title, subtitle, children, img, tall = false
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.22 }}
-          className="mt-6 text-lg sm:text-xl text-white/50 max-w-2xl leading-relaxed font-light"
+          className="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed font-normal"
         >
           {subtitle}
         </motion.p>

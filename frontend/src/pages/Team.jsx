@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GlowCard } from "../components/shared/GlowCard";
@@ -125,7 +126,7 @@ export default function Team() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -137,7 +138,7 @@ export default function Team() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {tm.title || "The people behind every placement"}
           </h1>
-          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{tm.subtitle}</p>}
+          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{tm.subtitle}</p>}
         </div>
       </section>
 
@@ -177,8 +178,8 @@ export default function Team() {
                   </div>
                   <div className="p-6">
                     <h3 className="font-heading text-lg font-medium text-[#231911] mb-1">{l.name}</h3>
-                    <p className="text-gold-600 text-xs mb-1">{l.role}</p>
-                    <p className="text-brown-500/35 text-xs">{l.office}</p>
+                    <p className="text-gold-600 text-sm mb-1">{l.role}</p>
+                    <p className="text-brown-500/35 text-sm">{l.office}</p>
                     <span className="mt-4 w-8 h-8 rounded-full border border-brown-500/15 flex items-center justify-center text-brown-500/60">
                       <Linkedin className="w-3.5 h-3.5" />
                     </span>
@@ -205,7 +206,7 @@ export default function Team() {
                 <div className="font-heading text-5xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent">
                   <Counter value={m.val} suffix={m.suffix} />
                 </div>
-                <p className="text-xs text-white/45 mt-1 tracking-wider uppercase">{m.label}</p>
+                <p className="text-sm text-white/45 mt-1 tracking-wider uppercase">{m.label}</p>
               </Reveal>
             ))}
           </div>
@@ -232,13 +233,9 @@ export default function Team() {
                 >
                   <team.icon className="w-6 h-6" style={{ color: team.color }} />
                 </div>
-<<<<<<< HEAD
                 <p className="font-heading text-lg font-medium text-[#231911]">
                   {tm.deptNames?.[team.dept] || team.dept}
                 </p>
-=======
-                <p className="font-heading text-lg font-medium text-[#231911]">{teamLabels[team.dept] || team.dept}</p>
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
               </GlowCard>
             </Reveal>
           ))}
@@ -262,7 +259,7 @@ export default function Team() {
         </div>
       </section>
 
-      {selectedMember && (
+      {selectedMember && createPortal(
         <div
           className="team-member-modal fixed inset-0 z-[100] flex items-center justify-center px-4 py-8 bg-[#120C08]/70 backdrop-blur-sm"
           role="dialog"
@@ -274,13 +271,13 @@ export default function Team() {
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-2xl rounded-[2rem] bg-[#FBF8F3] p-6 sm:p-8 shadow-[0_35px_90px_-28px_rgba(0,0,0,0.65)]"
+            className="relative w-full max-w-2xl max-h-[85dvh] overflow-y-auto rounded-[2rem] bg-[#FBF8F3] p-6 sm:p-8 shadow-[0_35px_90px_-28px_rgba(0,0,0,0.65)]"
             onClick={(event) => event.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setSelectedMember(null)}
-              className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white text-brown-500 shadow-[0_10px_30px_-20px_rgba(61,35,20,0.55)] border border-brown-500/10 hover:text-gold-700 hover:border-gold/50 transition-colors"
+              className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white text-brown-500 shadow-[0_10px_30px_-20px_rgba(61,35,20,0.55)] border border-brown-500/10 hover:text-gold-700 hover:border-gold/50 transition-colors"
               aria-label="Close profile"
             >
               <X className="h-4 w-4" />
@@ -307,7 +304,7 @@ export default function Team() {
               <h4 className="mt-2 font-heading text-3xl sm:text-5xl font-light tracking-[-0.04em] text-[#231911]">
                 {selectedMember.name}
               </h4>
-              <p className="mt-2 text-sm font-medium text-brown-500/65">
+              <p className="mt-2 text-base font-medium text-brown-500/65">
                 {selectedMember.role || roleFor(selectedMember.name, selectedMember.group.dept)}
               </p>
             </div>
@@ -344,7 +341,7 @@ export default function Team() {
               </div>
             </div>
           </motion.div>
-        </div>
+        </div>, document.body
       )}
     </div>
   );

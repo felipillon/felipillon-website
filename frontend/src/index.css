@@ -17,7 +17,7 @@
     --secondary: 222 14% 92%;
     --secondary-foreground: 222 30% 8%;
     --muted: 222 14% 92%;
-    --muted-foreground: 222 10% 50%;
+    --muted-foreground: 222 10% 35%;
     --accent: 36 57% 51%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
@@ -43,7 +43,7 @@
     --secondary: 220 12% 10%;
     --secondary-foreground: 36 20% 95%;
     --muted: 220 10% 9%;
-    --muted-foreground: 220 8% 55%;
+    --muted-foreground: 220 8% 75%;
     --accent: 36 57% 51%;
     --accent-foreground: 220 15% 5%;
     --destructive: 0 62% 30%;
@@ -71,20 +71,20 @@
   ::selection { background: rgba(201,151,58,0.25); color: white; }
 }
 
-/* Global readability pass for muted supporting copy. */
-.text-brown-500\/30 { color: rgb(61 35 20 / 0.45); }
-.text-brown-500\/35 { color: rgb(61 35 20 / 0.50); }
-.text-brown-500\/40 { color: rgb(61 35 20 / 0.56); }
-.text-brown-500\/45 { color: rgb(61 35 20 / 0.62); }
-.text-brown-500\/50 { color: rgb(61 35 20 / 0.68); }
-.text-brown-500\/55 { color: rgb(61 35 20 / 0.72); }
-.text-brown-500\/60 { color: rgb(61 35 20 / 0.76); }
-.text-white\/35 { color: rgb(255 255 255 / 0.56); }
-.text-white\/40 { color: rgb(255 255 255 / 0.62); }
-.text-white\/45 { color: rgb(255 255 255 / 0.68); }
-.text-white\/50 { color: rgb(255 255 255 / 0.72); }
-.text-white\/55 { color: rgb(255 255 255 / 0.76); }
-.text-white\/60 { color: rgb(255 255 255 / 0.80); }
+/* Keep supporting copy readable on light and dark surfaces. */
+.text-brown-500\/30 { color: rgb(61 35 20 / 0.74); }
+.text-brown-500\/35 { color: rgb(61 35 20 / 0.76); }
+.text-brown-500\/40 { color: rgb(61 35 20 / 0.78); }
+.text-brown-500\/45 { color: rgb(61 35 20 / 0.80); }
+.text-brown-500\/50 { color: rgb(61 35 20 / 0.82); }
+.text-brown-500\/55 { color: rgb(61 35 20 / 0.84); }
+.text-brown-500\/60 { color: rgb(61 35 20 / 0.86); }
+.text-white\/35 { color: rgb(255 255 255 / 0.80); }
+.text-white\/40 { color: rgb(255 255 255 / 0.82); }
+.text-white\/45 { color: rgb(255 255 255 / 0.84); }
+.text-white\/50 { color: rgb(255 255 255 / 0.86); }
+.text-white\/55 { color: rgb(255 255 255 / 0.88); }
+.text-white\/60 { color: rgb(255 255 255 / 0.90); }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
@@ -217,4 +217,65 @@
 /* Hide scrollbar for horizontally-scrolling pill navs */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Prevent intrinsic content from widening narrow layouts. */
+main .grid > *, footer .grid > * { min-width: 0; }
+main h1, main h2, main h3, main p, footer a { overflow-wrap: anywhere; }
+html { scroll-padding-top: 7rem; }
+:focus-visible { outline: 2px solid #A47420; outline-offset: 4px; }
+
+/* ── xs breakpoint helpers (480px) ── */
+@media (min-width: 480px) {
+  .xs\:flex-row { flex-direction: row; }
+  .xs\:w-auto { width: auto; }
+  .xs\:inline-flex { display: inline-flex; }
+  .xs\:text-base { font-size: 1rem; line-height: 1.5rem; }
+  .xs\:hidden { display: none; }
+  .xs\:block { display: block; }
+}
+
+/* ── Mobile touch-target improvements ── */
+@media (max-width: 639px) {
+  button, a { min-height: 36px; }
+  .home-hero { height: auto; }
+  .home-hero > .relative { padding-top: 8rem; padding-bottom: 2rem; }
+  main section.py-24 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  main .text-5xl { font-size: 2.5rem; }
+  main .grid-cols-2 .text-5xl { font-size: clamp(1.875rem, 8vw, 2.5rem); }
+  main .grid-cols-2 .tracking-\[0\.22em\] { letter-spacing: 0.08em; }
+  main .rounded-\[2\.5rem\] { border-radius: 1.5rem; }
+  /* Prevent iOS text zoom on inputs */
+  input, select, textarea { font-size: 16px !important; }
+  /* Chat support widget safe area */
+  .chat-support-widget {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .chat-support-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 6.5rem - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .chat-support-panel > * { flex-shrink: 0; }
+  .chat-support-panel .chat-support-messages {
+    flex: 1 1 auto;
+    min-height: 6rem;
+    max-height: 36dvh;
+    overflow-wrap: anywhere;
+  }
+  footer { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+}
+
+/* ── Safe area inset utility ── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-marquee-reverse, .animate-blob,
+  .animate-blob-slow, .animate-float, .animate-drift { animation: none; }
+}

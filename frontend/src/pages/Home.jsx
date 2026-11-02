@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion, animate } from "framer-motion";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
@@ -124,7 +125,7 @@ const Hero = () => {
   });
 
   return (
-    <section ref={ref} className="relative h-screen min-h-screen flex items-end overflow-hidden">
+    <section ref={ref} className="home-hero relative min-h-[100svh] flex items-end overflow-hidden">
 
       {/* ── Video layers with crossfade ── */}
       <div className="absolute inset-0 z-0">
@@ -137,14 +138,14 @@ const Hero = () => {
             className="absolute inset-0"
             style={{ zIndex: i === activeIdx ? 1 : 0 }}
           >
-            <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            {v.poster && <img src={v.poster} alt="" className="absolute inset-0 w-full h-full object-cover" />}
             <video
               ref={(el) => { videoRefs.current[i] = el; }}
               muted
               playsInline
               autoPlay
               preload="auto"
-              poster={v.poster}
+              poster={v.poster || undefined}
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
@@ -233,15 +234,15 @@ const Hero = () => {
 
           <motion.div
             {...entrance(0.42)}
-            className="mt-8 flex flex-wrap gap-4"
+            className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4"
           >
             <MagneticButton to="/staffing" variant="primary" icon={ArrowRight} className="shadow-[0_16px_34px_-14px_rgba(0,0,0,1)]">
               {t.hero?.cta1 || "Hire Top Talent"}
             </MagneticButton>
-            <MagneticButton to="/specialities" variant="secondary" className="bg-black/62 border-white/35 text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/72">
+            <MagneticButton to="/specialities" variant="secondary" className="bg-[#3D2314] border-[#C9973A] text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-[#54321E]">
               {t.hero?.cta2 || "Our Specialities"}
             </MagneticButton>
-            <MagneticButton to="/open-roles" variant="ghost" className="bg-black/48 border-white/30 text-white/95 shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-black/62">
+            <MagneticButton to="/open-roles" variant="ghost" className="bg-[#231911] border-white/60 text-white shadow-[0_16px_34px_-14px_rgba(0,0,0,1)] hover:bg-[#3D2314]">
               {t.hero?.cta3 || "Open Roles"}
             </MagneticButton>
           </motion.div>
@@ -286,7 +287,7 @@ const WhoWeAre = () => {
               className="absolute inset-0"
               initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
               whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
-              viewport={{ once: true, margin: "-80px" }}
+              viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.div
@@ -377,7 +378,7 @@ const OrbitCard = ({ item, index, count, rotation, radius, cardW, cardH, onOpen,
             <span className="text-xs sm:text-sm font-semibold text-[#FFF7E6] ml-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{statLabel}</span>
           </div>
           <h4 className="font-heading text-white text-base sm:text-lg font-semibold mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">{name}</h4>
-          <p className="text-[#FFF7E6] text-xs sm:text-sm font-medium leading-relaxed line-clamp-2 mb-2 hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{desc}</p>
+          <p className="text-[#FFF7E6] text-sm sm:text-sm font-medium leading-relaxed line-clamp-2 mb-2 hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">{desc}</p>
           <div
             className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#FFE29A] opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]"
           >
@@ -456,7 +457,7 @@ const SpecialitiesSection = () => {
 
   const cardW = radius < 220 ? 165 : radius < 290 ? 205 : radius < 360 ? 250 : 295;
   const cardH = radius < 220 ? 215 : radius < 290 ? 265 : radius < 360 ? 320 : 380;
-  const stageSize = radius * 2 + cardH + 40;
+  const stageSize = Math.min(radius * 2 + cardH + 40, window.innerWidth - 16);
 
   return (
     <section className="py-16 sm:py-20 relative">
@@ -475,8 +476,22 @@ const SpecialitiesSection = () => {
         </Reveal>
       </div>
 
+      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-6 pb-6 sm:hidden" aria-label={t.specialities?.title || "Specialities"}>
+        {SPECIALITIES.map((item) => (
+          <button key={item.id} onClick={() => navigate("/specialities")}
+            className="relative flex-none w-[82%] max-w-xs snap-center overflow-hidden rounded-2xl bg-white border border-brown-500/10 text-left shadow-sm">
+            <img src={item.img} alt="" loading="lazy" className="h-44 w-full object-cover" />
+            <div className="p-5">
+              <h3 className="text-xl text-[#231911]">{CARD_TEXT[lang]?.specialities?.[item.id]?.name || item.name}</h3>
+              <p className="mt-2 text-base leading-relaxed text-brown-500/70">{CARD_TEXT[lang]?.specialities?.[item.id]?.desc || item.desc}</p>
+              <ArrowUpRight className="mt-4 h-5 w-5 text-gold-600" />
+            </div>
+          </button>
+        ))}
+      </div>
+
       {/* ── Orbit circle with left/right arrows on sides ── */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative hidden sm:flex items-center justify-center">
 
         {/* Left arrow */}
         <button
@@ -555,7 +570,7 @@ const PhotoBreak = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <Reveal>
             <blockquote className="text-center max-w-3xl px-8">
-              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-relaxed tracking-[-0.02em]">
+              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-white leading-relaxed tracking-[-0.02em]">
                 "{t.quoteBreak?.quote || "We focus on real business problems, not just services. Long-term value over short-term fees."}"
               </p>
               <cite className="block mt-6 text-gold-300 text-sm tracking-widest not-italic">
@@ -598,7 +613,7 @@ const WhySection = () => {
                 <w.icon className="w-5 h-5 text-gold-600" />
               </div>
               <h4 className="font-heading text-lg font-medium mb-2 text-[#231911]">{translated.title || w.title}</h4>
-              <p className="text-sm text-brown-500/50 leading-relaxed">{translated.desc || w.desc}</p>
+              <p className="text-base text-brown-500/50 leading-relaxed">{translated.desc || w.desc}</p>
             </GlowCard>
           </Reveal>
         )})}
@@ -629,7 +644,7 @@ const MetricsSection = () => {
                 <div className="font-heading text-5xl sm:text-6xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent">
                   <Counter value={m.value} suffix={m.suffix} />
                 </div>
-                <p className="mt-3 text-xs tracking-[0.22em] uppercase text-white/45">{labels[i]}</p>
+                <p className="mt-3 text-sm tracking-[0.22em] uppercase text-white/45">{labels[i]}</p>
               </div>
             </Reveal>
           ))}
@@ -643,6 +658,17 @@ const MetricsSection = () => {
 const TestimonialsSection = () => {
   const { t } = useLang();
   const [active, setActive] = useState(null);
+  useEffect(() => {
+    if (active === null) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event) => { if (event.key === "Escape") setActive(null); };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [active]);
   const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(t.testimonials?.items?.[i] || {}) }));
   const activeItem = active !== null ? testimonialItems[active] : null;
 
@@ -667,6 +693,16 @@ const TestimonialsSection = () => {
             <motion.div
               layoutId={`testimonial-${i}`}
               onClick={() => setActive(i)}
+                role="button"
+                tabIndex={0}
+                data-testid={`testimonial-${i}`}
+                aria-label={`Read testimonial from ${tm.name}`}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActive(i);
+                  }
+                }}
               whileHover={{ y: -4 }}
               transition={{ type: "spring", stiffness: 300, damping: 24 }}
               className="h-full cursor-pointer"
@@ -686,8 +722,8 @@ const TestimonialsSection = () => {
                     {tm.name[0]}
                   </div>
                   <div>
-                    <p className="font-semibold text-sm text-[#231911]">{tm.name}</p>
-                    <p className="text-xs text-brown-500/40 mt-0.5">{tm.title}</p>
+                    <p className="font-semibold text-base text-[#231911]">{tm.name}</p>
+                    <p className="text-sm text-brown-500/40 mt-0.5">{tm.title}</p>
                   </div>
                 </div>
               </GlowCard>
@@ -703,10 +739,13 @@ const TestimonialsSection = () => {
       </div>
 
       {/* ── Zoom modal — the clicked card morphs into this larger view ── */}
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-center justify-center p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Testimonial from ${activeItem.name}`}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -722,11 +761,11 @@ const TestimonialsSection = () => {
               layoutId={`testimonial-${active}`}
               onClick={(e) => e.stopPropagation()}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full p-9 sm:p-12"
+              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full max-h-[85dvh] overflow-y-auto p-6 pt-16 sm:p-12"
             >
               <button
                 onClick={() => setActive(null)}
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
+                className="absolute top-5 right-5 w-11 h-11 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
@@ -737,7 +776,7 @@ const TestimonialsSection = () => {
                   <span key={j} className="text-gold text-xl">★</span>
                 ))}
               </div>
-              <p className="font-heading text-xl sm:text-2xl font-light leading-relaxed text-brown-500/80 italic mb-8">
+              <p className="font-heading text-xl sm:text-2xl font-normal leading-relaxed text-brown-500/80 italic mb-8">
                 "{activeItem.quote}"
               </p>
               <div className="flex items-center gap-4 pt-6 border-t border-brown-500/[0.08]">
@@ -746,13 +785,13 @@ const TestimonialsSection = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-base text-[#231911]">{activeItem.name}</p>
-                  <p className="text-sm text-brown-500/40 mt-0.5">{activeItem.title}</p>
+                  <p className="text-base text-brown-500/40 mt-0.5">{activeItem.title}</p>
                 </div>
               </div>
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </section>
   );
 };
@@ -789,13 +828,13 @@ const FootprintSection = () => {
                 <div className="relative w-14 h-10 rounded-md overflow-hidden shrink-0">
                   <img src={loc.img} alt={loc.country} className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center justify-center w-6 h-4 text-[9px] font-bold tracking-wider bg-brown-500/8 rounded text-brown-500/60">{loc.code}</span>
                     <span className="font-medium text-[#231911] text-sm">{loc.country}</span>
                     <span className="text-xs text-gold-600">· {loc.role}</span>
                   </div>
-                  <p className="text-xs text-brown-500/35 mt-0.5">{loc.entity}</p>
+                  <p className="text-sm text-brown-500/35 mt-0.5">{loc.entity}</p>
                 </div>
               </div>
             </Reveal>
@@ -817,7 +856,7 @@ const CTASection = () => {
   const { t } = useLang();
   return (
     <section className="py-6 pb-2">
-      <div className="relative overflow-hidden mx-6 sm:mx-8 rounded-[2.5rem] shadow-[0_30px_80px_-20px_rgba(61,35,20,0.4)]">
+      <div className="relative overflow-hidden mx-3 sm:mx-8 rounded-2xl sm:rounded-[2.5rem] shadow-[0_30px_80px_-20px_rgba(61,35,20,0.4)]">
         <video autoPlay muted loop playsInline poster={MEDIA.aboutTeam} className="absolute inset-0 w-full h-full object-cover">
           <source src={VIDEO_BG} type="video/mp4" />
         </video>
@@ -829,7 +868,7 @@ const CTASection = () => {
         {/* Layer 3 — bottom fade for clean blend into footer */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,8,4,0.28) 0%, transparent 35%)" }} />
 
-        <div className="relative px-10 sm:px-16 py-20 max-w-2xl">
+        <div className="relative px-6 sm:px-16 py-14 sm:py-20 max-w-2xl">
           <Reveal>
             <h2
               className="font-heading text-4xl sm:text-5xl font-semibold tracking-[-0.01em] leading-[1.06] mb-5 text-white"
@@ -847,7 +886,7 @@ const CTASection = () => {
               <MagneticButton to="/contact" variant="primary" icon={ArrowRight}>
                 {t.cta?.btn1 || "Send Inquiry"}
               </MagneticButton>
-              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08]/95 border-white/45 font-semibold text-white backdrop-blur-none shadow-[0_10px_24px_-14px_rgba(0,0,0,0.9)] hover:bg-[#231911]">
+              <MagneticButton to="/open-roles" variant="secondary" className="bg-[#1A0E08] border-white/60 font-semibold text-white backdrop-blur-none shadow-[0_10px_24px_-14px_rgba(0,0,0,0.9)] hover:bg-[#231911]">
                 {t.cta?.btn2 || "View Open Roles"}
               </MagneticButton>
             </div>

@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlowCard } from "../components/shared/GlowCard";
@@ -15,6 +16,17 @@ export default function Testimonials() {
   const tm = t.testimonials || {};
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState(null);
+  useEffect(() => {
+    if (active === null) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event) => { if (event.key === "Escape") setActive(null); };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [active]);
   const testimonialItems = TESTIMONIALS.map((item, i) => ({ ...item, ...(tm.items?.[i] || {}) }));
   const activeItem = active !== null ? testimonialItems[active] : null;
 
@@ -32,7 +44,7 @@ export default function Testimonials() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -44,7 +56,7 @@ export default function Testimonials() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {tm.title || "Trusted by the people we serve"}
           </h1>
-          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{tm.subtitle}</p>}
+          {tm.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{tm.subtitle}</p>}
         </div>
       </section>
 
@@ -56,6 +68,16 @@ export default function Testimonials() {
               <motion.div
                 layoutId={`testimonial-page-${i}`}
                 onClick={() => setActive(i)}
+                role="button"
+                tabIndex={0}
+                data-testid={`testimonial-page-${i}`}
+                aria-label={`Read testimonial from ${item.name}`}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActive(i);
+                  }
+                }}
                 whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 300, damping: 24 }}
                 className="h-full cursor-pointer"
@@ -70,8 +92,8 @@ export default function Testimonials() {
                       {item.name[0]}
                     </div>
                     <div>
-                      <p className="font-semibold text-sm text-[#231911]">{item.name}</p>
-                      <p className="text-xs text-brown-500/40 mt-0.5">{item.title}</p>
+                      <p className="font-semibold text-base text-[#231911]">{item.name}</p>
+                      <p className="text-sm text-brown-500/40 mt-0.5">{item.title}</p>
                     </div>
                   </div>
                 </GlowCard>
@@ -82,10 +104,13 @@ export default function Testimonials() {
       </section>
 
       {/* ── Zoom modal ── */}
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-[80] flex items-center justify-center p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Testimonial from ${activeItem.name}`}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setActive(null)}
           >
@@ -94,32 +119,32 @@ export default function Testimonials() {
               layoutId={`testimonial-page-${active}`}
               onClick={(e) => e.stopPropagation()}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full p-9 sm:p-12 cursor-auto"
+              className="relative bg-white rounded-[2rem] shadow-2xl max-w-xl w-full max-h-[85dvh] overflow-y-auto p-6 pt-16 sm:p-12 cursor-auto"
               style={{ cursor: "auto" }}
             >
               <button
                 onClick={() => setActive(null)}
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
+                className="absolute top-5 right-5 w-11 h-11 rounded-full bg-brown-500/5 hover:bg-brown-500/10 flex items-center justify-center text-brown-500/50 hover:text-brown-500 transition-colors"
                 style={{ cursor: "pointer" }}
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
               </button>
               <p className="text-gold text-xl mb-6">★★★★★</p>
-              <p className="font-heading text-xl sm:text-2xl font-light leading-relaxed text-brown-500/80 italic mb-8">"{activeItem.quote}"</p>
+              <p className="font-heading text-xl sm:text-2xl font-normal leading-relaxed text-brown-500/80 italic mb-8">"{activeItem.quote}"</p>
               <div className="flex items-center gap-4 pt-6 border-t border-brown-500/[0.08]">
                 <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gold-300 to-gold-700 flex items-center justify-center text-white font-bold text-lg shrink-0">
                   {activeItem.name[0]}
                 </div>
                 <div>
                   <p className="font-semibold text-base text-[#231911]">{activeItem.name}</p>
-                  <p className="text-sm text-brown-500/40 mt-0.5">{activeItem.title}</p>
+                  <p className="text-base text-brown-500/40 mt-0.5">{activeItem.title}</p>
                 </div>
               </div>
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
 
       {/* ── Satisfaction — dark contrast band ── */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-6">
@@ -128,8 +153,8 @@ export default function Testimonials() {
           <div className="absolute inset-0 bg-gradient-to-br from-brown-500/90 via-brown-600/85 to-[#180F08]/92" />
           <Reveal className="relative">
             <p className="font-heading text-4xl sm:text-5xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent mb-3">95%</p>
-            <p className="text-gold-300 text-sm tracking-widest uppercase mb-2">{tm.satisfactionRate}</p>
-            <p className="text-white/45 text-sm">{tm.satisfactionDesc}</p>
+            <p className="text-gold-300 text-base tracking-widest uppercase mb-2">{tm.satisfactionRate}</p>
+            <p className="text-white/45 text-base">{tm.satisfactionDesc}</p>
           </Reveal>
         </div>
       </div>

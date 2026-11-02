@@ -10,7 +10,7 @@ import { useLang } from "../context/LangContext";
 const Field = ({ label, placeholder }) => (
   <div className="mb-2 last:mb-0">
     {label && (
-      <p className="text-xs text-brown-500/40 uppercase tracking-wide mb-0.5">{label}</p>
+      <p className="text-sm text-brown-500/40 uppercase tracking-wide mb-0.5">{label}</p>
     )}
     <span className="inline-block text-xs px-2.5 py-1 rounded-md bg-gold/10 border border-dashed border-gold/40 text-gold-600">
       {placeholder}
@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -72,7 +72,7 @@ export default function PrivacyPolicy() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl text-[#231911] max-w-2xl">
             {t.privacy?.title || "Privacy Policy"}
           </h1>
-          <p className="mt-6 text-lg text-brown-500/50 max-w-xl leading-relaxed font-light">{t.privacy?.subtitle || "Information pursuant to the EU General Data Protection Regulation"}</p>
+          <p className="mt-6 text-lg text-brown-500/50 max-w-xl leading-relaxed font-normal">{t.privacy?.subtitle || "Information pursuant to the EU General Data Protection Regulation"}</p>
         </div>
       </section>
 
@@ -169,7 +169,7 @@ export default function PrivacyPolicy() {
 
             <Section id="s10" number="10" title={t.privacy?.s9 || "Changes to This Policy"}>
               <p>We may update this Privacy Policy from time to time. The current version is always available on this page.</p>
-              <p className="text-xs pt-1">{t.privacy?.updated || "Last updated: June 2026"}</p>
+              <p className="text-sm pt-1">{t.privacy?.updated || "Last updated: June 2026"}</p>
             </Section>
 
             <div className="mt-10 pt-6 border-t border-brown-500/[0.08] text-xs text-brown-500/35 space-y-1">

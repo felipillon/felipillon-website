@@ -11,7 +11,7 @@ const icons = [Bot, Code2, Layers, Cloud, Workflow, Boxes];
 export default function Innovation() {
   return (
     <>
-      <section className="relative pt-40 pb-20 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-20 overflow-hidden">
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-[0.15]">
           <source src={VIDEOS.code} type="video/mp4" />
         </video>
@@ -48,7 +48,7 @@ export default function Innovation() {
                     <Icon className="w-6 h-6 text-electric-500" />
                   </div>
                   <h3 className="font-heading text-xl font-medium">{s}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">Enterprise-grade {s.toLowerCase()} engineered for scale, security and speed.</p>
+                  <p className="mt-2 text-base text-muted-foreground">Enterprise-grade {s.toLowerCase()} engineered for scale, security and speed.</p>
                 </GlowCard>
               </Reveal>
             );

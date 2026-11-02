@@ -99,7 +99,7 @@ export default function Contact() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -111,7 +111,7 @@ export default function Contact() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {c.title || "Let's start a conversation"}
           </h1>
-          {c.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{c.subtitle}</p>}
+          {c.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{c.subtitle}</p>}
         </div>
       </section>
 
@@ -138,7 +138,7 @@ export default function Contact() {
                       <CheckCircle2 className="w-8 h-8 text-gold-600" />
                     </motion.div>
                     <h3 className="font-heading text-2xl font-medium mb-3 text-[#231911]">{c.successTitle}</h3>
-                    <p className="text-brown-500/50 max-w-sm mb-8 text-sm leading-relaxed">
+                    <p className="text-brown-500/50 max-w-sm mb-8 text-base leading-relaxed">
                       {c.successDesc1} <span className="text-[#231911] font-medium">{form.name}</span>. {c.successDesc2} <span className="text-[#231911] font-medium">{form.email}</span> {c.successDesc3}
                     </p>
                     <MagneticButton variant="lightSecondary" onClick={() => { setForm(EMPTY); setErrors({}); setSubmitted(false); }}>
@@ -167,7 +167,7 @@ export default function Contact() {
                             data-testid="contact-name"
                             className={inputCls(errors.name)} />
                         </div>
-                        {errors.name && <p className="text-xs text-red-500/80 mt-1.5">{errors.name}</p>}
+                        {errors.name && <p className="text-sm text-red-500/80 mt-1.5">{errors.name}</p>}
                       </div>
                       {/* Email */}
                       <div>
@@ -180,7 +180,7 @@ export default function Contact() {
                             data-testid="contact-email"
                             className={inputCls(errors.email)} />
                         </div>
-                        {errors.email && <p className="text-xs text-red-500/80 mt-1.5">{errors.email}</p>}
+                        {errors.email && <p className="text-sm text-red-500/80 mt-1.5">{errors.email}</p>}
                       </div>
                     </div>
 
@@ -220,9 +220,9 @@ export default function Contact() {
                           maxLength={100}
                           placeholder={c.messagePlaceholder}
                           className={`${inputCls(errors.message)} resize-none`} />
-                        <p className="text-xs text-brown-500/35 text-right mt-1">{form.message.length}/100</p>
+                        <p className="text-sm text-brown-500/35 text-right mt-1">{form.message.length}/100</p>
                       </div>
-                      {errors.message && <p className="text-xs text-red-500/80 mt-1.5">{errors.message}</p>}
+                      {errors.message && <p className="text-sm text-red-500/80 mt-1.5">{errors.message}</p>}
                     </div>
 
                     <div className="flex flex-wrap gap-4 pt-2">
@@ -243,7 +243,7 @@ export default function Contact() {
                       </motion.button>
                     </div>
 
-                    <p className="text-xs text-brown-500/35 pt-1">
+                    <p className="text-sm text-brown-500/35 pt-1">
                       {c.responseTime}{" "}
                       <a href="/privacy-policy" className="text-gold-600 hover:underline">{c.privacyPolicy}</a>.
                     </p>
@@ -272,7 +272,7 @@ export default function Contact() {
                     <p className="text-[10px] text-gold-600">{locText.role || loc.role}</p>
                   </div>
                 </div>
-                <p className="text-xs text-brown-500/45 leading-relaxed flex items-start gap-2">
+                <p className="text-sm text-brown-500/45 leading-relaxed flex items-start gap-2">
                   <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5" />{loc.addr}
                 </p>
                 <p className="text-[10px] text-brown-500/30 mt-2">{loc.entity}</p>

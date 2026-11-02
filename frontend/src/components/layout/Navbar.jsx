@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useLang } from "../../context/LangContext";
+import { createPortal } from "react-dom";
 import { NAV_LINKS } from "../../data/content";
 import { LANGUAGES } from "../../data/i18n";
 
@@ -23,6 +24,29 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [menuTop, setMenuTop] = useState(84);
+  const headerRef = useRef(null);
+  const menuRef = useRef(null);
+  const toggleRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const placeMenu = () => setMenuTop((headerRef.current?.getBoundingClientRect().bottom || 76) + 8);
+    const closeOutside = (event) => {
+      if (!menuRef.current?.contains(event.target) && !toggleRef.current?.contains(event.target)) setOpen(false);
+    };
+    placeMenu();
+    const frame = requestAnimationFrame(placeMenu);
+    window.addEventListener("resize", placeMenu);
+    window.addEventListener("scroll", placeMenu, { passive: true });
+    document.addEventListener("pointerdown", closeOutside);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", placeMenu);
+      window.removeEventListener("scroll", placeMenu);
+      document.removeEventListener("pointerdown", closeOutside);
+    };
+  }, [open]);
 
   const { pathname } = useLocation();
   const isHomePage = pathname === "/";
@@ -56,6 +80,25 @@ export const Navbar = () => {
     setScrolled(window.scrollY > 24);
   }, [pathname]);
 
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape" && (open || langOpen)) {
+        setOpen(false);
+        setLangOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 1536) setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open, langOpen]);
+
   const primaryLinks = NAV_LINKS.filter((link) =>
     PRIMARY_NAV.includes(link.label)
   );
@@ -85,7 +128,7 @@ export const Navbar = () => {
   const navItemClass = (active) => {
     if (useDarkForeground) {
       return active
-        ? "text-[#A47420] hover:text-[#8C6018] focus-visible:text-[#8C6018]"
+        ? "text-[#855A16] hover:text-[#8C6018] focus-visible:text-[#8C6018]"
         : "text-[#3D2314] hover:text-[#1A0E08] focus-visible:text-[#1A0E08]";
     }
 
@@ -104,7 +147,9 @@ export const Navbar = () => {
     "shadow-[0_22px_60px_-26px_rgba(61,35,20,0.65)]";
 
   return (
+    <>
     <motion.header
+      ref={headerRef}
       initial={{ y: -90 }}
       animate={{ y: 0 }}
       transition={{
@@ -130,7 +175,7 @@ export const Navbar = () => {
           pointer-events-auto
           mx-auto
           flex items-center justify-between
-          gap-6
+          gap-2 sm:gap-6
 
           transition-all
           duration-500
@@ -139,7 +184,7 @@ export const Navbar = () => {
           ${
             isFloating
               ? `
-                max-w-7xl
+                max-w-[1440px]
                 rounded-2xl
                 border
                 border-brown-500/[0.12]
@@ -162,11 +207,11 @@ export const Navbar = () => {
                 sm:px-8
               `
               : `
-                max-w-7xl
+                max-w-[1440px]
                 rounded-none
                 border
                 border-transparent
-                bg-transparent
+                bg-[linear-gradient(to_bottom,rgba(0,0,0,0.32)_0%,transparent_100%)]
                 px-6
                 py-3
                 shadow-none
@@ -190,7 +235,7 @@ export const Navbar = () => {
                 : "brightness(0) invert(1) drop-shadow(0 2px 12px rgba(255,255,255,0.9)) drop-shadow(0 0 24px rgba(255,255,255,0.6))",
             }}
             className={`
-              ${isFloating ? "h-14 sm:h-16" : "h-16 sm:h-20"}
+              ${isFloating ? "h-11 sm:h-16" : "h-12 sm:h-20"}
               w-auto
               object-contain
               transition-all
@@ -200,7 +245,7 @@ export const Navbar = () => {
         </Link>
 
         {/* DESKTOP NAVIGATION */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className={`hidden 2xl:flex items-center gap-1 ${!useDarkForeground ? "[text-shadow:0_1px_6px_rgba(0,0,0,0.85)]" : ""}`}>
           {primaryLinks.map((link) => {
             const label = nav[link.label] || link.label;
             const active = pathname === link.path;
@@ -214,7 +259,7 @@ export const Navbar = () => {
                   relative
                   px-3
                   py-1.5
-                  text-[13px]
+                  text-base
                   font-semibold
                   rounded-full
 
@@ -261,7 +306,7 @@ export const Navbar = () => {
               className={`
                 px-3
                 py-1.5
-                text-[13px]
+                text-base
                 font-semibold
                 rounded-full
 
@@ -307,9 +352,9 @@ export const Navbar = () => {
                 opacity-0
                 translate-y-1
 
-                group-hover:visible
-                group-hover:opacity-100
-                group-hover:translate-y-0
+                group-focus-within:visible group-hover:visible
+                group-focus-within:opacity-100 group-hover:opacity-100
+                group-focus-within:translate-y-0 group-hover:translate-y-0
 
                 transition-all
                 duration-200
@@ -329,8 +374,8 @@ export const Navbar = () => {
                     px-4
                     py-3.5
 
-                    text-sm
-                    font-medium
+                    text-base
+                    font-semibold
 
                     transition-colors
 
@@ -357,6 +402,8 @@ export const Navbar = () => {
             <button
               type="button"
               onClick={() => setLangOpen((current) => !current)}
+              aria-expanded={langOpen}
+              aria-label="Choose language"
               data-testid="lang-switcher"
               className={`
                 flex
@@ -369,7 +416,7 @@ export const Navbar = () => {
                 rounded-full
                 border
 
-                text-[13px]
+                text-base
                 font-semibold
 
                 transition-all
@@ -464,7 +511,7 @@ export const Navbar = () => {
                         px-4
                         py-3
 
-                        text-sm
+                        text-base
 
                         transition-colors
 
@@ -479,7 +526,7 @@ export const Navbar = () => {
                         {language.label}
                       </span>
 
-                      <span className="text-brown-500/60 text-xs">
+                      <span className="text-[#634B3B] text-sm">
                         {language.name}
                       </span>
                     </button>
@@ -508,7 +555,7 @@ export const Navbar = () => {
               bg-[#C9973A]
               text-[#1A0E08]
 
-              text-[13px]
+              text-base
               font-semibold
 
               hover:bg-[#D4A853]
@@ -530,15 +577,26 @@ export const Navbar = () => {
           {/* MOBILE HAMBURGER */}
           <button
             type="button"
-            onClick={() => setOpen((current) => !current)}
+            ref={toggleRef}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowDown" || (open && event.key === "Tab" && !event.shiftKey)) {
+                event.preventDefault();
+                setOpen(true);
+                requestAnimationFrame(() => menuRef.current?.querySelector("a")?.focus());
+              }
+            }}
+            onClick={() => { setOpen((current) => !current); setLangOpen(false); }}
             data-testid="mobile-menu-toggle"
             aria-label={open ? "Close navigation" : "Open navigation"}
             aria-expanded={open}
+            aria-controls="mobile-navigation"
             className={`
-              lg:hidden
+              2xl:hidden
 
-              w-9
-              h-9
+              min-w-11
+              h-11
+              px-3
+              gap-2
 
               rounded-full
               border
@@ -574,119 +632,30 @@ export const Navbar = () => {
             ) : (
               <Menu className="w-5 h-5" />
             )}
+            <span className="text-base font-semibold">Menu</span>
           </button>
         </div>
       </div>
-
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              height: 0,
-              y: -8,
-            }}
-            animate={{
-              opacity: 1,
-              height: "auto",
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              height: 0,
-              y: -8,
-            }}
-            transition={{
-              duration: 0.25,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="
-              lg:hidden
-              overflow-hidden
-              pointer-events-auto
-            "
-          >
-            <div
-              className={`mx-4 mt-3 rounded-2xl border p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.65)] transition-colors duration-500 ${
-                useDarkForeground
-                  ? "bg-[#FBF8F3] border-brown-500/[0.12]"
-                  : "bg-[#0D0D10]/95 backdrop-blur-xl border-white/[0.08]"
-              }`}
-              data-testid="mobile-menu"
-            >
-              {/* MOBILE LINKS */}
-              <div className="grid grid-cols-2 gap-1 mb-4">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`
-                      px-4
-                      py-3
-
-                      rounded-xl
-
-                      text-sm
-                      font-medium
-
-                      transition-colors
-
-                      ${
-                        pathname === link.path
-                          ? useDarkForeground
-                            ? "bg-gold/14 text-gold-700"
-                            : "bg-[#C9973A]/10 text-[#C9973A]"
-                          : useDarkForeground
-                            ? "text-[#3D2314]/78 hover:text-[#1A0E08] hover:bg-white/70"
-                            : "text-white/70 hover:text-white hover:bg-white/[0.05]"
-                      }
-                    `}
-                  >
-                    {nav[link.label] || link.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* MOBILE LANGUAGE SWITCHER */}
-              <div className={`flex gap-2 pt-3 border-t ${
-                useDarkForeground ? "border-brown-500/[0.1]" : "border-white/[0.06]"
-              }`}>
-                {LANGUAGES.map((language) => (
-                  <button
-                    type="button"
-                    key={language.code}
-                    onClick={() => {
-                      switchLang(language.code);
-                    }}
-                    className={`
-                      px-3
-                      py-1.5
-
-                      rounded-full
-
-                      text-xs
-                      font-semibold
-
-                      transition-colors
-
-                      ${
-                        lang === language.code
-                          ? "bg-[#C9973A] text-black"
-                          : useDarkForeground
-                            ? "border border-brown-500/[0.12] text-[#3D2314]/70 hover:text-[#1A0E08]"
-                            : "border border-white/10 text-white/60 hover:text-white"
-                      }
-                    `}
-                  >
-                    {language.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
+
+      {open && createPortal(
+        <div ref={menuRef} id="mobile-navigation" data-testid="mobile-menu"
+          style={{ top: menuTop, maxHeight: `min(70dvh, calc(100dvh - ${menuTop + 16}px))` }}
+          className="fixed right-4 z-[120] w-[calc(100%-2rem)] max-w-sm overflow-y-auto overscroll-contain rounded-2xl border border-brown-500/15 bg-[#FBF8F3] p-3 text-[#3D2314] shadow-[0_16px_48px_-16px_rgba(61,35,20,0.45)] 2xl:hidden">
+          <nav aria-label="Mobile navigation" className="grid grid-cols-2 gap-1">
+            {[...NAV_LINKS, { label: "contact", path: "/contact" }].map((link) => (
+              <Link key={link.path} to={link.path} onClick={() => setOpen(false)}
+                aria-current={pathname === link.path ? "page" : undefined}
+                className={`flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 py-2 text-base font-semibold ${
+                  pathname === link.path ? "bg-gold/15 text-gold-700" : "text-[#3D2314] hover:bg-white"
+                }`}>
+                <span className="min-w-0 break-words">{nav[link.label] || link.label}</span>
+                <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
+              </Link>
+            ))}
+          </nav>
+        </div>, document.body
+      )}
+    </>
   );
 };

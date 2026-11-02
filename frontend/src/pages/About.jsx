@@ -20,7 +20,7 @@ const RevealPhoto = ({ src, alt = "", className = "", children, delay = 0 }) => 
       className="absolute inset-0"
       initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
       whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "0px" }}
       transition={{ duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
@@ -58,8 +58,8 @@ export default function About() {
       {ready && <CursorFollower />}
 
       {/* ── Hero — large type, light, reveal photo ── */}
-      <section className="relative pt-40 pb-20 overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-end">
+      <section className="relative pt-28 sm:pt-40 pb-20 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-end">
           <div>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -76,10 +76,10 @@ export default function About() {
               {a.title || "Connecting people with opportunity"}
             </h1>
             {a.subtitle && (
-              <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{a.subtitle}</p>
+              <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{a.subtitle}</p>
             )}
           </div>
-          <RevealPhoto src={MEDIA.aboutMission} alt="Felipillon" className="rounded-[2rem] aspect-[4/3] shadow-[0_24px_60px_-16px_rgba(61,35,20,0.25)] border border-white" />
+          <RevealPhoto src={MEDIA.aboutMission} alt="Felipillon" className="rounded-2xl sm:rounded-[2rem] aspect-[4/3] shadow-[0_24px_60px_-16px_rgba(61,35,20,0.25)] border border-white max-h-64 sm:max-h-none" />
         </div>
       </section>
 
@@ -103,7 +103,7 @@ export default function About() {
                   <div className="w-5 h-5 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-gold-600" />
                   </div>
-                  <p className="text-sm text-brown-500/60 leading-relaxed">{w}</p>
+                  <p className="text-base text-brown-500/60 leading-relaxed">{w}</p>
                 </div>
               ))}
             </div>
@@ -116,30 +116,22 @@ export default function About() {
                 <RevealPhoto src={MEDIA.berlin} alt="Berlin office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.1}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">{a.germany || "Germany"}</p>
-                    <p className="text-xs text-white/60">{a.globalHq || "Global HQ"}</p>
+                    <p className="text-sm text-gold-300 font-semibold">{a.germany || "Germany"}</p>
+                    <p className="text-sm text-white/60">{a.globalHq || "Global HQ"}</p>
                   </div>
                 </RevealPhoto>
-<<<<<<< HEAD
                 <RevealPhoto src={MEDIA.italy} alt="Italy office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">{a.italyLabel || "Italy"}</p>
-                    <p className="text-xs text-white/60">{a.europeanExpansion || "European Expansion"}</p>
+                    <p className="text-sm text-gold-300 font-semibold">{a.italyLabel || "Italy"}</p>
+                    <p className="text-sm text-white/60">{a.europeanExpansion || "European Expansion"}</p>
                   </div>
                 </RevealPhoto>
                 <RevealPhoto src={MEDIA.indiaLandmark} alt="India office" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.26}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">{a.indiaLabel || "India"}</p>
-                    <p className="text-xs text-white/60">{a.operationsHub || "Operations Hub"}</p>
-=======
-                <RevealPhoto src={MEDIA.philippinesLandmark} alt="Makati City" className="rounded-xl aspect-square shadow-[0_16px_40px_-16px_rgba(61,35,20,0.2)]" delay={0.18}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
-                    <p className="text-xs text-gold-300 font-semibold">{a.indiaPhilippines || "India + Philippines"}</p>
-                    <p className="text-xs text-white/60">{a.techOps || "Tech & Ops"}</p>
->>>>>>> fbc4ec16d01dc31d8b11728ed83170b5dfaa3e01
+                    <p className="text-sm text-gold-300 font-semibold">{a.indiaLabel || "India"}</p>
+                    <p className="text-sm text-white/60">{a.operationsHub || "Operations Hub"}</p>
                   </div>
                 </RevealPhoto>
               </div>
@@ -166,7 +158,7 @@ export default function About() {
                   <div className="font-heading text-5xl sm:text-6xl font-light bg-gradient-to-r from-gold-300 to-gold bg-clip-text text-transparent">
                     <Counter value={m.val} suffix={m.suf} />
                   </div>
-                  <p className="mt-3 text-xs tracking-[0.22em] uppercase text-white/45">{m.label}</p>
+                  <p className="mt-3 text-sm tracking-[0.22em] uppercase text-white/45">{m.label}</p>
                 </div>
               </Reveal>
             ))}
@@ -190,7 +182,7 @@ export default function About() {
               <GlowCard variant="light" className="p-7 h-full">
                 <div className="font-heading text-5xl font-light text-gold/25 mb-4">0{i + 1}</div>
                 <h3 className="font-heading text-xl font-medium mb-3 text-[#231911]">{v.title}</h3>
-                <p className="text-sm text-brown-500/45 leading-relaxed">{v.desc}</p>
+                <p className="text-base text-brown-500/45 leading-relaxed">{v.desc}</p>
               </GlowCard>
             </Reveal>
           ))}
@@ -263,7 +255,7 @@ export default function About() {
                       <span className="font-heading text-2xl font-light text-gold-600">{tl.year}</span>
                       <h4 className="font-heading text-xl font-medium text-[#231911]">{tl.title}</h4>
                     </div>
-                    <p className="text-sm text-brown-500/45 leading-relaxed">{tl.desc}</p>
+                    <p className="text-base text-brown-500/45 leading-relaxed">{tl.desc}</p>
                   </div>
                 </Reveal>
               ))}

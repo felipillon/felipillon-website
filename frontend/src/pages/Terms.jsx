@@ -49,7 +49,7 @@ export default function Terms() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -61,7 +61,7 @@ export default function Terms() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl text-[#231911] max-w-2xl">
             {t.terms?.title || "Terms of Service"}
           </h1>
-          <p className="mt-6 text-lg text-brown-500/50 max-w-xl leading-relaxed font-light">{t.terms?.subtitle || "General terms and conditions for using this website"}</p>
+          <p className="mt-6 text-lg text-brown-500/50 max-w-xl leading-relaxed font-normal">{t.terms?.subtitle || "General terms and conditions for using this website"}</p>
         </div>
       </section>
 
@@ -117,7 +117,7 @@ export default function Terms() {
 
             <Section id="s9" number="9" title={t.terms?.s9 || "Changes to These Terms"}>
               <p>We may revise these Terms of Service at any time. Continued use of the website following any changes constitutes acceptance of the updated terms.</p>
-              <p className="text-xs pt-1">{t.terms?.updated || "Last updated: June 2026"}</p>
+              <p className="text-sm pt-1">{t.terms?.updated || "Last updated: June 2026"}</p>
             </Section>
 
             <Section id="s10" number="10" title={t.terms?.s10 || "Contact"}>

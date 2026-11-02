@@ -29,7 +29,7 @@ export default function CaseStudies() {
       {ready && <CursorFollower />}
 
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-16 overflow-hidden">
+      <section className="relative pt-28 sm:pt-40 pb-16 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
@@ -41,7 +41,7 @@ export default function CaseStudies() {
           <h1 className="font-heading font-light leading-[0.96] tracking-[-0.05em] text-4xl sm:text-6xl lg:text-[4.6rem] text-[#231911] max-w-3xl">
             {cs.title || "Outcomes that speak louder than promises"}
           </h1>
-          {cs.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-light">{cs.subtitle}</p>}
+          {cs.subtitle && <p className="mt-7 text-lg text-brown-500/55 max-w-xl leading-relaxed font-normal">{cs.subtitle}</p>}
         </div>
       </section>
 
@@ -62,7 +62,7 @@ export default function CaseStudies() {
                       className="absolute inset-0"
                       initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
                       whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
-                      viewport={{ once: true, margin: "-80px" }}
+                      viewport={{ once: true, margin: "0px" }}
                       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
                     >
                       <motion.div className="w-full h-full" animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}>
@@ -74,8 +74,8 @@ export default function CaseStudies() {
                       <div className="font-heading font-light leading-none text-5xl sm:text-6xl" style={{ color: c.color }}>
                         {num > 0 ? <Counter value={num} suffix={suffix} /> : c.metric}
                       </div>
-                      <p className="text-white/60 text-sm mt-2">{c.metricLabel}</p>
-                      <p className="text-white/35 text-xs">{c.sub}</p>
+                      <p className="text-white/60 text-base mt-2">{c.metricLabel}</p>
+                      <p className="text-white/35 text-sm">{c.sub}</p>
                     </div>
                   </div>
                 </div>
