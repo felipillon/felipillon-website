@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Bot, MessageCircle, Send, X, Linkedin, Mail, ArrowUpRight, Maximize2, Minimize2, RotateCcw } from "lucide-react";
 
+import { getGreetingReply } from "./greetings";
+
 const LINKEDIN_URL = "https://www.linkedin.com/company/felipillon";
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
 
@@ -9,7 +11,7 @@ const STARTER_MESSAGES = [
   {
     role: "assistant",
     content:
-      "Hi. Ask me about Felipillon's services, locations, hiring support, open roles, or how to contact the team.",
+      "Hi! Welcome to Felipillon. How can I help today? I can help you find a job, hire talent, explore our technology services, or get in touch with our team.",
   },
 ];
 
@@ -160,7 +162,7 @@ const KNOWLEDGE_ACTIONS = {
 const INTENT_RULES = {
   [INTENTS.OPEN_ROLES]: {
     topic: "careers",
-    phrases: ["open roles", "open role", "jobs page", "job page", "careers page", "career page", "current roles", "open positions", "current opportunities", "are you hiring"],
+    phrases: ["open roles", "open role", "open jobs", "open job", "jobs page", "job page", "find jobs", "find open jobs", "careers page", "career page", "current roles", "open positions", "current opportunities", "are you hiring"],
     keywords: ["job", "jobs", "role", "roles", "career", "careers", "vacancy", "vacancies", "position", "positions", "opening", "openings", "hiring", "stellen", "karriere", "lavoro", "posizione", "вакансия", "ilan"],
     negative: ["office", "headquarters", "located", "location"],
   },
@@ -216,7 +218,7 @@ const INTENT_RULES = {
   },
   [INTENTS.INDUSTRIES]: {
     topic: "services",
-    phrases: ["what sectors", "which sectors", "what industries", "which industries", "find work", "help people find work", "help me get a job", "help me find a job"],
+    phrases: ["what sectors", "which sectors", "what industries", "which industries", "find work", "need a job", "looking for a job", "help people find work", "help me get a job", "help me find a job"],
     keywords: ["industry", "industries", "sector", "sectors", "field", "fields", "speciality", "specialities", "healthcare", "construction", "renewable", "logistics", "trade", "branche", "sektor"],
   },
   [INTENTS.VALUES]: {
@@ -306,6 +308,14 @@ const isDetailedQuestion = (text) => {
 const buildActions = (...actions) => actions.filter(Boolean);
 
 const getReply = (text, context = {}) => {
+  const greeting = getGreetingReply(text, getLanguage(text));
+  if (greeting) {
+    return {
+      content: greeting,
+      actions: buildActions(KNOWLEDGE_ACTIONS.openRoles, KNOWLEDGE_ACTIONS.services, KNOWLEDGE_ACTIONS.contact),
+      nextContext: context,
+    };
+  }
   const c = getCopy(text);
   const result = classifyIntent(text, context);
   const nextContext = {
@@ -409,13 +419,27 @@ export const ChatSupportWidget = () => {
   );
 
   useEffect(() => {
+    if (!open) return;
+    const bodyOverflow = document.body.style.overflow;
+    const rootOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = bodyOverflow;
+      document.documentElement.style.overflow = rootOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
     if (open) {
-      window.setTimeout(() => inputRef.current?.focus(), 80);
+      const timer = window.setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 80);
+      return () => window.clearTimeout(timer);
     }
   }, [open]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+    const container = messagesEndRef.current?.closest(".chat-support-messages");
+    if (container) container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, isTyping, expanded]);
 
   useEffect(() => {
@@ -519,10 +543,16 @@ export const ChatSupportWidget = () => {
   };
 
   return (
+    <>
+    {open && <button type="button" aria-label="Close chat backdrop" onClick={() => setOpen(false)}
+      className="fixed inset-0 z-[85] cursor-default bg-black/15 touch-none" />}
     <div className="chat-support-widget fixed bottom-5 right-5 z-[90] pointer-events-auto">
       {open && (
         <div
-          className={`mb-4 overflow-hidden rounded-2xl border border-brown-500/[0.12] bg-[#FBF8F3] shadow-[0_24px_70px_-32px_rgba(61,35,20,0.55)] ${
+          id="support-chat-panel"
+          role="region"
+          aria-label="Support chat"
+          className={`chat-support-panel mb-4 overflow-hidden rounded-2xl border border-brown-500/[0.12] bg-[#FBF8F3] shadow-[0_24px_70px_-32px_rgba(61,35,20,0.55)] ${
             expanded
               ? "w-[min(calc(100vw-2.5rem),620px)]"
               : "w-[min(calc(100vw-2.5rem),440px)]"
@@ -569,7 +599,7 @@ export const ChatSupportWidget = () => {
           </div>
 
           <div
-            className={`space-y-3 overflow-y-auto px-4 py-4 ${expanded ? "max-h-[560px] min-h-[420px]" : "max-h-[460px] min-h-[260px]"}`}
+            className={`chat-support-messages space-y-3 overflow-y-auto overscroll-contain px-4 py-4 ${expanded ? "max-h-[560px] min-h-[420px]" : "max-h-[460px] min-h-[260px]"}`}
             aria-live="polite"
           >
             {messages.map((message, index) => (
@@ -590,7 +620,7 @@ export const ChatSupportWidget = () => {
                         {message.jobPreview.map((job) => (
                           <Link
                             key={job.id || job.title}
-                            to="/open-roles"
+                            to="/open-roles" onClick={() => setOpen(false)}
                             className="block rounded-xl border border-brown-500/[0.1] bg-white px-3 py-2 text-left text-xs text-brown-500 shadow-[0_10px_24px_-24px_rgba(61,35,20,0.45)]"
                           >
                             <span className="block font-semibold text-[#231911]">{job.title}</span>
@@ -599,7 +629,7 @@ export const ChatSupportWidget = () => {
                         ))}
                       </div>
                     )}
-                    <Link to="/open-roles" className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700">
+                    <Link to="/open-roles" onClick={() => setOpen(false)} className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700">
                       View open roles <ArrowUpRight className="h-3 w-3" />
                     </Link>
                   </div>
@@ -613,6 +643,7 @@ export const ChatSupportWidget = () => {
                           <Link
                             key={`${action.label}-${action.to}`}
                             to={action.to}
+                            onClick={() => setOpen(false)}
                             className="inline-flex items-center gap-1 rounded-full border border-brown-500/[0.14] bg-white px-3 py-1.5 text-xs font-semibold text-brown-500"
                           >
                             {action.label} <ArrowUpRight className="h-3 w-3" />
@@ -773,11 +804,14 @@ export const ChatSupportWidget = () => {
         type="button"
         onClick={() => setOpen((value) => !value)}
         className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#C9973A] text-[#1A0E08] shadow-[0_18px_44px_-18px_rgba(201,151,58,0.75)] transition-transform hover:scale-105"
-        aria-label="Open support chat"
+        aria-label={open ? "Close support chat" : "Open support chat"}
+        aria-expanded={open}
+        aria-controls="support-chat-panel"
       >
         {!open && <span className="absolute inset-0 rounded-full bg-[#C9973A]/45 animate-ping" />}
         {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
       </button>
     </div>
+    </>
   );
 };

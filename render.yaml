@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: felipillon-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: TEAM_EMAIL
+        sync: false
+      - key: FROM_EMAIL
+        sync: false
+      - key: MANATAL_CLIENT_SLUG
+        sync: false

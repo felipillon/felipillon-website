@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { cn } from "../../lib/utils";
 
 export const MagneticButton = ({
   children, onClick, to, variant = "primary", className = "", icon: Icon, ...props
@@ -10,6 +11,7 @@ export const MagneticButton = ({
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   const handleMove = (e) => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const rect = ref.current.getBoundingClientRect();
     setPos({
       x: (e.clientX - rect.left - rect.width / 2) * 0.22,
@@ -22,12 +24,12 @@ export const MagneticButton = ({
 
   const styles = {
     primary: "bg-[#C9973A] text-black font-semibold hover:bg-[#D4A853] hover:shadow-[0_0_32px_-4px_rgba(201,151,58,0.65)] active:scale-95",
-    secondary: "bg-white/[0.07] backdrop-blur-md border border-white/[0.12] text-white hover:bg-white/[0.12] hover:border-white/20",
-    ghost: "bg-transparent border border-white/[0.12] text-white/70 hover:text-white hover:border-white/25",
+    secondary: "bg-[#3D2314] border border-[#C9973A] text-white hover:bg-[#54321E] hover:border-[#E0B65F]",
+    ghost: "bg-[#231911] border border-white/60 text-white hover:bg-[#3D2314] hover:border-white",
     // Light-theme variants (homepage redesign)
     lightPrimary: "bg-brown-500 text-white font-semibold hover:bg-brown-600 hover:shadow-[0_10px_32px_-8px_rgba(61,35,20,0.45)] active:scale-95",
-    lightSecondary: "bg-white text-brown-500 border border-brown-500/15 font-medium hover:border-gold/50 hover:shadow-[0_8px_28px_-8px_rgba(201,151,58,0.35)]",
-    lightGhost: "bg-transparent border border-brown-500/15 text-brown-500/70 hover:text-brown-500 hover:border-brown-500/30",
+    lightSecondary: "bg-white text-[#3D2314] border border-brown-500/45 hover:bg-[#F5EDDF] hover:border-brown-500/70 hover:shadow-[0_8px_28px_-8px_rgba(201,151,58,0.35)]",
+    lightGhost: "bg-[#F5EDDF] border border-brown-500/45 text-[#3D2314] hover:bg-[#EADCC7] hover:border-brown-500/70",
   };
 
   return (
@@ -40,11 +42,11 @@ export const MagneticButton = ({
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
       transition={{ type: "spring", stiffness: 200, damping: 16 }}
-      className={`relative inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm transition-all duration-300 ${styles[variant]} ${className}`}
+      className={cn("relative min-h-11 max-w-full inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#855A16] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", styles[variant], className)}
       {...props}
     >
       {children}
-      {Icon && <Icon className="w-4 h-4" />}
+      {Icon && <Icon className="w-4 h-4 shrink-0" />}
     </motion.button>
   );
 };
